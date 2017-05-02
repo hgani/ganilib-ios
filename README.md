@@ -20,10 +20,6 @@ it, simply add the following line to your Podfile:
 pod "ganilib"
 ```
 
-## Author
-
-apinrdw, apinrdw@gmail.com
-
 ## License
 
 ganilib is available under the MIT license. See the LICENSE file for more info.

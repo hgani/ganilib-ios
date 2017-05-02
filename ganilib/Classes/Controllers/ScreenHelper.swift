@@ -1,0 +1,44 @@
+
+import UIKit
+import SwiftIconFont
+import IoniconsKit
+import SideMenu
+import SnapKit
+
+open class ScreenHelper {
+    // NOTE: Not sure if we need to set this to weak. We tried unowned but got "bad access".
+    private let screen : UIViewController
+    
+    private var navItem : UIBarButtonItem?
+    
+    public init(_ screen : UIViewController) {
+        self.screen = screen
+    }
+    
+    public func setupLeftMenuButton() {
+        let icon = UIImage.ionicon(with: .navicon, textColor: UIColor.white, size: CGSize(width: 24, height: 24))
+        //let button = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(leftMenuButtonPressed))
+        
+        let button = UIButton(type: .custom)
+        button.frame = CGRect(x: 0.0, y: 0.0, width: icon.size.width, height: icon.size.height)
+        button.setBackgroundImage(icon, for: UIControlState())
+        button.addTarget(self,
+                         action: #selector(leftMenuButtonPressed),
+                         for: UIControlEvents.touchUpInside)
+        
+        // Use customView to ensure UIBarButtonItem.view exists at all times or else the badge won't appear as we navigate
+        // to other screens. See http://stackoverflow.com/questions/43641698/getting-frame-of-uibarbuttonitem-returns-nil
+        navItem = UIBarButtonItem(customView: button)
+        
+        screen.navigationItem.leftBarButtonItem = navItem
+    }
+    
+    @objc func leftMenuButtonPressed() {
+        screen.present(SideMenuManager.menuLeftNavigationController!, animated: true, completion: nil)
+    }
+    
+    public func viewWillAppear() {
+        // Can be nil since not all screens have nav menu.
+        navItem?.setBadge(text: UIApplication.shared.applicationIconBadgeNumber > 0 ? "!" : "")
+    }
+}

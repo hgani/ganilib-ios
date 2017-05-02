@@ -42,4 +42,5 @@ TODO: Add long description of the pod here.
   s.dependency 'SideMenu'
   s.dependency 'SnapKit'
   s.dependency 'IoniconsKit'
+  s.dependency 'Eureka'
 end

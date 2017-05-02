@@ -1,0 +1,31 @@
+PODS:
+  - Eureka (2.0.1)
+  - ganilib (0.1.0):
+    - Eureka
+    - IoniconsKit
+    - SideMenu
+    - SnapKit
+    - SwiftIconFont
+  - IoniconsKit (0.1.1)
+  - SideMenu (2.3.0)
+  - SnapKit (3.2.0)
+  - SwiftIconFont (2.6.0)
+
+DEPENDENCIES:
+  - ganilib (from `../`)
+
+EXTERNAL SOURCES:
+  ganilib:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Eureka: ae837bb1dfae0c07bc1bda7aeef87876eeb537c2
+  ganilib: b00f359e027791ee1a8007002edf2cacabfa78e7
+  IoniconsKit: da4e3826b706e59adfb7ef5633e44764dd0acd90
+  SideMenu: 43d092cf615cf472f105c5b9867a21beff9fc269
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  SwiftIconFont: bbe1f32e1e16bac87dad8566afc80132cb8d072c
+
+PODFILE CHECKSUM: 66645d4dea386cceb4756c8597cce5e96ea8dae0
+
+COCOAPODS: 1.2.1
