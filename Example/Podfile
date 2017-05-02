@@ -1,0 +1,6 @@
+use_frameworks!
+target 'ganilib_Tests' do
+  pod 'ganilib', :path => '../'
+  
+  
+end
