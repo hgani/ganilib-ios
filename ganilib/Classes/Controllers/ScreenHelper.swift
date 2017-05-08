@@ -4,6 +4,7 @@ import SwiftIconFont
 import IoniconsKit
 import SideMenu
 import SnapKit
+import IoniconsKit
 
 open class ScreenHelper {
     // NOTE: Not sure if we need to set this to weak. We tried unowned but got "bad access".
@@ -31,6 +32,17 @@ open class ScreenHelper {
         navItem = UIBarButtonItem(customView: button)
         
         screen.navigationItem.leftBarButtonItem = navItem
+    }
+    
+    public func setupRightMenuButton(icon: Ionicons, target: UIViewController, action: Selector) {
+        let icon = UIImage.ionicon(with: icon, textColor: UIColor.white, size: CGSize(width: 24, height: 24))
+        let button = UIButton(type: .custom)
+        button.frame = CGRect(x: 0.0, y: 0.0, width: icon.size.width, height: icon.size.height)
+        button.setBackgroundImage(icon, for: UIControlState())
+        button.addTarget(target, action: action, for: UIControlEvents.touchUpInside)
+        navItem = UIBarButtonItem(customView: button)
+
+        screen.navigationItem.rightBarButtonItem = navItem
     }
     
     @objc func leftMenuButtonPressed() {
