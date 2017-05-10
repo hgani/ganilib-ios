@@ -6,6 +6,8 @@ open class GScreen : UIViewController {
     public let contentView = GVerticalPanel()
     private var helper : ScreenHelper!
     public var launch : LaunchHelper!
+    public var indicator : IndicatorHelper!
+    public var nav : NavHelper!
     
     private var previousViewElement:UIView!
     
@@ -29,6 +31,8 @@ open class GScreen : UIViewController {
         
         self.helper = ScreenHelper(self)
         self.launch = LaunchHelper(self)
+        self.indicator = IndicatorHelper(self)
+        self.nav = NavHelper(self)
         
         self.edgesForExtendedLayout = []
         self.view.backgroundColor = UIColor.white
