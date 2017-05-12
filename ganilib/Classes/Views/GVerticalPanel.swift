@@ -5,6 +5,17 @@ open class GVerticalPanel : UIView {
     private var previousViewElement : UIView!
     private var previousConstraint : NSLayoutConstraint!
     private var defaultTop : CGFloat = 0.0
+    private var horizontalPadding : Bool = true
+    
+    init(horizontalPadding : Bool = true) {
+        super.init(frame: .zero)
+        
+        self.horizontalPadding = horizontalPadding
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     public var defaultGap : CGFloat {
         set { defaultTop = newValue }
@@ -55,7 +66,7 @@ open class GVerticalPanel : UIView {
                                relatedBy: .equal,
                                toItem: self,
                                attribute: .width,
-                               multiplier: 6/7,
+                               multiplier: (horizontalPadding ? 0.9 : 1.0),
                                constant: 0.0)])
         
         if previousViewElement == nil {

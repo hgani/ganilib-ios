@@ -43,7 +43,7 @@ open class GScreen : UIViewController {
         
         self.view.addSubview(scrollView)
         scrollView.addSubview(contentView)
-        
+                
         self.view.addConstraints([
             NSLayoutConstraint(item: scrollView,
                                attribute: .centerX,
