@@ -7,7 +7,7 @@ open class GVerticalPanel : UIView {
     private var defaultTop : CGFloat = 0.0
     private var horizontalPadding : Bool = true
     
-    init(horizontalPadding : Bool = true) {
+    public init(horizontalPadding : Bool = true) {
         super.init(frame: .zero)
         
         self.horizontalPadding = horizontalPadding

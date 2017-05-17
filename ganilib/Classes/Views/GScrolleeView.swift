@@ -1,7 +1,7 @@
 
 import UIKit
 
-class GScrolleeView : UIView {
+open class GScrolleeView : UIView {
     
     // From http://stackoverflow.com/questions/3605393/iphone-uiview-resize-frame-to-fit-subviews
     func resizeToFitSubviews() {

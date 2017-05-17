@@ -2,16 +2,16 @@
 import UIKit
 import SwiftIconFont
 
-class GLabel : UILabel {
+open class GLabel : UILabel {
     private var isUnderlined = false
     
-    func text(_ text : String) -> GLabel {
+    public func text(_ text : String) -> GLabel {
         self.numberOfLines = 0
         self.text = text
         return self
     }
     
-    func icon(_ icon: String, size: CGFloat) -> GLabel {
+    public func icon(_ icon: String, size: CGFloat) -> GLabel {
         self.numberOfLines = 0
         self.text = icon
         self.font = self.font.withSize(size)
@@ -19,45 +19,45 @@ class GLabel : UILabel {
         return self
     }
     
-    func font(_ font : UIFont) -> GLabel {
+    public func font(_ font : UIFont) -> GLabel {
         self.font = font
         return self
     }
     
-    func bold() -> GLabel {
+    public func bold() -> GLabel {
         // TODO
         //return font(self.font.bold())
         return self
     }
     
-    func align(_ alignment : NSTextAlignment) -> GLabel {
+    public func align(_ alignment : NSTextAlignment) -> GLabel {
         self.textAlignment = alignment
         return self
     }
     
-    func spec(_ spec : GLabelSpec) -> GLabel {
+    public func spec(_ spec : GLabelSpec) -> GLabel {
         spec.initialize(self)
         return self
     }
     
-    func click(_ target: Any, action: Selector) -> GLabel {
+    public func click(_ target: Any, action: Selector) -> GLabel {
         self.isUserInteractionEnabled = true
         let gestureRecognizer = UITapGestureRecognizer(target: target, action: action)
         self.addGestureRecognizer(gestureRecognizer)
         return self
     }
     
-    func color(_ color: UIColor) -> GLabel {
+    public func color(_ color: UIColor) -> GLabel {
         self.textColor = color
         return self
     }
     
-    func underline() -> GLabel {
+    public func underline() -> GLabel {
         self.isUnderlined = true
         return self
     }
     
-    override func draw(_ rect: CGRect) {
+    override open func draw(_ rect: CGRect) {
         super.draw(rect)
         
         if isUnderlined {

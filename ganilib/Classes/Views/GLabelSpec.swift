@@ -1,7 +1,7 @@
 
 import UIKit
 
-protocol GLabelSpec {
+public protocol GLabelSpec {
     func initialize(_ label : GLabel)
     func color() -> UIColor?
     func size() -> CGFloat?

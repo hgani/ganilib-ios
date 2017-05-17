@@ -1,8 +1,8 @@
 
 import UIKit
 
-class GImageView : UIImageView {
-    func namedImage(_ name: String) -> UIImageView {
+open class GImageView : UIImageView {
+    public func namedImage(_ name: String) -> UIImageView {
         self.image = UIImage(named: name)
         return self
     }
