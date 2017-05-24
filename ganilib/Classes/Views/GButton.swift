@@ -1,6 +1,7 @@
 
 import UIKit
 import IoniconsKit
+import SwiftIconFont
 
 open class GButton : UIButton {
     public init() {
@@ -27,6 +28,44 @@ open class GButton : UIButton {
         callButtonString.append(callStringAttributed)
         
         self.setAttributedTitle(callButtonString, for: .normal)
+        
+        self.layer.cornerRadius = 4
+        
+        return self
+    }
+    
+    public func custom(_ title: String, iconString: String) -> GButton {
+        let wrapper = UIView()
+        wrapper.isUserInteractionEnabled = false
+        
+        let icon = UILabel()
+        icon.isUserInteractionEnabled = false
+        icon.font = UIFont.icon(from: .Ionicon, ofSize: 24.0)
+        icon.text = String.fontIonIcon(iconString)
+        icon.sizeToFit()
+        
+        let label = UILabel()
+        label.isUserInteractionEnabled = false
+        label.text = title
+        label.sizeToFit()
+        
+        wrapper.addSubview(icon)
+        wrapper.addSubview(label)
+        self.addSubview(wrapper)
+        
+        wrapper.snp.makeConstraints { (make) in
+            make.edges.equalTo(self).inset(UIEdgeInsetsMake(10, 10, 10, 10))
+        }
+        
+        icon.snp.makeConstraints { (make) in
+            make.top.equalTo(wrapper)
+            make.left.equalTo(0)
+        }
+        
+        label.snp.makeConstraints { (make) in
+            make.top.equalTo(wrapper)
+            make.left.equalTo(icon.snp.right).offset(5)
+        }
         
         self.layer.cornerRadius = 4
         
