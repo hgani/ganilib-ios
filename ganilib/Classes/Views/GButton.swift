@@ -29,7 +29,7 @@ open class GButton : UIButton {
         
         self.setAttributedTitle(callButtonString, for: .normal)
         
-        self.layer.cornerRadius = 4
+        //self.layer.cornerRadius = 4
         
         return self
     }
@@ -59,7 +59,8 @@ open class GButton : UIButton {
         
         icon.snp.makeConstraints { (make) in
             make.top.equalTo(wrapper)
-            make.left.equalTo(0)
+            make.left.equalTo(10)
+            make.width.equalTo(16)
         }
         
         label.snp.makeConstraints { (make) in
@@ -67,8 +68,15 @@ open class GButton : UIButton {
             make.left.equalTo(icon.snp.right).offset(5)
         }
         
-        self.layer.cornerRadius = 4
+        //self.layer.cornerRadius = 4
         
+        return self
+    }
+    
+    public func width(_ width : Int) -> GButton {
+        self.snp.makeConstraints { (make) -> Void in
+            make.width.equalTo(width)
+        }
         return self
     }
     
@@ -100,6 +108,23 @@ open class GButton : UIButton {
     
     public func font(_ font: UIFont) -> GButton {
         self.titleLabel!.font = font
+        return self
+    }
+    
+    public func color(bg: UIColor?, text: UIColor? = nil) -> GButton {
+        if let bgColor = bg {
+            self.backgroundColor = bgColor
+        }
+        if let textColor = text {
+            self.titleLabel?.textColor = textColor
+        }
+        return self
+    }
+    
+    public func border(color : UIColor, width : Float = 1, corner : Float = 6) -> GButton {
+        self.layer.borderColor = color.cgColor
+        self.layer.borderWidth = CGFloat(width)
+        self.layer.cornerRadius = CGFloat(corner)
         return self
     }
 }

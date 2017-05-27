@@ -2,8 +2,12 @@
 import UIKit
 
 open class GWrapper : UIView {
-    init(_ child : UIView, gravity : GWrapperGravity = .center) {
+    private var child : UIView!
+    
+    public init(_ child : UIView, gravity : GWrapperGravity = .center) {
         super.init(frame: .zero)
+        
+        self.child = child
         
         addSubview(child)
         
@@ -31,7 +35,15 @@ open class GWrapper : UIView {
         super.init(coder: aDecoder)
     }
     
-    enum GWrapperGravity {
+//    public func width(_ width : Int) -> GWrapper {
+//        child.snp.makeConstraints { (make) -> Void in
+//            make.width.equalTo(width)
+//        }
+//        return self
+//    }
+    
+    
+    public enum GWrapperGravity {
         case center
         case left
         case right

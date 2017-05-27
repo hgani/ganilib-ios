@@ -112,7 +112,7 @@ open class GScreen : UIViewController {
     override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         helper.viewWillAppear()
-        
+        nav.viewWillAppear()
     }
     
     public func setupLeftMenuButton() {
