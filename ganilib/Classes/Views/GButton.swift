@@ -4,6 +4,8 @@ import IoniconsKit
 import SwiftIconFont
 
 open class GButton : UIButton {
+    private var onClick : ((GButton) -> Void)?
+    
     public init() {
         super.init(frame: .zero)
 
@@ -73,17 +75,15 @@ open class GButton : UIButton {
         return self
     }
     
-    public func width(_ width : Int) -> GButton {
+    public func width(_ width : Int) -> Self {
         self.snp.makeConstraints { (make) -> Void in
             make.width.equalTo(width)
         }
         return self
     }
     
-    public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> GButton {
+    public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
         let orig = self.contentEdgeInsets
-        
-        NSLog("INSETS: \(orig.top) \(orig.left) \(orig.bottom) \(orig.right)")
         
         let top = top ?? orig.top
         let left = left ?? orig.left
@@ -95,23 +95,37 @@ open class GButton : UIButton {
         return self
     }
     
-    public func bgcolor(_ color: UIColor) -> GButton {
+    public func bgcolor(_ color: UIColor) -> Self {
         self.backgroundColor = color
         self.titleLabel?.textColor = UIColor.white
         return self
     }
     
-    public func click(_ target: Any, action: Selector) -> GButton {
+    // NOTE: Deprecated. Use onClick() instead
+    public func click(_ target: Any, action: Selector) -> Self {
         addTarget(target, action: action, for: .touchUpInside)
         return self
     }
     
-    public func font(_ font: UIFont) -> GButton {
+    // Use block instead of selector from now on. See https://stackoverflow.com/questions/24007650/selector-in-swift
+    public func onClick(_ command: @escaping (GButton) -> Void) -> Self {
+        self.onClick = command
+        addTarget(self, action: #selector(performClick), for: .touchUpInside)
+        return self
+    }
+    
+    @objc private func performClick() {
+        if let callback = self.onClick {
+            callback(self)
+        }
+    }
+    
+    public func font(_ font: UIFont) -> Self {
         self.titleLabel!.font = font
         return self
     }
     
-    public func color(bg: UIColor?, text: UIColor? = nil) -> GButton {
+    public func color(bg: UIColor?, text: UIColor? = nil) -> Self {
         if let bgColor = bg {
             self.backgroundColor = bgColor
         }
@@ -121,10 +135,16 @@ open class GButton : UIButton {
         return self
     }
     
-    public func border(color : UIColor, width : Float = 1, corner : Float = 6) -> GButton {
+    public func border(color : UIColor, width : Float = 1, corner : Float = 6) -> Self {
         self.layer.borderColor = color.cgColor
         self.layer.borderWidth = CGFloat(width)
         self.layer.cornerRadius = CGFloat(corner)
+        return self
+    }
+    
+    public func enabled(_ value : Bool) -> Self {
+        self.isEnabled = value
+        self.alpha = value ? 1.0 : 0.5
         return self
     }
 }
