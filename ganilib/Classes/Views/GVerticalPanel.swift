@@ -65,23 +65,14 @@ open class GVerticalPanel : UIView {
                                attribute: .centerX,
                                multiplier: 1.0,
                                constant: 0.0),
-            
-//            NSLayoutConstraint(item: child,
-//                               attribute: .width,
-//                               relatedBy: .equal,
-//                               toItem: self,
-//                               attribute: .width,
-//                               multiplier: (horizontalPadding ? 0.9 : 1.0),
-//                               constant: 0.0)])
-            
-            
-                        NSLayoutConstraint(item: child,
-                                           attribute: .left,
-                                           relatedBy: .equal,
-                                           toItem: self,
-                                           attribute: .left,
-                                           multiplier: 1.0,
-                                           constant: paddings.left),
+
+        NSLayoutConstraint(item: child,
+                           attribute: .left,
+                           relatedBy: .equal,
+                           toItem: self,
+                           attribute: .left,
+                           multiplier: 1.0,
+                           constant: paddings.left),
         
         NSLayoutConstraint(item: child,
                            attribute: .right,
@@ -141,6 +132,7 @@ open class GVerticalPanel : UIView {
         //helper.padding(top: top, left: left, bottom: bottom, right: right)
 //        self.layoutMargins =  UIEdgeInsetsMake(20, 10, 20, 10)
         //self.layoutMargins =  UIEdgeInsetsMake(60, 30, 60, 30)
+        
         
         let orig = self.paddings
         

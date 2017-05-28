@@ -15,4 +15,10 @@ open class ViewHelper {
             make.width.equalTo(width)
         }
     }
+    
+    public func height(_ height : Int) {
+        view.snp.makeConstraints { (make) -> Void in
+            make.height.equalTo(height)
+        }
+    }
 }

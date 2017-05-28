@@ -40,9 +40,7 @@ open class GLabel : UILabel {
     }
     
     public func bold() -> GLabel {
-        // TODO
-        //return font(self.font.bold())
-        return self
+        return font(self.font.bold())
     }
     
     public func align(_ alignment : NSTextAlignment) -> GLabel {

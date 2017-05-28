@@ -125,7 +125,7 @@ open class GScreen : UIViewController {
     }
     
     public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
-        _ = self.contentView.padding(top: 30, left: 30, bottom: 30, right: 30)
+        _ = self.contentView.padding(top: top, left: left, bottom: bottom, right: right)
         return self
     }
 }

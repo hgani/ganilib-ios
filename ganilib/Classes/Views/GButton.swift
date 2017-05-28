@@ -7,6 +7,8 @@ open class GButton : UIButton {
     private var helper : ViewHelper!
     private var onClick : ((GButton) -> Void)?
     
+//    private var myTitleLabel : GLabel?
+    
     public init() {
         super.init(frame: .zero)
         
@@ -29,15 +31,62 @@ open class GButton : UIButton {
             callButtonString.append(callIconAttributed)
         }
         
-        let callStringAttributed = NSMutableAttributedString(string: title, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)])
+        //let callStringAttributed = NSMutableAttributedString(string: title, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)])
+        let callStringAttributed = NSMutableAttributedString(string: title)
+
         callButtonString.append(callStringAttributed)
         
         self.setAttributedTitle(callButtonString, for: .normal)
         
-        //self.layer.cornerRadius = 4
-        
         return self
     }
+    
+//    public func title(_ title: String) -> GButton {
+//        let wrapper = UIView()
+//        wrapper.isUserInteractionEnabled = false
+////        wrapper.backgroundColor = UIColor.blue
+//        
+//        let icon = UILabel()
+//        icon.isUserInteractionEnabled = false
+////        icon.backgroundColor = UIColor.red
+//        
+////        if let str = iconString {
+////            icon.font = UIFont.icon(from: .Ionicon, ofSize: 24.0)
+////            icon.text = String.fontIonIcon(str)
+////        }
+//
+//        icon.sizeToFit()
+//        
+//        self.myTitleLabel = GLabel().text(title)
+//        myTitleLabel.isUserInteractionEnabled = false
+//        //        label.backgroundColor = UIColor.yellow
+////        label.text = title
+//        label.sizeToFit()
+//        
+//        self.titleLabel = label
+//        
+//        wrapper.addSubview(icon)
+//        wrapper.addSubview(label)
+//        self.addSubview(wrapper)
+//        
+//        wrapper.snp.makeConstraints { (make) in
+//            make.edges.equalTo(self).inset(UIEdgeInsetsMake(10, 10, 10, 10))
+//        }
+//        
+////        icon.snp.makeConstraints { (make) in
+////            make.top.equalTo(wrapper)
+////            make.left.equalTo(10)
+////            make.width.equalTo(16)
+////        }
+//        
+//        label.snp.makeConstraints { (make) in
+//            make.centerY.equalTo(wrapper)
+//            make.left.equalTo(icon.snp.right).offset(5)
+//        }
+//        
+//        return self
+//    }
+
     
     public func custom(_ title: String, iconString: String) -> GButton {
         let wrapper = UIView()
@@ -90,6 +139,11 @@ open class GButton : UIButton {
         return self
     }
     
+    public func height(_ height : Int) -> Self {
+        helper.height(height)
+        return self
+    }
+    
     public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
         let orig = self.contentEdgeInsets
         
@@ -133,12 +187,16 @@ open class GButton : UIButton {
         return self
     }
     
+    public func textSize(_ size: Float) -> Self {
+        return font(self.titleLabel!.font.withSize(CGFloat(size)))
+    }
+    
     public func color(bg: UIColor?, text: UIColor? = nil) -> Self {
         if let bgColor = bg {
             self.backgroundColor = bgColor
         }
         if let textColor = text {
-            self.titleLabel?.textColor = textColor
+            self.titleLabel!.textColor = textColor
         }
         return self
     }
