@@ -4,11 +4,14 @@ import IoniconsKit
 import SwiftIconFont
 
 open class GButton : UIButton {
+    private var helper : ViewHelper!
     private var onClick : ((GButton) -> Void)?
     
     public init() {
         super.init(frame: .zero)
-
+        
+        self.helper = ViewHelper(self)
+        
         // Make sure that contentEdgeInsets' values is always initialized properly (i.e. non-zero)
         _ = self.padding(top: 10, left: 20, bottom: 10, right: 20)
     }
@@ -75,10 +78,15 @@ open class GButton : UIButton {
         return self
     }
     
+//    public func width(_ width : Int) -> Self {
+//        self.snp.makeConstraints { (make) -> Void in
+//            make.width.equalTo(width)
+//        }
+//        return self
+//    }
+    
     public func width(_ width : Int) -> Self {
-        self.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(width)
-        }
+        helper.width(width)
         return self
     }
     

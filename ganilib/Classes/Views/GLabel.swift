@@ -5,6 +5,21 @@ import SwiftIconFont
 open class GLabel : UILabel {
     private var isUnderlined = false
     
+    public func color(_ color: UIColor) -> GLabel {
+        self.textColor = color
+        return self
+    }
+    
+    public func color(bg : UIColor?, text: UIColor? = nil) -> Self {
+        if let bgColor = bg {
+            self.backgroundColor = bgColor
+        }
+        if let textColor = text {
+            self.textColor = textColor
+        }
+        return self
+    }
+    
     public func text(_ text : String) -> GLabel {
         self.numberOfLines = 0
         self.text = text
@@ -44,11 +59,6 @@ open class GLabel : UILabel {
         self.isUserInteractionEnabled = true
         let gestureRecognizer = UITapGestureRecognizer(target: target, action: action)
         self.addGestureRecognizer(gestureRecognizer)
-        return self
-    }
-    
-    public func color(_ color: UIColor) -> GLabel {
-        self.textColor = color
         return self
     }
     

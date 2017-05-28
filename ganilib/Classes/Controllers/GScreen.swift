@@ -33,7 +33,7 @@ open class GScreen : UIViewController {
         self.launch = LaunchHelper(self)
         self.indicator = IndicatorHelper(self)
         self.nav = NavHelper(self)
-        
+                
         self.edgesForExtendedLayout = []
         self.view.backgroundColor = UIColor.white
         
@@ -117,5 +117,15 @@ open class GScreen : UIViewController {
     
     public func setupLeftMenuButton() {
         helper.setupLeftMenuButton()
+    }
+    
+    public func color(bg: UIColor) -> Self {
+        self.view.backgroundColor = bg
+        return self
+    }
+    
+    public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
+        _ = self.contentView.padding(top: 30, left: 30, bottom: 30, right: 30)
+        return self
     }
 }

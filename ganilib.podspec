@@ -43,4 +43,5 @@ TODO: Add long description of the pod here.
   s.dependency 'SnapKit'
   s.dependency 'IoniconsKit'
   s.dependency 'Eureka'
+  s.dependency 'SnapKit'
 end
