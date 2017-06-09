@@ -27,7 +27,7 @@ open class LaunchHelper {
                 }
             }
             else {
-                alert("This device cannot make calls")
+                alert("This device doesn't support phone calls")
             }
         }
         else {

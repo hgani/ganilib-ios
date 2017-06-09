@@ -26,24 +26,24 @@ open class GVerticalPanel : UIView {
 //        get { return defaultTop }
 //    }
     
-    public func addView(_ view : UIView, top : CGFloat? = nil, wrap : Bool = false) {
-        var child = view
+    public func addView(_ view : UIView, top : CGFloat? = nil) {
+        let child = view
         
-        if wrap {
-            let container = UIView()
-            container.addSubview(view)
-            
-            view.snp.makeConstraints { (make) -> Void in
-                make.top.equalTo(0)
-                make.centerX.equalTo(container)
-            }
-            
-            container.snp.makeConstraints { (make) -> Void in
-                make.height.equalTo(view)
-            }
-            
-            child = container
-        }
+//        if wrap {
+//            let container = UIView()
+//            container.addSubview(view)
+//            
+//            view.snp.makeConstraints { (make) -> Void in
+//                make.top.equalTo(0)
+//                make.centerX.equalTo(container)
+//            }
+//            
+//            container.snp.makeConstraints { (make) -> Void in
+//                make.height.equalTo(view)
+//            }
+//            
+//            child = container
+//        }
         
         // The hope is this makes things more predictable
         child.translatesAutoresizingMaskIntoConstraints = false

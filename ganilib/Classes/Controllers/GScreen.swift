@@ -105,8 +105,8 @@ open class GScreen : UIViewController {
                                constant: 0.0)])
     }
     
-    public func addView(_ view: UIView, top : CGFloat? = nil, wrap : Bool = false) {
-        contentView.addView(view, top: top, wrap: wrap)
+    public func addView(_ view: UIView, top : CGFloat? = nil) {
+        contentView.addView(view, top: top)
     }
     
     override open func viewWillAppear(_ animated: Bool) {
