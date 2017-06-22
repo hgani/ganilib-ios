@@ -201,8 +201,10 @@ open class GButton : UIButton {
         return self
     }
     
-    public func border(color : UIColor, width : Float = 1, corner : Float = 6) -> Self {
-        self.layer.borderColor = color.cgColor
+    public func border(color : UIColor?, width : Float = 1, corner : Float = 6) -> Self {
+        if let c = color {
+            self.layer.borderColor = c.cgColor
+        }
         self.layer.borderWidth = CGFloat(width)
         self.layer.cornerRadius = CGFloat(corner)
         return self

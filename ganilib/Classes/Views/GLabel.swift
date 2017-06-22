@@ -1,8 +1,9 @@
 
 import UIKit
 import SwiftIconFont
+import TTTAttributedLabel
 
-open class GLabel : UILabel {
+open class GLabel : TTTAttributedLabel {
     private var isUnderlined = false
     
     public func color(_ color: UIColor) -> GLabel {
@@ -23,6 +24,13 @@ open class GLabel : UILabel {
     public func text(_ text : String) -> GLabel {
         self.numberOfLines = 0
         self.text = text
+        return self
+    }
+    
+    // https://developer.apple.com/documentation/foundation/nstextcheckingtypes
+    // https://developer.apple.com/documentation/foundation/nstextcheckingtype
+    public func checkingTypes(_ mode : NSTextCheckingTypes) -> Self {
+        self.enabledTextCheckingTypes = mode
         return self
     }
     

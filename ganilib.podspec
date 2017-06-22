@@ -44,4 +44,5 @@ TODO: Add long description of the pod here.
   s.dependency 'IoniconsKit'
   s.dependency 'Eureka'
   s.dependency 'SnapKit'
+  s.dependency 'TTTAttributedLabel'
 end
