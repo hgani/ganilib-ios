@@ -14,6 +14,15 @@ open class ScreenHelper {
     
     public init(_ screen : UIViewController) {
         self.screen = screen
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(applicationDidBecomeActiveNotification(_:)),
+                                               name: .UIApplicationWillEnterForeground,
+                                               object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     public func setupLeftMenuButton() {
@@ -50,7 +59,15 @@ open class ScreenHelper {
     }
     
     public func viewWillAppear() {
+        updateBadge();
+    }
+    
+    @objc fileprivate func applicationDidBecomeActiveNotification(_ notification: Notification) {
+        updateBadge()
+    }
+    
+    private func updateBadge() {
         // Can be nil since not all screens have nav menu.
-        navItem?.setBadge(text: UIApplication.shared.applicationIconBadgeNumber > 0 ? "!" : "")
+        self.navItem?.setBadge(text: UIApplication.shared.applicationIconBadgeNumber > 0 ? "!" : "")
     }
 }
