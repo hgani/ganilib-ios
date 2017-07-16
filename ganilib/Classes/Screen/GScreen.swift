@@ -103,6 +103,8 @@ open class GScreen : UIViewController {
                                attribute: .bottom,
                                multiplier: 1.0,
                                constant: 0.0)])
+        
+        _ = padding(top: UIApplication.shared.statusBarFrame.height)
     }
     
     public func addView(_ view: UIView, top : CGFloat? = nil) {
@@ -115,8 +117,18 @@ open class GScreen : UIViewController {
         nav.viewWillAppear()
     }
     
+    // Deprecated
     public func setupLeftMenuButton() {
         helper.setupLeftMenuButton()
+    }
+    
+    public func leftMenu(controller: UITableViewController) -> Self {
+        helper.leftMenu(controller: controller)
+        return self
+    }
+    
+    public func end() {
+        // Ends chaining
     }
     
     public func color(bg: UIColor) -> Self {

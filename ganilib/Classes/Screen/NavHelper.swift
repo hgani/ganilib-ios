@@ -15,6 +15,19 @@ open class NavHelper {
         self.showBar = false
     }
     
+    public func title(_ title: String) -> Self {
+        screen.title = title
+        return self
+    }
+    
+    public func color(bg: UIColor, text: UIColor) {
+        if let navController = screen.navigationController {
+            navController.navigationBar.barTintColor = bg
+            navController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: text]
+            //        UINavigationBar.appearance().tintColor = UIColor.red
+        }
+    }
+    
     public func viewWillAppear() {
         screen.navigationController?.setNavigationBarHidden(!showBar, animated: false)
     }

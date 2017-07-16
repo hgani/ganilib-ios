@@ -25,6 +25,7 @@ open class ScreenHelper {
         NotificationCenter.default.removeObserver(self)
     }
     
+    // NOTE: Deprecated
     public func setupLeftMenuButton() {
         let icon = UIImage.ionicon(with: .navicon, textColor: UIColor.white, size: CGSize(width: 24, height: 24))
         //let button = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(leftMenuButtonPressed))
@@ -41,6 +42,20 @@ open class ScreenHelper {
         navItem = UIBarButtonItem(customView: button)
         
         screen.navigationItem.leftBarButtonItem = navItem
+    }
+    
+    public func leftMenu(controller: UITableViewController) {
+        setupLeftMenuButton()
+        
+//        let menuNavigationController = MenuNavigationController()
+        let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: controller)
+        menuLeftNavigationController.leftSide = true
+        
+        SideMenuManager.menuLeftNavigationController = menuLeftNavigationController
+        SideMenuManager.menuAddPanGestureToPresent(toView: screen.navigationController!.navigationBar)
+        SideMenuManager.menuAddScreenEdgePanGesturesToPresent(toView: screen.navigationController!.view)
+        SideMenuManager.menuPresentMode = .viewSlideOut
+        SideMenuManager.menuFadeStatusBar = false
     }
     
     public func setupRightMenuButton(icon: Ionicons, target: UIViewController, action: Selector) {
