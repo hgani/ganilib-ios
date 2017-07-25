@@ -9,19 +9,21 @@ public enum MenuType {
 }
 
 public class MenuItem {
-    var title: String
-    var icon: String
-    var controller: UIViewController?
+    private(set) var title: String
+    private(set) var icon: String
+    private(set) var controller: UIViewController?
     var url: URL?
     //var method: Selector?
     var requireAuth: Bool = false
     var type: MenuType
-    var onClick: Selector?
+    private(set) var onClick: (() -> Void)?
+    private(set) var isRoot = false
     
     public init(title: String, icon: String) {
         self.title = title
         self.icon = icon
         self.type = MenuType.popToRoot
+        self.isRoot = true
     }
     
     public init(title: String, icon: String, controller: UIViewController) {
@@ -31,16 +33,23 @@ public class MenuItem {
         self.type = MenuType.push
     }
     
-    public init(title: String, icon: String, url: URL, requireAuth: Bool = false, onClick: Selector? = nil, type: MenuType = .turbolinks) {
-        self.title = title
-        self.icon = icon
-        self.url = url
-        self.requireAuth = requireAuth
-        self.type = type
-        self.onClick = onClick
-    }
+//    public init(title: String, icon: String, url: URL, requireAuth: Bool = false, onClick: Selector? = nil, type: MenuType = .turbolinks) {
+//        self.title = title
+//        self.icon = icon
+//        self.url = url
+//        self.requireAuth = requireAuth
+//        self.type = type
+//        self.onClick = onClick
+//    }
+//    
+//    public init(title: String, icon: String, onClick: Selector) {
+//        self.title = title
+//        self.icon = icon
+//        self.onClick = onClick
+//        self.type = MenuType.method
+//    }
     
-    public init(title: String, icon: String, onClick: Selector) {
+    public init(title: String, icon: String, onClick: @escaping () -> Void) {
         self.title = title
         self.icon = icon
         self.onClick = onClick

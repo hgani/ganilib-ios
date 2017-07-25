@@ -17,4 +17,8 @@ public class Menu {
     public func add(_ item : MenuItem) {
         items.append(item)
     }
+    
+    public func clear() {
+        items.removeAll()
+    }
 }

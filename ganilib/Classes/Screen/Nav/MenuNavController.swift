@@ -4,13 +4,17 @@ import IoniconsKit
 //import SVProgressHUD
 
 open class MenuNavController: UITableViewController {
-//    private var menu = [MenuItem]()
+//    static private var currentItem: MenuItem?
+    
     private let menu = Menu()
     private var notificationItem : MenuItem!
+    public var nav : NavHelper!
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        self.nav = NavHelper(navController: GApp.instance.navigationController)
+//        self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         initMenu(menu)
         tableView.register(MenuCell.self, forCellReuseIdentifier: NSStringFromClass(MenuCell.self))
@@ -24,6 +28,10 @@ open class MenuNavController: UITableViewController {
 //        let notificationPrefix = (UIApplication.shared.applicationIconBadgeNumber > 0) ? " *" : ""
 //        notificationItem.title = "Notifications\(notificationPrefix)"
         
+        Log.i("RELOADING DATA")
+        
+        menu.clear()
+        initMenu(menu)
         tableView.reloadData()
     }
     
@@ -51,22 +59,38 @@ open class MenuNavController: UITableViewController {
     }
     
     open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let menu = menus[indexPath.row] as Menu
-//        dismiss(animated: true, completion: {
+//        let previousItem = MenuNavController.currentItem
+        let item = menu[indexPath.row] as MenuItem
+//        MenuNavController.currentItem = item
+        
+        dismiss(animated: true, completion: {
+//            Log.i("ITEM: \(previousItem) === \(item)")
+//            if item === previousItem {
+//                return
+//            }
+            
 //            let navigationController = AppDelegate.get().navigationController
 //            
-//            // TODO: better use this for check auth before navigate to screen
-//            // or override viewWillAppear, but Turbolinks.VisitableViewController cant be override
+//            // TODO: better use this for checking auth before navigate to screen
+//            // or override viewWillAppear, but Turbolinks.VisitableViewController cant be overriden
 //            if menu.requireAuth && AppDelegate.get().currentUser == nil {
 //                let signinController = SigninController()
 //                navigationController?.pushViewController(signinController, animated: true)
 //                return
 //            }
-//            
-//            if (menu.onClick != nil) {
-//                self.perform(menu.onClick)
-//            }
-//            
+            
+            if item.isRoot {
+                self.nav.backToHome()
+            }
+            
+            if let controller = item.controller {
+                self.nav.backToHome(animated: false).push(controller)
+            }
+            
+            if let onClick = item.onClick {
+                onClick()
+            }
+            
 //            switch menu.type {
 //            case .popToRoot:
 //                _ = navigationController?.popToRootViewController(animated: true)
@@ -86,10 +110,10 @@ open class MenuNavController: UITableViewController {
 //                                                                 action: .Replace)
 //            case .method:
 //                // Nothing to do. onClick() must have been executed regardless.
-//                NSLog("Executing method ...")
+////                NSLog("Executing method ...")
 //                //    self.perform(menu.method)
 //            }
-//            
-//        })
+            
+        })
     }
 }

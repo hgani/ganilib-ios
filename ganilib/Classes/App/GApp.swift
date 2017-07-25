@@ -2,7 +2,7 @@
 import UIKit
 
 public class GApp {
-    private var navigationController: UINavigationController!
+    public var navigationController: UINavigationController!
     public var window: UIWindow!
 
     static public let instance = GApp()

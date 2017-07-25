@@ -4,7 +4,7 @@ import Eureka
 
 open class GFormScreen : FormViewController {
     private var helper : ScreenHelper!
-    private(set) var launch : LaunchHelper!
+    public var launch : LaunchHelper!
     
     override open func viewDidLoad() {
         super.viewDidLoad()

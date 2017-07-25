@@ -76,6 +76,7 @@ open class LaunchHelper {
         }
     }
     
+    // TODO: Remove. Use NavHelper instead.
     public func screen(_ controller : UIViewController, animated : Bool, pop : Bool = false) {
         if pop {
             // See http://stackoverflow.com/questions/6872852/popping-and-pushing-view-controllers-in-same-action
