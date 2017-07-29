@@ -5,6 +5,7 @@ import TTTAttributedLabel
 
 open class GLabel : TTTAttributedLabel {
     private var isUnderlined = false
+    private var onClick : ((GLabel) -> Void)?
     
     public func color(_ color: UIColor) -> GLabel {
         self.textColor = color
@@ -61,11 +62,28 @@ open class GLabel : TTTAttributedLabel {
         return self
     }
     
+    // NOTE: Deprecated. Use onClick() instead
     public func click(_ target: Any, action: Selector) -> GLabel {
         self.isUserInteractionEnabled = true
         let gestureRecognizer = UITapGestureRecognizer(target: target, action: action)
         self.addGestureRecognizer(gestureRecognizer)
         return self
+    }
+    
+    // Use block instead of selector from now on. See https://stackoverflow.com/questions/24007650/selector-in-swift
+    public func onClick(_ command: @escaping (GLabel) -> Void) -> Self {
+        self.onClick = command
+//        addTarget(self, action: #selector(performClick), for: .touchUpInside)
+        
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(performClick))
+        self.addGestureRecognizer(gestureRecognizer)
+        return self
+    }
+    
+    @objc private func performClick() {
+        if let callback = self.onClick {
+            callback(self)
+        }
     }
     
     public func underline() -> GLabel {
