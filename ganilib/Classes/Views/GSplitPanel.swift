@@ -5,7 +5,6 @@ open class GSplitPanel : UIView {
 //    private var helper : ViewHelper!
     private var previousViewElement : UIView!
     private var previousConstraint : NSLayoutConstraint!
-    //    private var defaultTop : CGFloat = 0.0
     private var horizontalPadding : Bool = true
     
     private var paddings = UIEdgeInsetsMake(0, 0, 0, 0)
@@ -38,12 +37,14 @@ open class GSplitPanel : UIView {
             make.right.equalTo(self)
         }
         
-        self.snp.makeConstraints { (make) -> Void in
-            if left.frame.height > right.frame.height {
-                make.bottom.equalTo(left)
-            }
-            else {
-                make.bottom.equalTo(right)
+        DispatchQueue.main.async {
+            self.snp.makeConstraints { (make) -> Void in
+                if left.frame.height > right.frame.height {
+                    make.bottom.equalTo(left)
+                }
+                else {
+                    make.bottom.equalTo(right)
+                }
             }
         }
         
