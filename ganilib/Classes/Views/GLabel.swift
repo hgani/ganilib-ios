@@ -43,14 +43,28 @@ open class GLabel : TTTAttributedLabel {
         return self
     }
     
-    public func font(_ font : UIFont) -> GLabel {
+    // Has to be called before text()
+    public func font(_ font : UIFont) -> Self {
         self.font = font
         return self
     }
     
-    public func bold() -> GLabel {
-        return font(self.font.bold())
+    public func font(size: Float? = nil, traits: UIFontDescriptorSymbolicTraits...) -> Self {
+        var f = self.font.withTraits(traits)
+        if let s = size {
+           f = f.withSize(CGFloat(s))
+        }
+//        if let t = traits {
+//            f = f.withTraits(traits)
+//        }
+        return font(f)
+//        return font(self.font.).withTraits(traits: traits))
+//        return self
     }
+    
+//    public func bold() -> Self {
+//        return font(self.font.bold())
+//    }
     
     public func align(_ alignment : NSTextAlignment) -> GLabel {
         self.textAlignment = alignment
