@@ -52,4 +52,8 @@ open class NavHelper {
         vcArray.append(controller)
         navController.setViewControllers(vcArray, animated: animated)
     }
+    
+    public func pop(animated : Bool = true) {
+        navController.popViewController(animated: animated)
+    }
 }

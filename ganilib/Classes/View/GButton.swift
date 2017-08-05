@@ -5,9 +5,7 @@ import SwiftIconFont
 
 open class GButton : UIButton {
     private var helper : ViewHelper!
-    private var onClick : ((GButton) -> Void)?
-    
-//    private var myTitleLabel : GLabel?
+    private var onClick : (() -> Void)?
     
     public init() {
         super.init(frame: .zero)
@@ -122,17 +120,8 @@ open class GButton : UIButton {
             make.left.equalTo(icon.snp.right).offset(5)
         }
         
-        //self.layer.cornerRadius = 4
-        
         return self
     }
-    
-//    public func width(_ width : Int) -> Self {
-//        self.snp.makeConstraints { (make) -> Void in
-//            make.width.equalTo(width)
-//        }
-//        return self
-//    }
     
     public func width(_ width : Int) -> Self {
         helper.width(width)
@@ -170,7 +159,7 @@ open class GButton : UIButton {
     }
     
     // Use block instead of selector from now on. See https://stackoverflow.com/questions/24007650/selector-in-swift
-    public func onClick(_ command: @escaping (GButton) -> Void) -> Self {
+    public func onClick(_ command: @escaping () -> Void) -> Self {
         self.onClick = command
         addTarget(self, action: #selector(performClick), for: .touchUpInside)
         return self
@@ -178,7 +167,7 @@ open class GButton : UIButton {
     
     @objc private func performClick() {
         if let callback = self.onClick {
-            callback(self)
+            callback()
         }
     }
     
@@ -189,6 +178,18 @@ open class GButton : UIButton {
     
     public func textSize(_ size: Float) -> Self {
         return font(self.titleLabel!.font.withSize(CGFloat(size)))
+    }
+    
+    public func text(size: Float?, align: UIControlContentHorizontalAlignment? = nil) -> Self {
+        if let textSize = size {
+            _ = font(self.titleLabel!.font.withSize(CGFloat(textSize)))
+        }
+        
+        if let textAlign = align {
+            self.contentHorizontalAlignment = textAlign;
+        }
+        
+        return self
     }
     
     public func color(bg: UIColor?, text: UIColor? = nil) -> Self {
@@ -202,11 +203,13 @@ open class GButton : UIButton {
     }
     
     public func border(color : UIColor?, width : Float = 1, corner : Float = 6) -> Self {
-        if let c = color {
-            self.layer.borderColor = c.cgColor
-        }
-        self.layer.borderWidth = CGFloat(width)
-        self.layer.cornerRadius = CGFloat(corner)
+//        if let c = color {
+//            self.layer.borderColor = c.cgColor
+//        }
+//        self.layer.borderWidth = CGFloat(width)
+//        self.layer.cornerRadius = CGFloat(corner)
+        
+        helper.border(color: color, width: width, corner: corner)
         return self
     }
     

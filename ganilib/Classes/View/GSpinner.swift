@@ -5,7 +5,7 @@ open class GSpinner<T> : GButton {
     private var screen : GScreen?  // Nil if instantiated from NSCoder
 
     private var data = [T]()
-    private var selectedItem : T?
+    public private(set) var selectedItem : T?
     private var onItemSelected : ((T) -> Void)?
     
     public init(_ screen: GScreen) {
@@ -79,6 +79,7 @@ open class GSpinner<T> : GButton {
         return self
     }
     
+    // NOTE: Deprecated. Use property instead.
     public func getSelectedItem() -> T? {
         return selectedItem
     }
