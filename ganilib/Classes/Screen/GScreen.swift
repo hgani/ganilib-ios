@@ -1,7 +1,7 @@
 
 import UIKit
 
-open class GScreen : UIViewController {
+open class GScreen : UIViewController, ScreenProtocol {
     private let scrollView = UIScrollView()
     public let contentView = GVerticalPanel()
     private var helper : ScreenHelper!
@@ -9,7 +9,9 @@ open class GScreen : UIViewController {
     public var indicator : IndicatorHelper!
     public var nav : NavHelper!
     
-    private var previousViewElement:UIView!
+    public var previous: ScreenProtocol?
+    
+//    private var previousViewElement:UIView!
     
     /*
      init() {
@@ -107,6 +109,11 @@ open class GScreen : UIViewController {
         _ = padding(top: UIApplication.shared.statusBarFrame.height)
     }
     
+    
+    public func clearViews() {
+        contentView.clearViews()
+    }
+    
     public func addView(_ view: UIView, top : CGFloat? = nil) {
         contentView.addView(view, top: top)
     }
@@ -139,5 +146,9 @@ open class GScreen : UIViewController {
     public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
         _ = self.contentView.padding(top: top, left: left, bottom: bottom, right: right)
         return self
+    }
+    
+    open func onRefresh() {
+        // To be overridden
     }
 }

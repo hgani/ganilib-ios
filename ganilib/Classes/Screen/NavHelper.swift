@@ -4,11 +4,12 @@ import MessageUI
 
 open class NavHelper {
     // NOTE: Not sure if we need to set this to weak. We tried unowned but got "bad access".
-    private var screen: UIViewController?
+    private var screen: ScreenProtocol?
     private let navController: UINavigationController!
     private var showBar = true
+    private var previous: ScreenProtocol?
     
-    convenience public init(_ screen : UIViewController) {
+    convenience public init(_ screen : ScreenProtocol) {
         self.init(navController: screen.navigationController!)
         self.screen = screen
     }
@@ -42,6 +43,10 @@ open class NavHelper {
     }
     
     public func push(_ controller : UIViewController, animated : Bool = true) {
+        if var next = controller as? ScreenProtocol {
+            next.previous = self.screen
+        }
+
         navController.pushViewController(controller, animated: animated)
     }
     
@@ -55,5 +60,12 @@ open class NavHelper {
     
     public func pop(animated : Bool = true) {
         navController.popViewController(animated: animated)
+    }
+    
+    public func popAndRefresh(animated : Bool = true) {
+        if let p = screen?.previous {
+            p.onRefresh()
+        }
+        pop(animated: animated)
     }
 }

@@ -2,10 +2,11 @@
 import UIKit
 import Eureka
 
-open class GFormScreen : FormViewController {
+open class GFormScreen : FormViewController, ScreenProtocol {
     private var helper : ScreenHelper!
     public var launch : LaunchHelper!
     public var nav : NavHelper!
+    public var previous: ScreenProtocol?
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +48,10 @@ open class GFormScreen : FormViewController {
         }
         
         return header
+    }
+    
+    open func onRefresh() {
+        // To be overridden
     }
 }
 

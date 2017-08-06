@@ -32,7 +32,7 @@ public class Rest {
     
     private static func request(_ path: String, _ method: HTTPMethod, _ params: GParams) -> Rest {
         return Rest(Alamofire.request("\(GHttp.instance.host())\(path)",
-            method: HTTPMethod.post,
+            method: method,
             parameters: prepareParams(GHttp.instance.delegate.restParams(params))))
     }
     
@@ -49,8 +49,12 @@ public class Rest {
         return data
     }
     
-    public static func post(path: String, params: GParams) -> Rest {
+    public static func post(path: String, params: GParams = GParams()) -> Rest {
         return request(path, .post, params)
+    }
+    
+    public static func get(path: String, params: GParams = GParams()) -> Rest {
+        return request(path, .get, params)
     }
 }
 

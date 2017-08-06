@@ -5,7 +5,6 @@ open class GVerticalPanel : UIView {
     private var helper : ViewHelper!
     private var previousViewElement : UIView!
     private var previousConstraint : NSLayoutConstraint!
-//    private var defaultTop : CGFloat = 0.0
     private var horizontalPadding : Bool = true
     
     private var paddings = UIEdgeInsetsMake(0, 0, 0, 0)
@@ -21,30 +20,16 @@ open class GVerticalPanel : UIView {
         super.init(coder: aDecoder)
     }
     
-//    public var defaultGap : CGFloat {
-//        set { defaultTop = newValue }
-//        get { return defaultTop }
-//    }
+    public func clearViews() {
+        previousViewElement = nil
+        previousConstraint = nil
+        
+        for view in subviews {
+            view.removeFromSuperview()
+        }
+    }
     
-    public func addView(_ view : UIView, top : CGFloat? = nil) {
-        let child = view
-        
-//        if wrap {
-//            let container = UIView()
-//            container.addSubview(view)
-//            
-//            view.snp.makeConstraints { (make) -> Void in
-//                make.top.equalTo(0)
-//                make.centerX.equalTo(container)
-//            }
-//            
-//            container.snp.makeConstraints { (make) -> Void in
-//                make.height.equalTo(view)
-//            }
-//            
-//            child = container
-//        }
-        
+    public func addView(_ child : UIView, top : CGFloat? = nil) {
         // The hope is this makes things more predictable
         child.translatesAutoresizingMaskIntoConstraints = false
         
