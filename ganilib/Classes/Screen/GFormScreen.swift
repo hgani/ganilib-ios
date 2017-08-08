@@ -5,6 +5,7 @@ import Eureka
 open class GFormScreen : FormViewController, ScreenProtocol {
     private var helper : ScreenHelper!
     public var launch : LaunchHelper!
+    public var indicator : IndicatorHelper!
     public var nav : NavHelper!
     public var previous: ScreenProtocol?
     
@@ -13,6 +14,7 @@ open class GFormScreen : FormViewController, ScreenProtocol {
         
         self.helper = ScreenHelper(self)
         self.launch = LaunchHelper(self)
+        self.indicator = IndicatorHelper(self)
         self.nav = NavHelper(self)
     }
     

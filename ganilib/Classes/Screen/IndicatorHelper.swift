@@ -1,6 +1,7 @@
 
 import UIKit
 import MessageUI
+import SVProgressHUD
 
 open class IndicatorHelper {
     // NOTE: Not sure if we need to set this to weak. We tried unowned but got "bad access".
@@ -11,6 +12,7 @@ open class IndicatorHelper {
         self.screen = screen
     }
     
+    // TODO: Should be deprecated in favour of SVProgressHUD
     public func showView() {
         //[[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         indicator.frame = CGRect(x: 0.0, y: 0.0, width: 50.0, height: 50.0)
@@ -30,8 +32,24 @@ open class IndicatorHelper {
         indicator.startAnimating()
     }
     
+    // TODO: Should be deprecated in favour of SVProgressHUD
     public func hideView() {
         indicator.stopAnimating()
     }
     
+    public func show() {
+        SVProgressHUD.show()
+    }
+    
+    public func hide() {
+        SVProgressHUD.dismiss()
+    }
+    
+    public func show(success: String) {
+        SVProgressHUD.showSuccess(withStatus: success)
+    }
+    
+    public func show(error: String) {
+        SVProgressHUD.showError(withStatus: error)
+    }
 }
