@@ -22,6 +22,15 @@ open class ViewHelper {
         }
     }
     
+    public func size(width: Int?, height: Int?) {
+        if let w = width {
+            self.width(w)
+        }
+        if let h = height {
+            self.height(h)
+        }
+    }
+    
     public func border(color : UIColor?, width : Float, corner : Float)  {
         if let c = color {
             view.layer.borderColor = c.cgColor

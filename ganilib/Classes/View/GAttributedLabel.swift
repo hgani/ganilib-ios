@@ -3,7 +3,7 @@ import UIKit
 import SwiftIconFont
 import TTTAttributedLabel
 
-open class GLabel : UILabel {
+open class GAttributedLabel : TTTAttributedLabel {
     private var helper : ViewHelper!
     private var isUnderlined = false
     private var onClick : (() -> Void)?
@@ -39,13 +39,21 @@ open class GLabel : UILabel {
         return self
     }
     
-    public func icon(_ icon: String, size: CGFloat) -> Self {
-        self.numberOfLines = 0
-        self.text = icon
-        self.font = self.font.withSize(size)
-        self.parseIcon()
+    // https://developer.apple.com/documentation/foundation/nstextcheckingtypes
+    // https://developer.apple.com/documentation/foundation/nstextcheckingtype
+    public func checkingTypes(_ mode : NSTextCheckingTypes) -> Self {
+//        self.enabledTextCheckingTypes = mode
         return self
     }
+    
+    // NOTE: textColor() doesn't work with SwiftIconFont and TTTAttributedLabel
+//    public func icon(_ icon: String, size: CGFloat) -> Self {
+//        self.numberOfLines = 0
+//        self.text = icon
+//        self.font = self.font.withSize(size)
+//        self.parseIcon()
+//        return self
+//    }
     
     // Has to be called before text()
     public func font(_ font : UIFont) -> Self {
@@ -80,10 +88,10 @@ open class GLabel : UILabel {
         return self
     }
     
-    public func spec(_ spec : GLabelSpec) -> Self {
-        spec.initialize(self)
-        return self
-    }
+//    public func spec(_ spec : GLabelSpec) -> Self {
+//        spec.initialize(self)
+//        return self
+//    }
     
 //    // NOTE: Deprecated. Use onClick() instead
 //    public func click(_ target: Any, action: Selector) -> GLabel {
