@@ -75,6 +75,16 @@ open class GLabel : UILabel {
         return self
     }
     
+    public func width(_ width : Int) -> Self {
+        helper.width(width)
+        return self
+    }
+    
+    public func height(_ height : Int) -> Self {
+        helper.height(height)
+        return self
+    }
+    
     public func align(_ alignment : NSTextAlignment) -> Self {
         self.textAlignment = alignment
         return self
@@ -135,4 +145,8 @@ open class GLabel : UILabel {
             path.stroke()
         }
     }
+}
+
+public protocol GLabelSpec {
+    func initialize(_ label : GLabel)
 }

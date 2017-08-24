@@ -33,11 +33,16 @@ open class GVerticalPanel : UIView {
         // The hope is this makes things more predictable
         child.translatesAutoresizingMaskIntoConstraints = false
         
-        addSubview(child)
+        super.addSubview(child)
         initChildConstraints(child: child, top: top ?? 0)
         adjustParentBottomConstraint(child: child)
         
         previousViewElement = child
+    }
+    
+    public func append(_ child : UIView, top : CGFloat? = nil) -> Self {
+        addView(child, top: top)
+        return self
     }
     
     // See https://github.com/zaxonus/AutoLayScroll/blob/master/AutoLayScroll/ViewController.swift
@@ -133,5 +138,9 @@ open class GVerticalPanel : UIView {
     public func color(bg: UIColor) -> Self {
         self.backgroundColor = bg
         return self
+    }
+    
+    open override func addSubview(_ view: UIView) {
+        fatalError("Use addView() instead")
     }
 }

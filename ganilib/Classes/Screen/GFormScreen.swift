@@ -23,10 +23,10 @@ open class GFormScreen : FormViewController, ScreenProtocol {
         helper.viewWillAppear()
     }
     
-    
-    public func setupLeftMenuButton() {
-        helper.setupLeftMenuButton();
-    }
+//    
+//    public func setupLeftMenuButton() {
+//        helper.setupLeftMenuButton();
+//    }
     
     public func headerForm(title: String?, height: CGFloat) -> HeaderFooterView<UIView> {
         var header = HeaderFooterView<UIView>(.class)
@@ -50,6 +50,20 @@ open class GFormScreen : FormViewController, ScreenProtocol {
         }
         
         return header
+    }
+    
+    public func leftMenu(controller: UITableViewController) -> Self {
+        helper.leftMenu(controller: controller)
+        return self
+    }
+    
+    public func end() {
+        // Ends chaining
+    }
+    
+    public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
+//        _ = self.contentView.padding(top: top, left: left, bottom: bottom, right: right)
+        return self
     }
     
     open func onRefresh() {

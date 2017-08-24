@@ -153,8 +153,14 @@ open class GButton : UIButton {
     }
     
     // NOTE: Deprecated. Use onClick() instead
-    public func click(_ target: Any, action: Selector) -> Self {
-        addTarget(target, action: action, for: .touchUpInside)
+//    public func click(_ target: Any, action: Selector) -> Self {
+//        addTarget(target, action: action, for: .touchUpInside)
+//        return self
+//    }
+    
+    //typealias V = GButton
+    public func spec(_ spec: GButtonSpec) -> Self {
+        spec.initialize(self)
         return self
     }
     
@@ -218,4 +224,12 @@ open class GButton : UIButton {
         self.alpha = value ? 1.0 : 0.5
         return self
     }
+    
+    public func end() {
+        // End chaining initialisation
+    }
+}
+
+public protocol GButtonSpec {
+    func initialize(_ button: GButton)
 }

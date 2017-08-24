@@ -3,6 +3,27 @@ import SwiftyJSON
 import SVProgressHUD
 
 public typealias GParams = [String: Any?]
+//public typealias HttpMethod = HTTPMethod
+
+public enum HttpMethod {
+    case get
+    case post
+    case patch
+    case delete
+    
+    func alamofire() -> HTTPMethod {
+        switch self {
+        case .get:
+            return HTTPMethod.get
+        case .post:
+            return HTTPMethod.post
+        case .patch:
+            return HTTPMethod.patch
+        case .delete:
+            return HTTPMethod.delete
+        }
+    }
+}
 
 public class Rest {
     private let request: DataRequest
@@ -30,10 +51,10 @@ public class Rest {
         }
     }
     
-    private static func request(_ path: String, _ method: HTTPMethod, _ params: GParams) -> Rest {
+    private static func request(_ path: String, _ method: HttpMethod, _ params: GParams) -> Rest {
         return Rest(Alamofire.request("\(GHttp.instance.host())\(path)",
-            method: method,
-            parameters: prepareParams(GHttp.instance.delegate.restParams(params))))
+            method: method.alamofire(),
+            parameters: prepareParams(GHttp.instance.delegate.restParams(from: params, method: method))))
     }
     
     private static func prepareParams(_ params: GParams) -> [String: Any] {

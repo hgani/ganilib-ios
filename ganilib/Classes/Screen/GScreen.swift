@@ -11,23 +11,6 @@ open class GScreen : UIViewController, ScreenProtocol {
     
     public var previous: ScreenProtocol?
     
-//    private var previousViewElement:UIView!
-    
-    /*
-     init() {
-     super.init(nibName: nil, bundle: nil)
-     initialize()
-     }
-     
-     required init?(coder aDecoder: NSCoder) {
-     super.init(coder: aDecoder)
-     initialize()
-     }
-     
-     private func initialize() {
-     }
-     */
-    
     override open func viewDidLoad() {
         super.viewDidLoad()
         
@@ -106,7 +89,7 @@ open class GScreen : UIViewController, ScreenProtocol {
                                multiplier: 1.0,
                                constant: 0.0)])
         
-        _ = padding(top: UIApplication.shared.statusBarFrame.height)
+        //_ = padding(top: UIApplication.shared.statusBarFrame.height)
     }
     
     

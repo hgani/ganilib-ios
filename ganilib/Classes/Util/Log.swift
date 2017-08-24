@@ -8,4 +8,8 @@ open class Log {
     static public func d(_ str: String) {
         NSLog(str)
     }
+    
+    static public func t(_ str: String) {
+        i("***** \(str)")
+    }
 }

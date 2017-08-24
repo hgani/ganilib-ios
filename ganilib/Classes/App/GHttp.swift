@@ -3,7 +3,7 @@ import Alamofire
 
 public protocol GHttpDelegate {
     // Parameters is a Dictionary which is a struct so the delegate can safely modify it.
-    func restParams(_ params: GParams) -> GParams
+    func restParams(from params: GParams, method: HttpMethod) -> GParams
 }
 
 public class GHttp {
@@ -12,10 +12,9 @@ public class GHttp {
     private var buildConfig: BuildConfig!
     private(set) var delegate: GHttpDelegate!
     
-    public func initialize(buildConfig: BuildConfig, delegate: GHttpDelegate) -> Self {
+    public func initialize(buildConfig: BuildConfig, delegate: GHttpDelegate) {
         self.buildConfig = buildConfig
         self.delegate = delegate
-        return self
     }
     
     public func host() -> String {
