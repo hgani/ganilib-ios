@@ -9,6 +9,14 @@ open class GFormScreen : FormViewController, ScreenProtocol {
     public var nav : NavHelper!
     public var previous: ScreenProtocol?
     
+    public init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,10 +31,18 @@ open class GFormScreen : FormViewController, ScreenProtocol {
         helper.viewWillAppear()
     }
     
-//    
-//    public func setupLeftMenuButton() {
-//        helper.setupLeftMenuButton();
-//    }
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // See https://stackoverflow.com/questions/8228411/detecting-when-the-back-button-is-pressed-on-a-navbar
+        if self.isMovingFromParentViewController || self.isBeingDismissed {
+            onPopping()
+        }
+    }
+    
+    open func onPopping() {
+        // To be overridden
+    }
     
     public func headerForm(title: String?, height: CGFloat) -> HeaderFooterView<UIView> {
         var header = HeaderFooterView<UIView>(.class)

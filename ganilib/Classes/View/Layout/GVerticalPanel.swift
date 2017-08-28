@@ -5,19 +5,21 @@ open class GVerticalPanel : UIView {
     private var helper : ViewHelper!
     private var previousViewElement : UIView!
     private var previousConstraint : NSLayoutConstraint!
-    private var horizontalPadding : Bool = true
-    
     private var paddings = UIEdgeInsetsMake(0, 0, 0, 0)
     
-    public init(horizontalPadding : Bool = true) {
+    public init() {
         super.init(frame: .zero)
         
         self.helper = ViewHelper(self)
-        self.horizontalPadding = horizontalPadding
     }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    open override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        helper.didMoveToSuperview()
     }
     
     public func clearViews() {
@@ -112,18 +114,29 @@ open class GVerticalPanel : UIView {
         //}
     }
     
-    public func width(_ width : Int) -> Self {
+    public func width(_ width: Int) -> Self {
         helper.width(width)
         return self
     }
     
+    public func width(_ width: LayoutSize) -> Self {
+        helper.width(width)
+        return self
+    }
+    
+    public func height(_ height: Int) -> Self {
+        helper.height(height)
+        return self
+    }
+    
+    public func height(_ height: LayoutSize) -> Self {
+        helper.height(height)
+        return self
+    }
+    
     // NOTE: At the moment, this only works it gets called before children get added
-    public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
-        //helper.padding(top: top, left: left, bottom: bottom, right: right)
-//        self.layoutMargins =  UIEdgeInsetsMake(20, 10, 20, 10)
-        //self.layoutMargins =  UIEdgeInsetsMake(60, 30, 60, 30)
-        
-        
+//    public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
+    public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
         let orig = self.paddings
         
         let top = top ?? orig.top

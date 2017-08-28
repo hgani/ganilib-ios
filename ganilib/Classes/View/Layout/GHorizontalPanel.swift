@@ -2,22 +2,25 @@
 import UIKit
 
 open class GHorizontalPanel : UIView {
-    private var helper : ViewHelper!
+    private var helper: ViewHelper!
     private var previousViewElement : UIView!
     private var previousConstraint : NSLayoutConstraint!
-    private var horizontalPadding : Bool = true
     
     private var paddings = UIEdgeInsetsMake(0, 0, 0, 0)
     
-    public init(horizontalPadding : Bool = true) {
+    public init() {
         super.init(frame: .zero)
         
         self.helper = ViewHelper(self)
-        self.horizontalPadding = horizontalPadding
     }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    open override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        helper.didMoveToSuperview()
     }
     
     public func clearViews() {
@@ -47,11 +50,11 @@ open class GHorizontalPanel : UIView {
     
     // See https://github.com/zaxonus/AutoLayScroll/blob/master/AutoLayScroll/ViewController.swift
     private func initChildConstraints(child: UIView, left: CGFloat) {
-        child.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(self)
+        child.snp.makeConstraints { make in
+            make.top.equalTo(self).offset(paddings.top)
             
             if previousViewElement == nil {
-                make.left.equalTo(self).offset(left)
+                make.left.equalTo(self).offset(paddings.left + left)
             }
             else {
                 make.left.equalTo(previousViewElement.snp.right).offset(left)
@@ -61,35 +64,48 @@ open class GHorizontalPanel : UIView {
     
     private func adjustParentBottomConstraint(child : UIView) {
         self.snp.makeConstraints { (make) -> Void in
-            make.bottom.greaterThanOrEqualTo(child)
+            make.bottom.greaterThanOrEqualTo(child).offset(paddings.bottom)
         }
 
-        if previousConstraint != nil {
-            self.removeConstraint(previousConstraint)
+        if !helper.shouldWidthMatchParent() {
+            if previousConstraint != nil {
+                self.removeConstraint(previousConstraint)
+            }
+            
+            previousConstraint = NSLayoutConstraint(item: child,
+                                                    attribute: .right,
+                                                    relatedBy: .equal,
+                                                    toItem: self,
+                                                    attribute: .right,
+                                                    multiplier: 1.0,
+                                                    constant: -paddings.right)
+            self.addConstraint(previousConstraint)
         }
-        
-        previousConstraint = NSLayoutConstraint(item: child,
-                                                attribute: .right,
-                                                relatedBy: .equal,
-                                                toItem: self,
-                                                attribute: .right,
-                                                multiplier: 1.0,
-                                                constant: -paddings.right)
-        self.addConstraint(previousConstraint)
     }
     
-    public func width(_ width : Int) -> Self {
+    public func width(_ width: Int) -> Self {
         helper.width(width)
         return self
     }
     
-    public func height(_ height : Int) -> Self {
+    public func width(_ width: LayoutSize) -> Self {
+        helper.width(width)
+        return self
+    }
+    
+    public func height(_ height: Int) -> Self {
         helper.height(height)
         return self
     }
     
+    public func height(_ height: LayoutSize) -> Self {
+        helper.height(height)
+        return self
+    }
+    
+    // TODO: Rewrite to add a wrapper view? Then rename this method to offsets
     // NOTE: At the moment, this only works it gets called before children get added
-    public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
+    public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
         let orig = self.paddings
         
         let top = top ?? orig.top

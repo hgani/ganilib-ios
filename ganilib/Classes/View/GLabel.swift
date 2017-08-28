@@ -18,6 +18,11 @@ open class GLabel : UILabel {
         super.init(coder: coder)
     }
     
+    open override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        helper.didMoveToSuperview()
+    }
+    
     public func color(_ color: UIColor) -> Self {
         self.textColor = color
         return self
@@ -70,17 +75,32 @@ open class GLabel : UILabel {
 //        return font(self.font.bold())
 //    }
     
-    public func size(w: Int?, h: Int?) -> Self {
-        helper.size(width: w, height: h)
-        return self
-    }
+//    public func size(w: Int?, h: Int?) -> Self {
+//        helper.size(width: w, height: h)
+//        return self
+//    }
     
-    public func width(_ width : Int) -> Self {
+    public func width(_ width: Int) -> Self {
         helper.width(width)
         return self
     }
     
-    public func height(_ height : Int) -> Self {
+    public func width(_ width: LayoutSize) -> Self {
+        helper.width(width)
+        return self
+    }
+    
+    public func width(weight: Float) -> Self {
+        helper.width(weight: weight)
+        return self
+    }
+    
+    public func height(_ height: Int) -> Self {
+        helper.height(height)
+        return self
+    }
+    
+    public func height(_ height: LayoutSize) -> Self {
         helper.height(height)
         return self
     }
@@ -122,6 +142,10 @@ open class GLabel : UILabel {
     public func underline() -> Self {
         self.isUnderlined = true
         return self
+    }
+    
+    public func end() {
+        // Ends chaining
     }
     
     override open func draw(_ rect: CGRect) {
