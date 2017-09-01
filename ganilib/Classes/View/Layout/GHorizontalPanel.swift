@@ -5,17 +5,20 @@ open class GHorizontalPanel : UIView {
     private var helper: ViewHelper!
     private var previousViewElement : UIView!
     private var previousConstraint : NSLayoutConstraint!
-    
     private var paddings = UIEdgeInsetsMake(0, 0, 0, 0)
     
     public init() {
         super.init(frame: .zero)
-        
-        self.helper = ViewHelper(self)
+        initialize()
     }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        initialize()
+    }
+    
+    private func initialize() {
+        self.helper = ViewHelper(self)
     }
     
     open override func didMoveToSuperview() {

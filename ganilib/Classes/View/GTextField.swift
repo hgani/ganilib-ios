@@ -6,15 +6,16 @@ open class GTextField: UITextField {
     
     public init() {
         super.init(frame: .zero)
-        
-        self.helper = ViewHelper(self)
-        
-        // Make sure that contentEdgeInsets' values is always initialized properly (i.e. non-zero)
-//        _ = self.padding(top: 10, left: 20, bottom: 10, right: 20)
+        initialize()
     }
     
     required public init?(coder: NSCoder) {
         super.init(coder: coder)
+        initialize()
+    }
+    
+    private func initialize() {
+        self.helper = ViewHelper(self)
     }
     
     public func placeholder(_ str: String) -> Self {

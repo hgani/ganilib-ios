@@ -10,12 +10,16 @@ open class GLabel : UILabel {
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.helper = ViewHelper(self)
+        initialize()
     }
     
     required public init?(coder: NSCoder) {
         super.init(coder: coder)
+        initialize()
+    }
+    
+    private func initialize() {
+        self.helper = ViewHelper(self)
     }
     
     open override func didMoveToSuperview() {
@@ -70,10 +74,11 @@ open class GLabel : UILabel {
 //        return font(self.font.).withTraits(traits: traits))
 //        return self
     }
-    
-//    public func bold() -> Self {
-//        return font(self.font.bold())
-//    }
+
+    // TODO: Consider deprecating this, but how about underline()
+    public func bold() -> Self {
+        return font(self.font.bold())
+    }
     
 //    public func size(w: Int?, h: Int?) -> Self {
 //        helper.size(width: w, height: h)

@@ -32,29 +32,35 @@ public class Rest {
         self.request = request
     }
     
-    public func execute(onHttpSuccess: @escaping (JSON) -> Bool) {
+    public func execute(indicator: ProgressIndicator = StandardProgressIndicator.shared, onHttpSuccess: @escaping (JSON) -> Bool) {
         Log.i("\(request.request?.httpMethod ?? "") \(request.request?.url?.absoluteString ?? "")")
         
-        SVProgressHUD.show()
+//        SVProgressHUD.show()
+        indicator.showProgress()
         request.responseString { response in
             switch response.result {
                 case .success(let value):
-                    SVProgressHUD.dismiss()
+//                    SVProgressHUD.dismiss()
+                    indicator.hideProgress()
+                    
                     let json = JSON(parseJSON: value)
                     Log.d("Result: \(json)")
                     if !onHttpSuccess(json) {
-                        SVProgressHUD.showError(withStatus: json["message"].stringValue)
+//                        SVProgressHUD.showError(withStatus: json["message"].stringValue)
+                        indicator.showError(message: json["message"].stringValue)
                     }
                 case .failure(let error):
-                    SVProgressHUD.showError(withStatus: error.localizedDescription)
+//                    SVProgressHUD.showError(withStatus: error.localizedDescription)
+                    indicator.showError(message: error.localizedDescription)
             }
         }
     }
     
-    private static func request(_ path: String, _ method: HttpMethod, _ params: GParams) -> Rest {
+    private static func request(_ path: String, _ method: HttpMethod, _ params: GParams, _ headers: HTTPHeaders?) -> Rest {
         return Rest(Alamofire.request("\(GHttp.instance.host())\(path)",
             method: method.alamofire(),
-            parameters: prepareParams(GHttp.instance.delegate.restParams(from: params, method: method))))
+            parameters: prepareParams(GHttp.instance.delegate.restParams(from: params, method: method)),
+            headers: headers))
     }
     
     private static func prepareParams(_ params: GParams) -> [String: Any] {
@@ -70,12 +76,11 @@ public class Rest {
         return data
     }
     
-    public static func post(path: String, params: GParams = GParams()) -> Rest {
-        return request(path, .post, params)
+    public static func post(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+        return request(path, .post, params, headers)
     }
     
-    public static func get(path: String, params: GParams = GParams()) -> Rest {
-        return request(path, .get, params)
+    public static func get(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+        return request(path, .get, params, headers)
     }
 }
-

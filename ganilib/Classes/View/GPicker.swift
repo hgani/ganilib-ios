@@ -5,13 +5,17 @@ open class GPicker: UIPickerView, UIPickerViewDataSource, UIPickerViewDelegate {
 
     public init() {
         super.init(frame: .zero)
-        
-        self.dataSource = self
-        self.delegate = self
+        initialize()
     }
     
     required public init?(coder: NSCoder) {
         super.init(coder: coder)
+        initialize()
+    }
+    
+    private func initialize() {
+        self.dataSource = self
+        self.delegate = self
     }
     
     public func dataArray(_ data : [String]) -> GPicker {

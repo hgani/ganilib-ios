@@ -7,6 +7,7 @@ open class GSpinner<T> : GButton {
     private var data = [T]()
     public private(set) var selectedItem : T?
     private var onItemSelected : ((T) -> Void)?
+    private var message: String?
     
     public init(_ screen: GScreen) {
         self.screen = screen
@@ -30,6 +31,11 @@ open class GSpinner<T> : GButton {
         return self
     }
     
+    public func dialog(message: String) -> Self {
+        self.message = message
+        return self
+    }
+    
     private func label(_ item : T) -> String {
         switch item {
         case let str as String:
@@ -49,7 +55,7 @@ open class GSpinner<T> : GButton {
     }
     
     func showOptions() {
-        let alert = UIAlertController(title: nil, message: "Choose Distance", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
         
         for (index, obj) in data.enumerated() {
             let title = label(obj)

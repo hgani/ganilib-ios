@@ -9,12 +9,16 @@ open class GSplitPanel : UIView {
     
     public init() {
         super.init(frame: .zero)
-        
-        self.helper = ViewHelper(self)
+        initialize()
     }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        initialize()
+    }
+    
+    private func initialize() {
+        self.helper = ViewHelper(self)
     }
     
     open override func didMoveToSuperview() {

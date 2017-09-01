@@ -87,9 +87,9 @@ open class GTableView: UITableView {
 open class GTableViewCell: UITableViewCell {
     private let container = GVerticalPanel()
     
-//    public convenience init() {
-//        self.init(style: .default)
-//    }
+    public convenience init() {
+        self.init(style: .default)
+    }
     
     public required init(style: UITableViewCellStyle) {
         super.init(style: style, reuseIdentifier: type(of: self).nibName())

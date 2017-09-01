@@ -10,12 +10,16 @@ open class GAttributedLabel : TTTAttributedLabel {
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.helper = ViewHelper(self)
+        initialize()
     }
     
     required public init?(coder: NSCoder) {
         super.init(coder: coder)
+        initialize()
+    }
+    
+    private func initialize() {
+        self.helper = ViewHelper(self)
     }
     
     public func color(_ color: UIColor) -> Self {

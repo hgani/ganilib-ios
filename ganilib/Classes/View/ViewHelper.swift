@@ -27,7 +27,6 @@ open class ViewHelper {
             }
             if let multiplier = matchParentHeightMultiplier {
                 view.snp.makeConstraints { make in
-                    Log.t("SNAP")
                     make.bottom.equalTo(superview)
                         //.multipliedBy(multiplier)
                 }

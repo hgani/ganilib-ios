@@ -2,10 +2,6 @@
 import UIKit
 
 open class GScreen : UIViewController, ScreenProtocol {
-//    private let scrollView = UIScrollView()
-//    public let contentView = GVerticalPanel()
-    
-//    private var container: UIView!
     public let container = GScrollView()
     
     private var helper : ScreenHelper!
