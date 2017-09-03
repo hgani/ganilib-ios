@@ -6,12 +6,16 @@ open class GTableView: UITableView {
     
     public override init(frame: CGRect, style: UITableViewStyle) {
         super.init(frame: frame, style: style)
-        
-        self.helper = ViewHelper(self)
+        initialize()
     }
 
     required public init?(coder: NSCoder) {
         super.init(coder: coder)
+        initialize()
+    }
+    
+    private func initialize() {
+        self.helper = ViewHelper(self)
     }
     
     open override func didMoveToSuperview() {
@@ -72,6 +76,12 @@ open class GTableView: UITableView {
         return self
     }
     
+    public func autoHeaderHeight(estimate: Float) -> Self {
+        self.sectionHeaderHeight = UITableViewAutomaticDimension
+        self.estimatedSectionHeaderHeight = CGFloat(estimate)
+        return self
+    }
+    
     public func cellInstance<T: GTableViewCell>(of type: T.Type, style: UITableViewCellStyle = .default) -> T {
         if let cell = self.dequeueReusableCell(withIdentifier: type.reuseIdentifier()) as? T {
             return cell
@@ -86,6 +96,7 @@ open class GTableView: UITableView {
 
 open class GTableViewCell: UITableViewCell {
     private let container = GVerticalPanel()
+    private let paddings = ViewPaddings()
     
     public convenience init() {
         self.init(style: .default)
@@ -105,15 +116,17 @@ open class GTableViewCell: UITableViewCell {
     
     public func initialize() {
         self.contentView.addSubview(container)
-        
+    }
+    
+    open override func didMoveToSuperview() {
         container.snp.makeConstraints { (make) -> Void in
             // Snap the panel's vertical edges so that the tableView can determine the dynamic height of each row
             // See https://stackoverflow.com/questions/18746929/using-auto-layout-in-uitableview-for-dynamic-cell-layouts-variable-row-heights
-            make.top.equalTo(self.contentView)
-            make.bottom.equalTo(self.contentView)
+            make.top.equalTo(self.contentView).offset(paddings.top)
+            make.bottom.equalTo(self.contentView).offset(-paddings.bottom)
             
-            make.left.equalTo(super.contentView)
-            make.right.equalTo(self.contentView)
+            make.left.equalTo(self.contentView).offset(paddings.left)
+            make.right.equalTo(self.contentView).offset(-paddings.right)
         }
     }
     
@@ -121,6 +134,12 @@ open class GTableViewCell: UITableViewCell {
         container.addView(view, top: top)
     }
     
+    public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
+//        _ = container.paddings(t: top, l: left, b: bottom, r: right)
+        paddings.update(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+
     static func nibName() -> String {
         return String(describing: self)
     }

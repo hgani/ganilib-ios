@@ -35,22 +35,18 @@ public class Rest {
     public func execute(indicator: ProgressIndicator = StandardProgressIndicator.shared, onHttpSuccess: @escaping (JSON) -> Bool) {
         Log.i("\(request.request?.httpMethod ?? "") \(request.request?.url?.absoluteString ?? "")")
         
-//        SVProgressHUD.show()
         indicator.showProgress()
         request.responseString { response in
             switch response.result {
                 case .success(let value):
-//                    SVProgressHUD.dismiss()
                     indicator.hideProgress()
                     
                     let json = JSON(parseJSON: value)
                     Log.d("Result: \(json)")
                     if !onHttpSuccess(json) {
-//                        SVProgressHUD.showError(withStatus: json["message"].stringValue)
                         indicator.showError(message: json["message"].stringValue)
                     }
                 case .failure(let error):
-//                    SVProgressHUD.showError(withStatus: error.localizedDescription)
                     indicator.showError(message: error.localizedDescription)
             }
         }
@@ -76,8 +72,22 @@ public class Rest {
         return data
     }
     
+    private static func augmentPostParams(_ params: GParams, _ method: HttpMethod) -> GParams {
+        var mutableParams = params
+        mutableParams["_method"] = method.alamofire().rawValue
+        return mutableParams
+    }
+    
     public static func post(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
-        return request(path, .post, params, headers)
+        return request(path, .post, augmentPostParams(params, .post), headers)
+    }
+    
+    public static func patch(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+        return request(path, .post, augmentPostParams(params, .patch), headers)
+    }
+    
+    public static func delete(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+        return request(path, .post, augmentPostParams(params, .delete), headers)
     }
     
     public static func get(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
