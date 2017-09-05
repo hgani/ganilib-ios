@@ -16,6 +16,15 @@ open class LaunchHelper {
         screen.present(alert, animated: true, completion: nil)
     }
     
+    public func confirm(_ message: String, title: String? = nil, handler: @escaping (() -> Void)) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: { view in
+            handler()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        screen.present(alert, animated: true, completion: nil)
+    }
+    
     public func call(_ number : String) {
         if let phoneCallURL = URL(string: "tel://\(number)") {
             let application = UIApplication.shared

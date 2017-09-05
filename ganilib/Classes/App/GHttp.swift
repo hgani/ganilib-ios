@@ -4,6 +4,14 @@ import Alamofire
 public protocol GHttpDelegate {
     // Parameters is a Dictionary which is a struct so the delegate can safely modify it.
     func restParams(from params: GParams, method: HttpMethod) -> GParams
+//    optional func processResponse(response: HTTPURLResponse) -> Bool
+    func processResponse(_ response: HTTPURLResponse) -> Bool;
+}
+
+extension GHttpDelegate {
+    public func processResponse(_ response: HTTPURLResponse) -> Bool {
+        return true
+    }
 }
 
 public class GHttp {

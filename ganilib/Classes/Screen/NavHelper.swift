@@ -7,6 +7,8 @@ open class NavHelper {
     private var screen: ScreenProtocol?
     private let navController: UINavigationController!
     private var showBar = true
+    
+    // TODO: Consider removing this now that we've got a generic solution for popAndRefresh()
     private var previous: ScreenProtocol?
     
     convenience public init(_ screen : ScreenProtocol) {
@@ -42,6 +44,12 @@ open class NavHelper {
         return self
     }
     
+    public func refresh() {
+        if let screen = navController.topViewController as? ScreenProtocol {
+            screen.onRefresh()
+        }
+    }
+    
     public func push(_ controller : UIViewController, animated : Bool = true) {
         if var next = controller as? ScreenProtocol {
             next.previous = self.screen
@@ -58,14 +66,15 @@ open class NavHelper {
         navController.setViewControllers(vcArray, animated: animated)
     }
     
-    public func pop(animated : Bool = true) {
+    public func pop(animated : Bool = true) -> Self {
         navController.popViewController(animated: animated)
+        return self
     }
     
-    public func popAndRefresh(animated : Bool = true) {
-        if let p = screen?.previous {
-            p.onRefresh()
-        }
-        pop(animated: animated)
-    }
+//    public func popAndRefresh(animated : Bool = true) {
+//        if let p = screen?.previous {
+//            p.onRefresh()
+//        }
+//        pop(animated: animated)
+//    }
 }

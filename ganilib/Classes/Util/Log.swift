@@ -1,6 +1,10 @@
 
 // NOTE: Implement later as needed
 open class Log {
+    static public func e(_ str: String) {
+        NSLog("[ERROR] \(str)")
+    }
+    
     static public func w(_ str: String) {
         NSLog("[WARN] \(str)")
     }

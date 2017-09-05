@@ -3,7 +3,7 @@ import SwiftyJSON
 import SVProgressHUD
 
 public typealias GParams = [String: Any?]
-//public typealias HttpMethod = HTTPMethod
+public typealias Json = JSON
 
 public enum HttpMethod {
     case get
@@ -27,16 +27,25 @@ public enum HttpMethod {
 
 public class Rest {
     private let request: DataRequest
+    private let actualMethod: HttpMethod
     
-    init(_ request: DataRequest) {
+    init(method: HttpMethod, request: DataRequest) {
+        self.actualMethod = method
         self.request = request
     }
     
-    public func execute(indicator: ProgressIndicator = StandardProgressIndicator.shared, onHttpSuccess: @escaping (JSON) -> Bool) {
-        Log.i("\(request.request?.httpMethod ?? "") \(request.request?.url?.absoluteString ?? "")")
+    public func execute(indicator: ProgressIndicator = StandardProgressIndicator.shared, onHttpSuccess: @escaping (Json) -> Bool) {
+        Log.i("\(actualMethod.alamofire().rawValue) \(request.request?.url?.absoluteString ?? "")")
         
         indicator.showProgress()
         request.responseString { response in
+            if let r = response.response {
+                if !GHttp.instance.delegate.processResponse(r) {
+                    indicator.hideProgress()
+                    return
+                }
+            }
+            
             switch response.result {
                 case .success(let value):
                     indicator.hideProgress()
@@ -52,10 +61,23 @@ public class Rest {
         }
     }
     
+    private static func augmentPostParams(_ params: GParams, _ method: HttpMethod) -> GParams {
+        switch method {
+        case .patch, .delete:
+            var mutableParams = params
+            mutableParams["_method"] = method.alamofire().rawValue
+            return mutableParams
+        default:  // Don't augment .post to allow caller specify their own `_method`
+            return params
+        }
+    }
+    
     private static func request(_ path: String, _ method: HttpMethod, _ params: GParams, _ headers: HTTPHeaders?) -> Rest {
-        return Rest(Alamofire.request("\(GHttp.instance.host())\(path)",
+        let augmentedParams = augmentPostParams(params, method)
+        
+        return Rest(method: method, request: Alamofire.request("\(GHttp.instance.host())\(path)",
             method: method.alamofire(),
-            parameters: prepareParams(GHttp.instance.delegate.restParams(from: params, method: method)),
+            parameters: prepareParams(GHttp.instance.delegate.restParams(from: augmentedParams, method: method)),
             headers: headers))
     }
     
@@ -72,22 +94,16 @@ public class Rest {
         return data
     }
     
-    private static func augmentPostParams(_ params: GParams, _ method: HttpMethod) -> GParams {
-        var mutableParams = params
-        mutableParams["_method"] = method.alamofire().rawValue
-        return mutableParams
-    }
-    
     public static func post(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
-        return request(path, .post, augmentPostParams(params, .post), headers)
+        return request(path, .post, params, headers)
     }
     
     public static func patch(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
-        return request(path, .post, augmentPostParams(params, .patch), headers)
+        return request(path, .patch, params, headers)
     }
     
     public static func delete(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
-        return request(path, .post, augmentPostParams(params, .delete), headers)
+        return request(path, .delete, params, headers)
     }
     
     public static func get(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {

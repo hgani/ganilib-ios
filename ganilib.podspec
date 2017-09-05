@@ -43,10 +43,11 @@ TODO: Add long description of the pod here.
   s.dependency 'SnapKit'
   s.dependency 'IoniconsKit'
   s.dependency 'Eureka'
-  s.dependency 'SnapKit'
   s.dependency 'TTTAttributedLabel'
 
   s.dependency 'Alamofire'
   s.dependency 'SwiftyJSON'
   s.dependency 'SVProgressHUD'
+	
+  s.dependency 'RealmSwift'
 end

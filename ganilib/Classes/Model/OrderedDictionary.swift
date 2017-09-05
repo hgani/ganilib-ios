@@ -6,6 +6,11 @@ public struct OrderedDictionary<K: Hashable, V> {
     public var count: Int {
         return self.keys.count
     }
+    
+    public mutating func removeAll() {
+        keys.removeAll()
+        dict.removeAll()
+    }
  
     public subscript(key: K) -> V? {
         get {

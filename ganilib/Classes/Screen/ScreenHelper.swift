@@ -25,8 +25,7 @@ open class ScreenHelper {
         NotificationCenter.default.removeObserver(self)
     }
     
-    // NOTE: Deprecated
-    public func setupLeftMenuButton() {
+    private func setupLeftMenuButton() {
         let icon = UIImage.ionicon(with: .navicon, textColor: UIColor.white, size: CGSize(width: 24, height: 24))
         //let button = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(leftMenuButtonPressed))
         
