@@ -131,8 +131,7 @@ open class GLabel : UILabel {
     // Use block instead of selector from now on. See https://stackoverflow.com/questions/24007650/selector-in-swift
     public func onClick(_ command: @escaping () -> Void) -> Self {
         self.onClick = command
-//        addTarget(self, action: #selector(performClick), for: .touchUpInside)
-        
+        self.isUserInteractionEnabled = true
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(performClick))
         self.addGestureRecognizer(gestureRecognizer)
         return self

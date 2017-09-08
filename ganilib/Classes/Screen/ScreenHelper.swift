@@ -26,19 +26,45 @@ open class ScreenHelper {
     }
     
     private func setupLeftMenuButton() {
-        let icon = UIImage.ionicon(with: .navicon, textColor: UIColor.white, size: CGSize(width: 24, height: 24))
+//        let icon = UIImage.ionicon(with: .navicon, textColor: UIColor.white, size: CGSize(width: 24, height: 24))
         //let button = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(leftMenuButtonPressed))
         
-        let button = UIButton(type: .custom)
-        button.frame = CGRect(x: 0.0, y: 0.0, width: icon.size.width, height: icon.size.height)
-        button.setBackgroundImage(icon, for: UIControlState())
-        button.addTarget(self,
-                         action: #selector(leftMenuButtonPressed),
-                         for: UIControlEvents.touchUpInside)
+//        let button = UIButton(type: .custom)
+////        let button = GButton().title("TEST")
+//        button.frame = CGRect(x: 0.0, y: 0.0, width: icon.size.width, height: icon.size.height)
+//        button.setBackgroundImage(icon, for: UIControlState())
+//        button.addTarget(self,
+//                         action: #selector(leftMenuButtonPressed),
+//                         for: UIControlEvents.touchUpInside)
+        
+//        navController.navigationBar.tintColor
+        
+//        let button = GButton()
+//            .title("fa:bars").iconify()
+//        .color(bg: .red)
+////            .custom("", iconString: "fa:bars")
+////            .color(bg: .red, text: GApp.instance.navigationController.navigationBar.tintColor)
+//            .width(30).height(30)
+        //        button.frame = CGRect(x: 0.0, y: 0.0, width: icon.size.width, height: icon.size.height)
+        //        button.setBackgroundImage(icon, for: UIControlState())
+        //        button.addTarget(self,
+        //                         action: #selector(leftMenuButtonPressed),
+        //                         for: UIControlEvents.touchUpInside)
         
         // Use customView to ensure UIBarButtonItem.view exists at all times or else the badge won't appear as we navigate
         // to other screens. See http://stackoverflow.com/questions/43641698/getting-frame-of-uibarbuttonitem-returns-nil
-        navItem = UIBarButtonItem(customView: button)
+//        navItem = UIBarButtonItem(customView: button)
+        
+        navItem = GBarButtonItem()
+            .icon(from: .FontAwesome, code: "bars")
+            .onClick({
+                self.leftMenuButtonPressed()
+        })
+        
+//        navItem!.target = self
+//        navItem!.action = #selector(leftMenuButtonPressed)
+//        
+//        navItem!.icon(from: .FontAwesome, code: "bars", ofSize: 20)
         
         screen.navigationItem.leftBarButtonItem = navItem
     }
@@ -57,16 +83,32 @@ open class ScreenHelper {
         SideMenuManager.menuFadeStatusBar = false
     }
     
-    public func setupRightMenuButton(icon: Ionicons, target: UIViewController, action: Selector) {
-        let icon = UIImage.ionicon(with: icon, textColor: UIColor.white, size: CGSize(width: 24, height: 24))
-        let button = UIButton(type: .custom)
-        button.frame = CGRect(x: 0.0, y: 0.0, width: icon.size.width, height: icon.size.height)
-        button.setBackgroundImage(icon, for: UIControlState())
-        button.addTarget(target, action: action, for: UIControlEvents.touchUpInside)
-        navItem = UIBarButtonItem(customView: button)
-
-        screen.navigationItem.rightBarButtonItem = navItem
-    }
+//    public func rightBarButton(item: GBarButtonItem) {
+//        screen.navigationItem.rightBarButtonItem = item
+//        
+////        setupLeftMenuButton()
+////        
+////        //        let menuNavigationController = MenuNavigationController()
+////        let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: controller)
+////        menuLeftNavigationController.leftSide = true
+////        
+////        SideMenuManager.menuLeftNavigationController = menuLeftNavigationController
+////        SideMenuManager.menuAddPanGestureToPresent(toView: screen.navigationController!.navigationBar)
+////        SideMenuManager.menuAddScreenEdgePanGesturesToPresent(toView: screen.navigationController!.view)
+////        SideMenuManager.menuPresentMode = .viewSlideOut
+////        SideMenuManager.menuFadeStatusBar = false
+//    }
+    
+//    public func setupRightMenuButton(icon: Ionicons, target: UIViewController, action: Selector) {
+//        let icon = UIImage.ionicon(with: icon, textColor: UIColor.white, size: CGSize(width: 24, height: 24))
+//        let button = UIButton(type: .custom)
+//        button.frame = CGRect(x: 0.0, y: 0.0, width: icon.size.width, height: icon.size.height)
+//        button.setBackgroundImage(icon, for: UIControlState())
+//        button.addTarget(target, action: action, for: UIControlEvents.touchUpInside)
+//        navItem = UIBarButtonItem(customView: button)
+//
+//        screen.navigationItem.rightBarButtonItem = navItem
+//    }
     
     @objc func leftMenuButtonPressed() {
         screen.present(SideMenuManager.menuLeftNavigationController!, animated: true, completion: nil)

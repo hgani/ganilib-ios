@@ -50,13 +50,13 @@ open class GScreen: UIViewController, ScreenProtocol {
         nav.viewWillAppear()
     }
     
-//    // Deprecated
-//    public func setupLeftMenuButton() {
-//        helper.setupLeftMenuButton()
-//    }
-    
     public func leftMenu(controller: UITableViewController) -> Self {
         helper.leftMenu(controller: controller)
+        return self
+    }
+    
+    public func rightBarButton(item: GBarButtonItem) -> Self {
+        self.navigationItem.rightBarButtonItem = item
         return self
     }
     

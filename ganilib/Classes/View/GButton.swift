@@ -1,6 +1,6 @@
 
 import UIKit
-import IoniconsKit
+//import IoniconsKit
 import SwiftIconFont
 
 open class GButton : UIButton {
@@ -20,24 +20,24 @@ open class GButton : UIButton {
         super.init(coder: coder)
     }
     
-    public func title(_ title : String, icon: Ionicons? = nil) -> GButton {
-        let callButtonString = NSMutableAttributedString()
-        
-        if icon != nil {
-            let callIcon = String.ionicon(with: icon!)
-            let callIconAttributed = NSMutableAttributedString(string: callIcon, attributes: [NSFontAttributeName: UIFont.ionicon(of: 20)])
-            callButtonString.append(callIconAttributed)
-        }
-        
-        //let callStringAttributed = NSMutableAttributedString(string: title, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)])
-        let callStringAttributed = NSMutableAttributedString(string: title)
-
-        callButtonString.append(callStringAttributed)
-        
-        self.setAttributedTitle(callButtonString, for: .normal)
-        
-        return self
-    }
+//    public func title(_ title : String, icon: Ionicons? = nil) -> GButton {
+//        let callButtonString = NSMutableAttributedString()
+//        
+//        if icon != nil {
+//            let callIcon = String.ionicon(with: icon!)
+//            let callIconAttributed = NSMutableAttributedString(string: callIcon, attributes: [NSFontAttributeName: UIFont.ionicon(of: 20)])
+//            callButtonString.append(callIconAttributed)
+//        }
+//        
+//        //let callStringAttributed = NSMutableAttributedString(string: title, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)])
+//        let callStringAttributed = NSMutableAttributedString(string: title)
+//
+//        callButtonString.append(callStringAttributed)
+//        
+//        self.setAttributedTitle(callButtonString, for: .normal)
+//        
+//        return self
+//    }
     
 //    public func title(_ title: String) -> GButton {
 //        let wrapper = UIView()
@@ -85,43 +85,51 @@ open class GButton : UIButton {
 //        return self
 //    }
 
-    
-    public func custom(_ title: String, iconString: String) -> GButton {
-        let wrapper = UIView()
-        wrapper.isUserInteractionEnabled = false
-        
-        let icon = UILabel()
-        icon.isUserInteractionEnabled = false
-        icon.font = UIFont.icon(from: .Ionicon, ofSize: 24.0)
-        icon.text = String.fontIonIcon(iconString)
-        icon.sizeToFit()
-        
-        let label = UILabel()
-        label.isUserInteractionEnabled = false
-        label.text = title
-        label.sizeToFit()
-        
-        wrapper.addSubview(icon)
-        wrapper.addSubview(label)
-        self.addSubview(wrapper)
-        
-        wrapper.snp.makeConstraints { (make) in
-            make.edges.equalTo(self).inset(UIEdgeInsetsMake(10, 10, 10, 10))
-        }
-        
-        icon.snp.makeConstraints { (make) in
-            make.top.equalTo(wrapper)
-            make.left.equalTo(10)
-            make.width.equalTo(16)
-        }
-        
-        label.snp.makeConstraints { (make) in
-            make.top.equalTo(wrapper)
-            make.left.equalTo(icon.snp.right).offset(5)
-        }
-        
+    public func title(_ title: String) -> Self {
+        self.setTitle(title, for: .normal)
         return self
     }
+    
+    public func iconify() -> Self {
+        self.parseIcon()
+        return self
+    }
+    
+//    public func custom(_ title: String, iconString: String) -> GButton {
+//        let wrapper = UIView()
+//        wrapper.isUserInteractionEnabled = false
+//        
+//        let icon = UILabel()
+//        icon.font = UIFont.icon(from: .Ionicon, ofSize: 24.0)
+//        icon.text = String.fontIonIcon(iconString)
+//        icon.sizeToFit()
+//        
+//        let label = UILabel()
+//        label.isUserInteractionEnabled = false
+//        label.text = title
+//        label.sizeToFit()
+//        
+//        wrapper.addSubview(icon)
+//        wrapper.addSubview(label)
+//        self.addSubview(wrapper)
+//        
+//        wrapper.snp.makeConstraints { (make) in
+//            make.edges.equalTo(self).inset(UIEdgeInsetsMake(10, 10, 10, 10))
+//        }
+//        
+//        icon.snp.makeConstraints { (make) in
+//            make.top.equalTo(wrapper)
+//            make.left.equalTo(10)
+//            make.width.equalTo(16)
+//        }
+//        
+//        label.snp.makeConstraints { (make) in
+//            make.top.equalTo(wrapper)
+//            make.left.equalTo(icon.snp.right).offset(5)
+//        }
+//        
+//        return self
+//    }
     
     public func width(_ width : Int) -> Self {
         helper.width(width)
@@ -203,7 +211,10 @@ open class GButton : UIButton {
             self.backgroundColor = bgColor
         }
         if let textColor = text {
-            self.titleLabel!.textColor = textColor
+            self.setTitleColor(textColor, for: .normal)
+
+//            Log.t("COLOR")
+//            self.titleLabel!.textColor = textColor
         }
         return self
     }
