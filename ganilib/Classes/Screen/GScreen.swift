@@ -9,7 +9,7 @@ open class GScreen: UIViewController, ScreenProtocol {
     public var indicator : IndicatorHelper!
     public var nav : NavHelper!
     
-    public var previous: ScreenProtocol?
+//    public var previous: ScreenProtocol?
     
     public init() {
         super.init(nibName: nil, bundle: nil)

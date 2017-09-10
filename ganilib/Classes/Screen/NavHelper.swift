@@ -51,9 +51,9 @@ open class NavHelper {
     }
     
     public func push(_ controller : UIViewController, animated : Bool = true) {
-        if var next = controller as? ScreenProtocol {
-            next.previous = self.screen
-        }
+//        if var next = controller as? ScreenProtocol {
+//            next.previous = self.screen
+//        }
 
         navController.pushViewController(controller, animated: animated)
     }
