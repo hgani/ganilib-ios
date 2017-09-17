@@ -151,5 +151,68 @@ open class GTableViewCell: UITableViewCell {
     static func nib() -> UINib {
         return UINib(nibName: nibName(), bundle: nil)
     }
+}
 
+open class GHeaderView: UIView {
+    private let container = GVerticalPanel()
+    
+    public init() {
+        super.init(frame: .zero)
+        initialize()
+    }
+    
+    required public init?(coder: NSCoder) {
+        super.init(coder: coder)
+        initialize()
+    }
+    
+    public func initialize() {
+        self.addSubview(container)
+        
+        container.snp.makeConstraints { make in
+            // Snap the panel's vertical edges so that the tableView can determine the dynamic height of each row
+            // See https://stackoverflow.com/questions/18746929/using-auto-layout-in-uitableview-for-dynamic-cell-layouts-variable-row-heights
+            make.top.equalTo(self)
+            make.bottom.equalTo(self)
+            
+            make.left.equalTo(self)
+            make.right.equalTo(self)
+        }
+        
+//        self.backgroundColor = .green
+//        container.backgroundColor = .red
+    }
+    
+    public func addView(_ view: UIView, top: CGFloat? = nil) {
+        container.addView(view, top: top)
+    }
+    
+    public func append(_ view: UIView, top: CGFloat? = nil) -> Self {
+        addView(view, top: top)
+        return self
+    }
+    
+    public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
+        _ = container.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+    
+    public func color(bg: UIColor) -> Self {
+        _ = container.color(bg: bg)
+        return self
+    }
+    
+    
+//    open override func didMoveToSuperview() {
+//        container.snp.makeConstraints { (make) -> Void in
+//            // Snap the panel's vertical edges so that the tableView can determine the dynamic height of each row
+//            // See https://stackoverflow.com/questions/18746929/using-auto-layout-in-uitableview-for-dynamic-cell-layouts-variable-row-heights
+//            make.top.equalTo(self.contentView).offset(paddings.top)
+//            make.bottom.equalTo(self.contentView).offset(-paddings.bottom)
+//            
+//            make.left.equalTo(self.contentView).offset(paddings.left)
+//            make.right.equalTo(self.contentView).offset(-paddings.right)
+//        }
+//    }
+    
 }

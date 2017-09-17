@@ -3,7 +3,7 @@ import UIKit
 import SwiftIconFont
 import TTTAttributedLabel
 
-open class GLabel : UILabel {
+open class GLabel: UILabel {
     private var helper : ViewHelper!
     private var isUnderlined = false
     private var onClick : (() -> Void)?
@@ -57,23 +57,25 @@ open class GLabel : UILabel {
     }
     
     // Has to be called before text()
-    public func font(_ font : UIFont) -> Self {
-        self.font = font
+    public func font(_ font: UIFont?, size: Float? = nil, traits: UIFontDescriptorSymbolicTraits...) -> Self {
+        var f = (font ?? self.font).withTraits(traits)
+        if let s = size {
+            f = f.withSize(CGFloat(s))
+        }
+        self.font = f
         return self
     }
     
-    public func font(size: Float? = nil, traits: UIFontDescriptorSymbolicTraits...) -> Self {
-        var f = self.font.withTraits(traits)
-        if let s = size {
-           f = f.withSize(CGFloat(s))
-        }
-//        if let t = traits {
-//            f = f.withTraits(traits)
+//    public func font(size: Float? = nil, traits: UIFontDescriptorSymbolicTraits...) -> Self {
+//        var f = self.font.withTraits(traits)
+//        if let s = size {
+//           f = f.withSize(CGFloat(s))
 //        }
-        return font(f)
-//        return font(self.font.).withTraits(traits: traits))
-//        return self
-    }
+////        if let t = traits {
+////            f = f.withTraits(traits)
+////        }
+//        return font(f)
+//    }
 
     // TODO: Consider deprecating this, but how about underline()
     public func bold() -> Self {

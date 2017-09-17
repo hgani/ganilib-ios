@@ -36,6 +36,9 @@ open class NavHelper {
     }
     
     public func viewWillAppear() {
+        Log.t("NAV1 \(navController.navigationBar.isTranslucent)")
+        Log.t("NAV2 \(showBar)")
+//        navController.setNavigationBarHidden(true, animated: false)
         navController.setNavigationBarHidden(!showBar, animated: false)
     }
     

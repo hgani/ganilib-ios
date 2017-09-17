@@ -2,12 +2,12 @@
 import UIKit
 import SnapKit
 
-
 open class ViewHelper {
     private let view: UIView
     private var matchParentWidthMultiplier: Float?
     private var matchParentHeightMultiplier: Float?
 //    private var paddings = UIEdgeInsetsMake(0, 0, 0, 0)
+//    let paddings = ViewPaddings()
     
     public init(_ view: UIView) {
         self.view = view
@@ -18,7 +18,8 @@ open class ViewHelper {
             if let multiplier = matchParentWidthMultiplier {
                 view.snp.makeConstraints { make in
                     if multiplier == 1 {
-                        make.right.equalTo(superview)  // Consume remaining space
+                        make.right.equalTo(superview.snp.rightMargin)  // Consume remaining space
+//                        make.right.equalTo(superview)  // Consume remaining space
                     }
                     else {
                         make.width.equalTo(superview).multipliedBy(multiplier)
@@ -36,6 +37,10 @@ open class ViewHelper {
     
     func shouldWidthMatchParent() -> Bool {
         return matchParentWidthMultiplier != nil
+    }
+    
+    func shouldHeightMatchParent() -> Bool {
+        return matchParentHeightMultiplier != nil
     }
     
     public func width(_ width: Int) {
@@ -94,6 +99,21 @@ open class ViewHelper {
         }
         view.layer.borderWidth = CGFloat(width)
         view.layer.cornerRadius = CGFloat(corner)
+    }
+    
+//    public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) {
+//        paddings.update(t: top, l: left, b: bottom, r: right)
+//    }
+    
+    public func paddings(t top: CGFloat?, l left: CGFloat?, b bottom: CGFloat?, r right: CGFloat?) {
+        let orig = view.layoutMargins
+        
+        let top = top ?? orig.top
+        let left = left ?? orig.left
+        let bottom = bottom ?? orig.bottom
+        let right = right ?? orig.right
+        
+        view.layoutMargins = UIEdgeInsetsMake(top, left, bottom, right)
     }
 }
 

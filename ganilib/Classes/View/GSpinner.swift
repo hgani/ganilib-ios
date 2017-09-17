@@ -1,8 +1,8 @@
 
 import UIKit
 
-open class GSpinner<T> : GButton {
-    private var screen : GScreen?  // Nil if instantiated from NSCoder
+open class GSpinner<T>: GButton {
+    private var screen: GScreen?  // Nil if instantiated from NSCoder
 
     private var data = [T]()
     public private(set) var selectedItem : T?

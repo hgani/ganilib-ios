@@ -9,15 +9,29 @@ open class GButton : UIButton {
     
     public init() {
         super.init(frame: .zero)
+        initialize()
         
+//        self.helper = ViewHelper(self)
+//        
+//        // Make sure that contentEdgeInsets' values is always initialized properly (i.e. non-zero)
+//        _ = self.padding(top: 10, left: 20, bottom: 10, right: 20)
+    }
+    
+    required public init?(coder: NSCoder) {
+        super.init(coder: coder)
+        initialize()
+    }
+    
+    private func initialize() {
         self.helper = ViewHelper(self)
         
         // Make sure that contentEdgeInsets' values is always initialized properly (i.e. non-zero)
         _ = self.padding(top: 10, left: 20, bottom: 10, right: 20)
     }
     
-    required public init?(coder: NSCoder) {
-        super.init(coder: coder)
+    open override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        helper.didMoveToSuperview()
     }
     
 //    public func title(_ title : String, icon: Ionicons? = nil) -> GButton {
@@ -131,12 +145,27 @@ open class GButton : UIButton {
 //        return self
 //    }
     
-    public func width(_ width : Int) -> Self {
+    public func width(_ width: Int) -> Self {
         helper.width(width)
         return self
     }
     
-    public func height(_ height : Int) -> Self {
+    public func width(_ width: LayoutSize) -> Self {
+        helper.width(width)
+        return self
+    }
+    
+    public func width(weight: Float) -> Self {
+        helper.width(weight: weight)
+        return self
+    }
+    
+    public func height(_ height: Int) -> Self {
+        helper.height(height)
+        return self
+    }
+    
+    public func height(_ height: LayoutSize) -> Self {
         helper.height(height)
         return self
     }
@@ -154,11 +183,11 @@ open class GButton : UIButton {
         return self
     }
     
-    public func bgcolor(_ color: UIColor) -> Self {
-        self.backgroundColor = color
-        self.titleLabel?.textColor = UIColor.white
-        return self
-    }
+//    public func bgcolor(_ color: UIColor) -> Self {
+//        self.backgroundColor = color
+//        self.titleLabel?.textColor = UIColor.white
+//        return self
+//    }
     
     // NOTE: Deprecated. Use onClick() instead
 //    public func click(_ target: Any, action: Selector) -> Self {
@@ -212,20 +241,11 @@ open class GButton : UIButton {
         }
         if let textColor = text {
             self.setTitleColor(textColor, for: .normal)
-
-//            Log.t("COLOR")
-//            self.titleLabel!.textColor = textColor
         }
         return self
     }
     
     public func border(color : UIColor?, width : Float = 1, corner : Float = 6) -> Self {
-//        if let c = color {
-//            self.layer.borderColor = c.cgColor
-//        }
-//        self.layer.borderWidth = CGFloat(width)
-//        self.layer.cornerRadius = CGFloat(corner)
-        
         helper.border(color: color, width: width, corner: corner)
         return self
     }

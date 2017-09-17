@@ -18,6 +18,11 @@ open class GTextField: UITextField {
         self.helper = ViewHelper(self)
     }
     
+    open override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        helper.didMoveToSuperview()
+    }
+    
     public func placeholder(_ str: String) -> Self {
         self.placeholder = str
         return self
@@ -50,8 +55,38 @@ open class GTextField: UITextField {
         return UIEdgeInsetsInsetRect(bounds, padding)
     }
     
+    public func color(bg : UIColor?, text: UIColor? = nil) -> Self {
+        if let bgColor = bg {
+            self.backgroundColor = bgColor
+        }
+        if let textColor = text {
+            self.textColor = textColor
+        }
+        return self
+    }
+    
     public func border(color : UIColor?, width : Float = 1, corner : Float = 6) -> Self {
         helper.border(color: color, width: width, corner: corner)
+        return self
+    }
+    
+    public func width(_ width: Int) -> Self {
+        helper.width(width)
+        return self
+    }
+    
+    public func width(_ width: LayoutSize) -> Self {
+        helper.width(width)
+        return self
+    }
+    
+    public func height(_ height: Int) -> Self {
+        helper.height(height)
+        return self
+    }
+    
+    public func height(_ height: LayoutSize) -> Self {
+        helper.height(height)
         return self
     }
 }
