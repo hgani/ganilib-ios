@@ -64,7 +64,7 @@ open class GScreen: UIViewController, ScreenProtocol {
         return self
     }
     
-    public func rightBarButton(item: GBarButtonItem) -> Self {
+    public func rightBarButton(item: UIBarButtonItem) -> Self {
         self.navigationItem.rightBarButtonItem = item
         return self
     }

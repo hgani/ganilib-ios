@@ -36,6 +36,12 @@ open class GBarButtonItem: UIBarButtonItem {
         return self
     }
     
+    public func title(_ text: String) -> Self {
+        super.title = text
+//        super.icon(from: font, code: code, ofSize: 20)
+        return self
+    }
+    
     public func end() {
         // End chaining initialisation
     }

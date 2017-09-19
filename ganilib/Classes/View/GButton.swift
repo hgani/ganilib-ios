@@ -3,9 +3,9 @@ import UIKit
 //import IoniconsKit
 import SwiftIconFont
 
-open class GButton : UIButton {
-    private var helper : ViewHelper!
-    private var onClick : (() -> Void)?
+open class GButton: UIButton {
+    private var helper: ViewHelper!
+    private var onClick: ((GButton) -> Void)?
     
     public init() {
         super.init(frame: .zero)
@@ -202,7 +202,7 @@ open class GButton : UIButton {
     }
     
     // Use block instead of selector from now on. See https://stackoverflow.com/questions/24007650/selector-in-swift
-    public func onClick(_ command: @escaping () -> Void) -> Self {
+    public func onClick(_ command: @escaping (GButton) -> Void) -> Self {
         self.onClick = command
         addTarget(self, action: #selector(performClick), for: .touchUpInside)
         return self
@@ -210,7 +210,7 @@ open class GButton : UIButton {
     
     @objc private func performClick() {
         if let callback = self.onClick {
-            callback()
+            callback(self)
         }
     }
     
