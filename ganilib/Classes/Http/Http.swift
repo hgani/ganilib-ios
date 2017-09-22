@@ -48,13 +48,8 @@ public class Http {
             switch response.result {
                 case .success(let value):
                     indicator.hideProgress()
-                    
-//                    let json = JSON(parseJSON: value)
-//                    Log.d("Result: \(json)")
                     if let message = onHttpSuccess(value) {
                         indicator.showError(message: message)
-
-//                        indicator.showError(message: json["message"].stringValue)
                     }
                 case .failure(let error):
                     indicator.showError(message: error.localizedDescription)
