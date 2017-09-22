@@ -95,8 +95,7 @@ open class GTableView: UITableView {
 }
 
 open class GTableViewCell: UITableViewCell {
-    private let container = GVerticalPanel()
-    private let paddings = ViewPaddings()
+    private var helper: ViewHelper!
     
     public convenience init() {
         self.init(style: .default)
@@ -114,29 +113,13 @@ open class GTableViewCell: UITableViewCell {
         initialize()
     }
     
-    public func initialize() {
-        self.contentView.addSubview(container)
-    }
-    
-    open override func didMoveToSuperview() {
-        container.snp.makeConstraints { (make) -> Void in
-            // Snap the panel's vertical edges so that the tableView can determine the dynamic height of each row
-            // See https://stackoverflow.com/questions/18746929/using-auto-layout-in-uitableview-for-dynamic-cell-layouts-variable-row-heights
-            make.top.equalTo(self.contentView).offset(paddings.top)
-            make.bottom.equalTo(self.contentView).offset(-paddings.bottom)
-            
-            make.left.equalTo(self.contentView).offset(paddings.left)
-            make.right.equalTo(self.contentView).offset(-paddings.right)
-        }
-    }
-    
-    public func addView(_ view: UIView, top : CGFloat? = nil) {
-        container.addView(view, top: top)
+    private func initialize() {
+        self.helper = ViewHelper(self.contentView)
+//        self.contentView.addSubview(container)
     }
     
     public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
-//        _ = container.paddings(t: top, l: left, b: bottom, r: right)
-        paddings.update(t: top, l: left, b: bottom, r: right)
+        helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
 
@@ -150,6 +133,51 @@ open class GTableViewCell: UITableViewCell {
     
     static func nib() -> UINib {
         return UINib(nibName: nibName(), bundle: nil)
+    }
+}
+
+open class GTableViewCustomCell: GTableViewCell {
+    private let container = GVerticalPanel()
+    
+    public convenience init() {
+        self.init(style: .default)
+    }
+    
+    public required init(style: UITableViewCellStyle) {
+        super.init(style: style)
+        
+        initialize()
+    }
+    
+    public required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        initialize()
+    }
+    
+    private func initialize() {
+        self.contentView.addSubview(container)
+    }
+    
+    open override func didMoveToSuperview() {
+        container.snp.makeConstraints { (make) -> Void in
+            // Snap the panel's vertical edges so that the tableView can determine the dynamic height of each row
+            // See https://stackoverflow.com/questions/18746929/using-auto-layout-in-uitableview-for-dynamic-cell-layouts-variable-row-heights
+//            make.top.equalTo(self.contentView).offset(paddings.top)
+//            make.bottom.equalTo(self.contentView).offset(-paddings.bottom)
+//            
+//            make.left.equalTo(self.contentView).offset(paddings.left)
+//            make.right.equalTo(self.contentView).offset(-paddings.right)
+            make.top.equalTo(self.contentView.snp.topMargin)
+            make.bottom.equalTo(self.contentView.snp.bottomMargin)
+            
+            make.left.equalTo(self.contentView.snp.leftMargin)
+            make.right.equalTo(self.contentView.snp.rightMargin)
+        }
+    }
+    
+    public func addView(_ view: UIView, top : CGFloat? = nil) {
+        container.addView(view, top: top)
     }
 }
 

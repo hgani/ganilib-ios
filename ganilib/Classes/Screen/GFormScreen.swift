@@ -73,6 +73,11 @@ open class GFormScreen : FormViewController, ScreenProtocol {
         return self
     }
     
+    public func leftBarButton(item: UIBarButtonItem) -> Self {
+        self.navigationItem.leftBarButtonItem = item
+        return self
+    }
+    
     public func end() {
         // Ends chaining
     }

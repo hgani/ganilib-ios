@@ -61,11 +61,6 @@ open class ScreenHelper {
                 self.leftMenuButtonPressed()
         })
         
-//        navItem!.target = self
-//        navItem!.action = #selector(leftMenuButtonPressed)
-//        
-//        navItem!.icon(from: .FontAwesome, code: "bars", ofSize: 20)
-        
         screen.navigationItem.leftBarButtonItem = navItem
     }
     

@@ -5,19 +5,6 @@ import SwiftIconFont
 open class GBarButtonItem: UIBarButtonItem {
     private var onClick : (() -> Void)?
     
-//    public override init() {
-//        super.init()
-//        
-//        self.helper = ViewHelper(self)
-//        
-//        // Make sure that contentEdgeInsets' values is always initialized properly (i.e. non-zero)
-////        _ = self.padding(top: 10, left: 20, bottom: 10, right: 20)
-//    }
-//    
-//    required public init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//    }
-    
     public func onClick(_ command: @escaping () -> Void) -> Self {
         self.onClick = command
         self.target = self
@@ -38,7 +25,6 @@ open class GBarButtonItem: UIBarButtonItem {
     
     public func title(_ text: String) -> Self {
         super.title = text
-//        super.icon(from: font, code: code, ofSize: 20)
         return self
     }
     

@@ -117,41 +117,41 @@ open class ViewHelper {
     }
 }
 
-public class ViewPaddings {
-    private var paddings = UIEdgeInsetsMake(0, 0, 0, 0)
-    
-    var top: CGFloat {
-        get {
-            return paddings.top
-        }
-    }
-    var bottom: CGFloat {
-        get {
-            return paddings.bottom
-        }
-    }
-    var left: CGFloat {
-        get {
-            return paddings.left
-        }
-    }
-    var right: CGFloat {
-        get {
-            return paddings.right
-        }
-    }
-    
-    public func update(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) {
-        let orig = self.paddings
-        
-        let top = top ?? orig.top
-        let left = left ?? orig.left
-        let bottom = bottom ?? orig.bottom
-        let right = right ?? orig.right
-        
-        self.paddings = UIEdgeInsetsMake(top, left, bottom, right)
-    }
-}
+//public class ViewPaddings {
+//    private var paddings = UIEdgeInsetsMake(0, 0, 0, 0)
+//    
+//    var top: CGFloat {
+//        get {
+//            return paddings.top
+//        }
+//    }
+//    var bottom: CGFloat {
+//        get {
+//            return paddings.bottom
+//        }
+//    }
+//    var left: CGFloat {
+//        get {
+//            return paddings.left
+//        }
+//    }
+//    var right: CGFloat {
+//        get {
+//            return paddings.right
+//        }
+//    }
+//    
+//    public func update(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) {
+//        let orig = self.paddings
+//        
+//        let top = top ?? orig.top
+//        let left = left ?? orig.left
+//        let bottom = bottom ?? orig.bottom
+//        let right = right ?? orig.right
+//        
+//        self.paddings = UIEdgeInsetsMake(top, left, bottom, right)
+//    }
+//}
 
 public enum LayoutSize {
     case matchParent, wrapContent

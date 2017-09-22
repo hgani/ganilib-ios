@@ -64,6 +64,11 @@ open class GScreen: UIViewController, ScreenProtocol {
         return self
     }
     
+    public func leftBarButton(item: UIBarButtonItem) -> Self {
+        self.navigationItem.leftBarButtonItem = item
+        return self
+    }
+    
     public func rightBarButton(item: UIBarButtonItem) -> Self {
         self.navigationItem.rightBarButtonItem = item
         return self
@@ -110,39 +115,6 @@ public class GScreenContainer: GHamburgerPanel {
             content,
             footer
         )
-        
-//        self.helper = ViewHelper(self)
-//
-//        _ = paddings(t: 0, l: 0, b: 0, r: 0)
-        
-//                let top = GVerticalPanel()
-//                top.addView(GLabel().text("TOP1").color(bg: .gray))
-//                top.addView(GLabel().text("TOP2").color(bg: .gray), top: 10)
-//        
-//                let scroller = GScrollView()
-//                scroller.addView(GLabel().text("MIDDLE1").color(bg: .blue))
-//                scroller.addView(GLabel().text("MIDDLE2").color(bg: .blue), top: 10)
-//                scroller.addView(GLabel().text("MIDDLE3").color(bg: .blue), top: 10)
-//                scroller.addView(GLabel().text("MIDDLE4").color(bg: .blue), top: 10)
-//                scroller.addView(GLabel().text("MIDDLE5").color(bg: .blue), top: 10)
-//                scroller.addView(GLabel().text("MIDDLE6").color(bg: .blue), top: 10)
-//                scroller.addView(GLabel().text("MIDDLE7").color(bg: .blue), top: 10)
-//                scroller.addView(GLabel().text("MIDDLE8").color(bg: .blue), top: 10)
-//                scroller.addView(GLabel().text("MIDDLE9").color(bg: .blue), top: 10)
-//                scroller.addView(GLabel().text("MIDDLE10").color(bg: .blue), top: 10)
-//        
-//                let bottom = GVerticalPanel()
-//                bottom.addView(GLabel().text("BOTTOM1").color(bg: .gray))
-//                bottom.addView(GLabel().text("BOTTOM2").color(bg: .gray), top: 10)
-//        
-//                container.addView(
-//                    GHamburgerPanel().color(bg: .yellow).withViews(
-//                        top,
-//                        scroller,
-//                        bottom
-//                    )
-//                )
-
     }
     
     public func clearViews() {
@@ -152,16 +124,4 @@ public class GScreenContainer: GHamburgerPanel {
     public func addView(_ view: UIView, top : CGFloat? = nil) {
         content.addView(view, top: top)
     }
-    
-//    
-//    public override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        initialize()
-//    }
-//    
-//    required public init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//        initialize()
-//    }
-    
 }
