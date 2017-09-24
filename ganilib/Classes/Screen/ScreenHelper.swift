@@ -1,18 +1,17 @@
 
 import UIKit
 import SwiftIconFont
-import IoniconsKit
 import SideMenu
-import SnapKit
-import IoniconsKit
+//import SnapKit
+//import IoniconsKit
 
 open class ScreenHelper {
     // NOTE: Not sure if we need to set this to weak. We tried unowned but got "bad access".
-    private let screen : UIViewController
+    private let screen: ScreenProtocol
     
-    private var navItem : UIBarButtonItem?
+    private var navItem: UIBarButtonItem?
     
-    public init(_ screen : UIViewController) {
+    public init(_ screen: ScreenProtocol) {
         self.screen = screen
         
         NotificationCenter.default.addObserver(self,
@@ -26,42 +25,15 @@ open class ScreenHelper {
     }
     
     private func setupLeftMenuButton() {
-//        let icon = UIImage.ionicon(with: .navicon, textColor: UIColor.white, size: CGSize(width: 24, height: 24))
-        //let button = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(leftMenuButtonPressed))
-        
-//        let button = UIButton(type: .custom)
-////        let button = GButton().title("TEST")
-//        button.frame = CGRect(x: 0.0, y: 0.0, width: icon.size.width, height: icon.size.height)
-//        button.setBackgroundImage(icon, for: UIControlState())
-//        button.addTarget(self,
-//                         action: #selector(leftMenuButtonPressed),
-//                         for: UIControlEvents.touchUpInside)
-        
-//        navController.navigationBar.tintColor
-        
-//        let button = GButton()
-//            .title("fa:bars").iconify()
-//        .color(bg: .red)
-////            .custom("", iconString: "fa:bars")
-////            .color(bg: .red, text: GApp.instance.navigationController.navigationBar.tintColor)
-//            .width(30).height(30)
-        //        button.frame = CGRect(x: 0.0, y: 0.0, width: icon.size.width, height: icon.size.height)
-        //        button.setBackgroundImage(icon, for: UIControlState())
-        //        button.addTarget(self,
-        //                         action: #selector(leftMenuButtonPressed),
-        //                         for: UIControlEvents.touchUpInside)
-        
         // Use customView to ensure UIBarButtonItem.view exists at all times or else the badge won't appear as we navigate
         // to other screens. See http://stackoverflow.com/questions/43641698/getting-frame-of-uibarbuttonitem-returns-nil
-//        navItem = UIBarButtonItem(customView: button)
-        
         navItem = GBarButtonItem()
             .icon(from: .FontAwesome, code: "bars")
             .onClick({
                 self.leftMenuButtonPressed()
         })
         
-        screen.navigationItem.leftBarButtonItem = navItem
+        screen.controller.navigationItem.leftBarButtonItem = navItem
     }
     
     public func leftMenu(controller: UITableViewController) {
@@ -106,9 +78,16 @@ open class ScreenHelper {
 //    }
     
     @objc func leftMenuButtonPressed() {
-        screen.present(SideMenuManager.menuLeftNavigationController!, animated: true, completion: nil)
+        screen.controller.present(SideMenuManager.menuLeftNavigationController!, animated: true, completion: nil)
     }
     
+//    func populate() {
+//        DispatchQueue.main.async {  // Make sure that the subclass' viewDidLoad() has finished executing
+//            self.screen.onRefresh()
+//        }
+//    }
+    
+    // Made public so that it's accessible from GaniWeb
     public func viewWillAppear() {
         updateBadge();
     }

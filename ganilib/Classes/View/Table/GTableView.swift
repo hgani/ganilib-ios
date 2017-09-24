@@ -181,7 +181,7 @@ open class GTableViewCustomCell: GTableViewCell {
     }
 }
 
-open class GHeaderView: UIView {
+open class GHeaderFooterView: UIView {
     private let container = GVerticalPanel()
     
     public init() {
@@ -207,8 +207,11 @@ open class GHeaderView: UIView {
             make.right.equalTo(self)
         }
         
-//        self.backgroundColor = .green
-//        container.backgroundColor = .red
+        self.backgroundColor = .white
+    }
+    
+    public func clearViews() {
+        container.clearViews()
     }
     
     public func addView(_ view: UIView, top: CGFloat? = nil) {

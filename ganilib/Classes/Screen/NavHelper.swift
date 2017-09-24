@@ -9,14 +9,14 @@ open class NavHelper {
     private var showBar = true
     
     // TODO: Consider removing this now that we've got a generic solution for popAndRefresh()
-    private var previous: ScreenProtocol?
+//    private var previous: ScreenProtocol?
     
-    convenience public init(_ screen : ScreenProtocol) {
+    convenience public init(_ screen: ScreenProtocol) {
         self.init(navController: screen.navigationController!)
         self.screen = screen
     }
     
-    init(navController : UINavigationController) {
+    init(navController: UINavigationController) {
         self.navController = navController
     }
     
@@ -25,7 +25,7 @@ open class NavHelper {
     }
     
     public func title(_ title: String) -> Self {
-        screen?.title = title
+        screen?.controller.title = title
         return self
     }
     
@@ -36,9 +36,6 @@ open class NavHelper {
     }
     
     public func viewWillAppear() {
-        Log.t("NAV1 \(navController.navigationBar.isTranslucent)")
-        Log.t("NAV2 \(showBar)")
-//        navController.setNavigationBarHidden(true, animated: false)
         navController.setNavigationBarHidden(!showBar, animated: false)
     }
     

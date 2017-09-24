@@ -2,7 +2,7 @@
 import UIKit
 import Eureka
 
-open class GFormScreen : FormViewController, ScreenProtocol {
+open class GFormScreen: FormViewController {
     private var helper : ScreenHelper!
     public var launch : LaunchHelper!
     public var indicator : IndicatorHelper!
@@ -24,6 +24,8 @@ open class GFormScreen : FormViewController, ScreenProtocol {
         self.launch = LaunchHelper(self)
         self.indicator = IndicatorHelper(self)
         self.nav = NavHelper(self)
+        
+//        helper.populate()
     }
     
     override open func viewWillAppear(_ animated: Bool) {
@@ -82,9 +84,17 @@ open class GFormScreen : FormViewController, ScreenProtocol {
         // Ends chaining
     }
     
-    public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
-//        _ = self.contentView.padding(top: top, left: left, bottom: bottom, right: right)
-        return self
+//    public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
+////        _ = self.contentView.padding(top: top, left: left, bottom: bottom, right: right)
+//        return self
+//    }
+}
+
+extension GFormScreen: ScreenProtocol {
+    public var controller: UIViewController {
+        get {
+            return self
+        }
     }
     
     open func onRefresh() {

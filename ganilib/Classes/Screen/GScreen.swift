@@ -1,16 +1,13 @@
 
 import UIKit
 
-open class GScreen: UIViewController, ScreenProtocol {
-//    public let container = GScrollView()
+open class GScreen: UIViewController {
     public let container = GScreenContainer()
     
     private var helper : ScreenHelper!
     public var launch : LaunchHelper!
     public var indicator : IndicatorHelper!
     public var nav : NavHelper!
-    
-//    public var previous: ScreenProtocol?
     
     public init() {
         super.init(nibName: nil, bundle: nil)
@@ -32,8 +29,6 @@ open class GScreen: UIViewController, ScreenProtocol {
         self.indicator = IndicatorHelper(self)
         self.nav = NavHelper(self)
         
-        Log.t("viewDidLoad1 \(self.navigationController!.navigationBar.isTranslucent)")
-        
         if !self.navigationController!.navigationBar.isTranslucent {
             // If nav bar is visible and actually consumes space, we want our view to be start just below the bar.
             // Otherwise, we want the view to start right from the top (i.e. status bar)
@@ -42,6 +37,10 @@ open class GScreen: UIViewController, ScreenProtocol {
 
         self.view.backgroundColor = UIColor.white
         
+        setupContainer()
+    }
+    
+    private func setupContainer() {
         screenContent().translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(screenContent())
         screenContent().snp.makeConstraints { make in
@@ -86,6 +85,18 @@ open class GScreen: UIViewController, ScreenProtocol {
     public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
         _ = container.paddings(t: top, l: left, b: bottom, r: right)
         return self
+    }
+    
+//    open func onRefresh() {
+//        // To be overridden
+//    }
+}
+
+extension GScreen: ScreenProtocol {
+    public var controller: UIViewController {
+        get {
+            return self
+        }
     }
     
     open func onRefresh() {

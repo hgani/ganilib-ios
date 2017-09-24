@@ -7,8 +7,9 @@ public protocol ScreenProtocol {
 //    var previous: ScreenProtocol? { get set }
 //    var nav : NavHelper! { get set }
     
-    var title: String? { get set }
+//    var title: String? { get set }
     var navigationController: UINavigationController? { get }
+    var controller: UIViewController { get }
     
     func onRefresh()
 }
