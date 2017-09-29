@@ -40,9 +40,9 @@ TODO: Add long description of the pod here.
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'SwiftIconFont'
   s.dependency 'SideMenu'
-  s.dependency 'SnapKit', '3.2.0'
+  s.dependency 'SnapKit', '~> 3.2'
   s.dependency 'IoniconsKit'
-  s.dependency 'Eureka'
+  s.dependency 'Eureka', '~> 3.1'
   s.dependency 'TTTAttributedLabel'
 
   s.dependency 'Alamofire'
