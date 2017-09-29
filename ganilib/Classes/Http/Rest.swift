@@ -2,29 +2,7 @@ import Alamofire
 import SwiftyJSON
 import SVProgressHUD
 
-//public typealias GParams = [String: Any?]
 public typealias Json = JSON
-
-//
-//public enum HttpMethod {
-//    case get
-//    case post
-//    case patch
-//    case delete
-//    
-//    func alamofire() -> HTTPMethod {
-//        switch self {
-//        case .get:
-//            return HTTPMethod.get
-//        case .post:
-//            return HTTPMethod.post
-//        case .patch:
-//            return HTTPMethod.patch
-//        case .delete:
-//            return HTTPMethod.delete
-//        }
-//    }
-//}
 
 public class Rest {
     private let request: DataRequest
@@ -35,7 +13,11 @@ public class Rest {
         self.request = request
     }
     
-    public func execute(indicator: ProgressIndicator = StandardProgressIndicator.shared, onHttpSuccess: @escaping (Json) -> Bool) {
+    public func cancel() {
+        self.request.cancel()
+    }
+    
+    public func execute(indicator: ProgressIndicator = StandardProgressIndicator.shared, onHttpSuccess: @escaping (Json) -> Bool) -> Self {
         Log.i("\(actualMethod.alamofire().rawValue) \(request.request?.url?.absoluteString ?? "")")
         
         indicator.showProgress()
@@ -60,6 +42,8 @@ public class Rest {
                     indicator.showError(message: error.localizedDescription)
             }
         }
+        
+        return self
     }
     
     private static func augmentPostParams(_ params: GParams, _ method: HttpMethod) -> GParams {
