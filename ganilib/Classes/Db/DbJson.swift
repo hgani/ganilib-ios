@@ -3,8 +3,8 @@ import RealmSwift
 public class DbJson: Object {
     static let realm = try! Realm()
     
-    dynamic var key = ""
-    dynamic var value = ""
+    @objc dynamic var key = ""
+    @objc dynamic var value = ""
     
     private static func row(key: String) -> DbJson? {
         return realm.objects(DbJson.self).filter("key = %@", key).first

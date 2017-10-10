@@ -1,4 +1,3 @@
-import IoniconsKit
 
 public enum MenuType {
     case popToRoot

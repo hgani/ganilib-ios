@@ -7,7 +7,7 @@ public protocol ProgressIndicator {
 }
 
 public class StandardProgressIndicator: ProgressIndicator {
-    static let shared = StandardProgressIndicator()
+    public static let shared = StandardProgressIndicator()
     
     public func showProgress() {
         SVProgressHUD.show()

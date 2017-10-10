@@ -54,7 +54,7 @@ open class GSpinner<T>: GButton {
         }
     }
     
-    func showOptions() {
+    @objc private func showOptions() {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
         
         for (index, obj) in data.enumerated() {

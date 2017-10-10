@@ -32,7 +32,7 @@ open class GVerticalPanel: UIView {
                                                 attribute: .top,
                                                 multiplier: 1.0,
                                                 constant: 0.0)
-        previousConstraint.priority = 900  // Lower priority than fixed height
+        previousConstraint.priority = UILayoutPriority(rawValue: 900)  // Lower priority than fixed height
         self.addConstraint(previousConstraint)
     }
     
@@ -120,7 +120,7 @@ open class GVerticalPanel: UIView {
                                                     attribute: .bottomMargin,
                                                     multiplier: 1.0,
                                                     constant: 0.0)
-            previousConstraint.priority = 900
+            previousConstraint.priority = UILayoutPriority(rawValue: 900)
 
             // At this point previousViewElement refers to the last subview, that is the one at the bottom.
             self.addConstraint(previousConstraint)

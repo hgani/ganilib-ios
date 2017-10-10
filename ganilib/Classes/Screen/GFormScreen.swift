@@ -84,10 +84,11 @@ open class GFormScreen: FormViewController {
         // Ends chaining
     }
     
-//    public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
-////        _ = self.contentView.padding(top: top, left: left, bottom: bottom, right: right)
-//        return self
-//    }
+    // Don't declare this in an extension or else we'll get compile error
+    // See https://stackoverflow.com/questions/44616409/declarations-in-extensions-cannot-override-yet-error-in-swift-4
+    open func onRefresh() {
+        // To be overridden
+    }
 }
 
 extension GFormScreen: ScreenProtocol {
@@ -95,10 +96,6 @@ extension GFormScreen: ScreenProtocol {
         get {
             return self
         }
-    }
-    
-    open func onRefresh() {
-        // To be overridden
     }
 }
 

@@ -1,7 +1,5 @@
 import UIKit
 import SideMenu
-import IoniconsKit
-//import SVProgressHUD
 
 open class MenuNavController: UITableViewController {
 //    static private var currentItem: MenuItem?

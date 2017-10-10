@@ -87,9 +87,11 @@ open class GScreen: UIViewController {
         return self
     }
     
-//    open func onRefresh() {
-//        // To be overridden
-//    }
+    // Don't declare this in an extension or else we'll get compile error
+    // See https://stackoverflow.com/questions/44616409/declarations-in-extensions-cannot-override-yet-error-in-swift-4
+    open func onRefresh() {
+        // To be overridden
+    }
 }
 
 extension GScreen: ScreenProtocol {
@@ -97,10 +99,6 @@ extension GScreen: ScreenProtocol {
         get {
             return self
         }
-    }
-    
-    open func onRefresh() {
-        // To be overridden
     }
 }
 

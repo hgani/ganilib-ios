@@ -10,11 +10,6 @@ open class GButton: UIButton {
     public init() {
         super.init(frame: .zero)
         initialize()
-        
-//        self.helper = ViewHelper(self)
-//        
-//        // Make sure that contentEdgeInsets' values is always initialized properly (i.e. non-zero)
-//        _ = self.padding(top: 10, left: 20, bottom: 10, right: 20)
     }
     
     required public init?(coder: NSCoder) {
@@ -26,7 +21,7 @@ open class GButton: UIButton {
         self.helper = ViewHelper(self)
         
         // Make sure that contentEdgeInsets' values is always initialized properly (i.e. non-zero)
-        _ = self.padding(top: 10, left: 20, bottom: 10, right: 20)
+        _ = self.paddings(t: 10, l: 20, b: 10, r: 20)
     }
     
     open override func didMoveToSuperview() {
@@ -100,6 +95,7 @@ open class GButton: UIButton {
 //    }
 
     public func title(_ title: String) -> Self {
+        self.titleLabel!.numberOfLines = 0
         self.setTitle(title, for: .normal)
         return self
     }
@@ -170,32 +166,19 @@ open class GButton: UIButton {
         return self
     }
     
-    public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
+    public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
         let orig = self.contentEdgeInsets
-        
+
         let top = top ?? orig.top
         let left = left ?? orig.left
         let bottom = bottom ?? orig.bottom
         let right = right ?? orig.right
-        
+
         self.contentEdgeInsets = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
 
         return self
     }
     
-//    public func bgcolor(_ color: UIColor) -> Self {
-//        self.backgroundColor = color
-//        self.titleLabel?.textColor = UIColor.white
-//        return self
-//    }
-    
-    // NOTE: Deprecated. Use onClick() instead
-//    public func click(_ target: Any, action: Selector) -> Self {
-//        addTarget(target, action: action, for: .touchUpInside)
-//        return self
-//    }
-    
-    //typealias V = GButton
     public func spec(_ spec: GButtonSpec) -> Self {
         spec.initialize(self)
         return self
@@ -223,13 +206,18 @@ open class GButton: UIButton {
         return font(self.titleLabel!.font.withSize(CGFloat(size)))
     }
     
-    public func text(size: Float?, align: UIControlContentHorizontalAlignment? = nil) -> Self {
+//    public func text(size: Float?, align: UIControlContentHorizontalAlignment? = nil) -> Self {
+    public func text(size: Float?, align: NSTextAlignment? = nil) -> Self {
         if let textSize = size {
             _ = font(self.titleLabel!.font.withSize(CGFloat(textSize)))
         }
         
         if let textAlign = align {
-            self.contentHorizontalAlignment = textAlign;
+//            self.contentHorizontalAlignment = textAlign;
+            
+            // The following works better when the button has multi-line text compared to
+            // self.contentHorizontalAlignment which only aligns the label itself rather than the label's text
+            self.titleLabel?.textAlignment = textAlign
         }
         
         return self

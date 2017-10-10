@@ -6,7 +6,7 @@ import TTTAttributedLabel
 open class GLabel: UILabel {
     private var helper : ViewHelper!
     private var isUnderlined = false
-    private var onClick : (() -> Void)?
+    private var onClick : ((GLabel) -> Void)?
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -122,16 +122,8 @@ open class GLabel: UILabel {
         return self
     }
     
-//    // NOTE: Deprecated. Use onClick() instead
-//    public func click(_ target: Any, action: Selector) -> GLabel {
-//        self.isUserInteractionEnabled = true
-//        let gestureRecognizer = UITapGestureRecognizer(target: target, action: action)
-//        self.addGestureRecognizer(gestureRecognizer)
-//        return self
-//    }
-    
     // Use block instead of selector from now on. See https://stackoverflow.com/questions/24007650/selector-in-swift
-    public func onClick(_ command: @escaping () -> Void) -> Self {
+    public func onClick(_ command: @escaping (GLabel) -> Void) -> Self {
         self.onClick = command
         self.isUserInteractionEnabled = true
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(performClick))
@@ -141,7 +133,7 @@ open class GLabel: UILabel {
     
     @objc private func performClick() {
         if let callback = self.onClick {
-            callback()
+            callback(self)
         }
     }
     

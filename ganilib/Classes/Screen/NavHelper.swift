@@ -31,7 +31,7 @@ open class NavHelper {
     
     public func color(bg: UIColor, text: UIColor) {
         navController.navigationBar.barTintColor = bg
-        navController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: text]
+        navController.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: text]
         navController.navigationBar.tintColor = text  // For built-in back button
     }
     

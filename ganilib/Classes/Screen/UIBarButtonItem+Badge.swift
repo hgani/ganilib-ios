@@ -37,7 +37,7 @@ extension UIBarButtonItem {
         
         let font = UIFont.systemFont(ofSize: fontSize)
         
-        let badgeSize = text.size(attributes: [NSFontAttributeName: font])
+        let badgeSize = text.size(withAttributes: [NSAttributedStringKey.font: font])
         
         // Initialize Badge
         let badge = CAShapeLayer()
