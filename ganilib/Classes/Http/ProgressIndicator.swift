@@ -1,39 +1,48 @@
 import SVProgressHUD
 
 public protocol ProgressIndicator {
-    func showProgress()
-    func hideProgress()
-    func showError(message: String)
+    func show()
+    func hide()
+    func show(error: String)
+    func show(success: String)
 }
 
 public class StandardProgressIndicator: ProgressIndicator {
     public static let shared = StandardProgressIndicator()
     
-    public func showProgress() {
+    public func show() {
         SVProgressHUD.show()
     }
     
-    public func hideProgress() {
+    public func hide() {
         SVProgressHUD.dismiss()
     }
     
-    public func showError(message: String) {
-        SVProgressHUD.showError(withStatus: message)
+    public func show(error: String) {
+        SVProgressHUD.showError(withStatus: error)
+    }
+    
+    public func show(success: String) {
+        SVProgressHUD.showSuccess(withStatus: success)
     }
 }
 
 public class NullProgressIndicator: ProgressIndicator {
     public static let shared = NullProgressIndicator()
     
-    public func showProgress() {
+    public func show() {
         // Do nothing
     }
     
-    public func hideProgress() {
+    public func hide() {
         // Do nothing
     }
     
-    public func showError(message: String) {
+    public func show(error: String) {
+        // Do nothing
+    }
+    
+    public func show(success: String) {
         // Do nothing
     }
 }

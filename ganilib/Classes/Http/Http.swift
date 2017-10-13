@@ -9,6 +9,7 @@ public enum HttpMethod {
     case post
     case patch
     case delete
+    case multipart
     
     func alamofire() -> HTTPMethod {
         switch self {
@@ -20,6 +21,8 @@ public enum HttpMethod {
             return HTTPMethod.patch
         case .delete:
             return HTTPMethod.delete
+        case .multipart:
+            return HTTPMethod.post
         }
     }
 }
@@ -36,23 +39,23 @@ public class Http {
     public func execute(indicator: ProgressIndicator = StandardProgressIndicator.shared, onHttpSuccess: @escaping (String) -> String?) {
         Log.i("\(actualMethod.alamofire().rawValue) \(request.request?.url?.absoluteString ?? "")")
         
-        indicator.showProgress()
+        indicator.show()
         request.responseString { response in
             if let r = response.response {
                 if !GHttp.instance.delegate.processResponse(r) {
-                    indicator.hideProgress()
+                    indicator.hide()
                     return
                 }
             }
             
             switch response.result {
                 case .success(let value):
-                    indicator.hideProgress()
+                    indicator.hide()
                     if let message = onHttpSuccess(value) {
-                        indicator.showError(message: message)
+                        indicator.show(error: message)
                     }
                 case .failure(let error):
-                    indicator.showError(message: error.localizedDescription)
+                    indicator.show(error: error.localizedDescription)
             }
         }
     }

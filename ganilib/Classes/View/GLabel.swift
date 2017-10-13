@@ -118,7 +118,7 @@ open class GLabel: UILabel {
     }
     
     public func spec(_ spec : GLabelSpec) -> Self {
-        spec.initialize(self)
+        spec.decorate(self)
         return self
     }
     
@@ -169,6 +169,14 @@ open class GLabel: UILabel {
     }
 }
 
-public protocol GLabelSpec {
-    func initialize(_ label : GLabel)
+public class GLabelSpec {
+    private var decorator: ((GLabel) -> Void)
+
+    public init(_ decorator: @escaping ((GLabel) -> Void)) {
+        self.decorator = decorator
+    }
+    
+    func decorate(_ label: GLabel) {
+        decorator(label)
+    }
 }

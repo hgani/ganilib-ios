@@ -30,7 +30,7 @@ open class GRefreshControl: UIRefreshControl, ProgressIndicator {
         }
     }
     
-    public func showProgress() {
+    public func show() {
         if let tableView = superview as? UITableView {
             // See https://stackoverflow.com/questions/14718850/uirefreshcontrol-beginrefreshing-not-working-when-uitableviewcontroller-is-ins
             tableView.setContentOffset(CGPoint(x: 0,y: tableView.contentOffset.y - self.frame.size.height), animated: true)
@@ -38,12 +38,16 @@ open class GRefreshControl: UIRefreshControl, ProgressIndicator {
         beginRefreshing()
     }
     
-    public func hideProgress() {
+    public func hide() {
         endRefreshing()
     }
     
-    public func showError(message: String) {
-        SVProgressHUD.showError(withStatus: message)
+    public func show(error: String) {
+        SVProgressHUD.showError(withStatus: error)
+    }
+    
+    public func show(success: String) {
+        SVProgressHUD.showSuccess(withStatus: success)
     }
     
     public func end() {

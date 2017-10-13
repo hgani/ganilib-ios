@@ -3,46 +3,107 @@ import SwiftyJSON
 import SVProgressHUD
 
 public typealias Json = JSON
+typealias NonNullParams = [String: Any]
 
 public class Rest {
-    private let request: DataRequest
-    private let actualMethod: HttpMethod
+    private let method: HttpMethod
+    private let url: String
+    private let params: NonNullParams
+    private let headers: HTTPHeaders?
+    private let string: String
     
-    init(method: HttpMethod, request: DataRequest) {
-        self.actualMethod = method
-        self.request = request
+    private var request: DataRequest?
+    private var canceled: Bool
+    
+    init(method: HttpMethod, url: String, params: NonNullParams, headers: HTTPHeaders?) {
+        self.method = method
+        self.url = url
+        self.params = params
+        self.headers = headers
+        
+        self.string = "\(method.alamofire().rawValue) \(url)"
+        self.canceled = false
     }
     
     public func cancel() {
-        self.request.cancel()
+        Log.i("Request canceled: \(string)")
+        self.canceled = true
+        
+        if let r = self.request {
+            r.cancel()
+        }
     }
     
-    public func execute(indicator: ProgressIndicator = StandardProgressIndicator.shared, onHttpSuccess: @escaping (Json) -> Bool) -> Self {
-        Log.i("\(actualMethod.alamofire().rawValue) \(request.request?.url?.absoluteString ?? "")")
+    private func executeGeneric(indicator: ProgressIndicator, onHttpSuccess: @escaping (Json) -> Bool) {
+        Log.i(string)
         
-        indicator.showProgress()
-        request.responseString { response in
-            if let r = response.response {
-                if !GHttp.instance.delegate.processResponse(r) {
-                    indicator.hideProgress()
-                    return
+        indicator.show()
+        if let r = request {
+            r.responseString { response in
+                if let r = response.response {
+                    if !GHttp.instance.delegate.processResponse(r) {
+                        indicator.hide()
+                        return
+                    }
                 }
-            }
-            
-            switch response.result {
+                
+                switch response.result {
                 case .success(let value):
-                    indicator.hideProgress()
+                    indicator.hide()
                     
                     let json = JSON(parseJSON: value)
                     Log.d("Result: \(json)")
                     if !onHttpSuccess(json) {
-                        indicator.showError(message: json["message"].stringValue)
+                        indicator.show(error: json["message"].stringValue)
                     }
                 case .failure(let error):
-                    indicator.showError(message: error.localizedDescription)
+                    indicator.show(error: error.localizedDescription)
+                }
             }
         }
+    }
+    
+    public func execute(indicator: ProgressIndicator = StandardProgressIndicator.shared, onHttpSuccess: @escaping (Json) -> Bool) -> Self {
+        if canceled {
+            return self
+        }
         
+        switch method {
+        case .multipart:
+            Alamofire.upload(multipartFormData: { (formData) in
+                for (key, value) in self.params {
+                    if value is UIImage {
+                        formData.append(UIImageJPEGRepresentation((value as! UIImage), 1)!,
+                                        withName: key,
+                                        fileName: "images.jpeg",
+                                        mimeType: "image/jpeg")
+                    }
+                    else {
+                        formData.append(String(describing: value).data(using: .utf8)!, withName: key)
+                    }
+                }
+            }, usingThreshold: 0,
+               to: self.url,
+               method: HTTPMethod.post,
+               headers: self.headers,
+               encodingCompletion: { (result) in
+                switch result {
+                case .failure(let error):
+                    indicator.show(error: error.localizedDescription)
+                case .success(let upload, _, _):
+                    upload.uploadProgress { progress in
+                        let percentage = (progress.fractionCompleted * 100).rounded()
+                        indicator.show(success: "Uploading (\(percentage)%)")
+                    }
+                    
+                    self.request = upload
+                    self.executeGeneric(indicator: indicator, onHttpSuccess: onHttpSuccess)
+                }
+            })
+        default:
+            self.request = Alamofire.request(url, method: method.alamofire(), parameters: params, headers: headers)
+            executeGeneric(indicator: indicator, onHttpSuccess: onHttpSuccess)
+        }
         return self
     }
     
@@ -58,15 +119,13 @@ public class Rest {
     }
     
     private static func request(_ path: String, _ method: HttpMethod, _ params: GParams, _ headers: HTTPHeaders?) -> Rest {
+        let url = "\(GHttp.instance.host())\(path)"
         let augmentedParams = augmentPostParams(params, method)
-        
-        return Rest(method: method, request: Alamofire.request("\(GHttp.instance.host())\(path)",
-            method: method.alamofire(),
-            parameters: prepareParams(GHttp.instance.delegate.restParams(from: augmentedParams, method: method)),
-            headers: headers))
+        let preparedParams = prepareParams(GHttp.instance.delegate.restParams(from: augmentedParams, method: method))
+        return Rest(method: method, url: url, params: preparedParams, headers: headers)
     }
     
-    private static func prepareParams(_ params: GParams) -> [String: Any] {
+    private static func prepareParams(_ params: GParams) -> NonNullParams {
         var data = [String: Any]()
         for (key, value) in params {
             if let sub = value as? GParams {
@@ -93,5 +152,9 @@ public class Rest {
     
     public static func get(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
         return request(path, .get, params, headers)
+    }
+    
+    public static func multipart(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+        return request(path, .multipart, params, headers)
     }
 }

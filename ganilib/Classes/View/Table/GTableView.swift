@@ -218,6 +218,11 @@ open class GHeaderFooterView: UIView {
         container.addView(view, top: top)
     }
     
+    public func clear() -> Self {
+        clearViews()
+        return self
+    }
+    
     public func append(_ view: UIView, top: CGFloat? = nil) -> Self {
         addView(view, top: top)
         return self
