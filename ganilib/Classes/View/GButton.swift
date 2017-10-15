@@ -1,6 +1,5 @@
 
 import UIKit
-//import IoniconsKit
 import SwiftIconFont
 
 open class GButton: UIButton {
@@ -180,12 +179,12 @@ open class GButton: UIButton {
     }
     
     public func spec(_ spec: GButtonSpec) -> Self {
-        spec.initialize(self)
+        spec.decorate(self)
         return self
     }
     
     // Use block instead of selector from now on. See https://stackoverflow.com/questions/24007650/selector-in-swift
-    public func onClick(_ command: @escaping (GButton) -> Void) -> Self {
+    open func onClick(_ command: @escaping (GButton) -> Void) -> Self {
         self.onClick = command
         addTarget(self, action: #selector(performClick), for: .touchUpInside)
         return self
@@ -249,6 +248,14 @@ open class GButton: UIButton {
     }
 }
 
-public protocol GButtonSpec {
-    func initialize(_ button: GButton)
+public class GButtonSpec {
+    private var decorator: ((GButton) -> Void)
+    
+    public init(_ decorator: @escaping ((GButton) -> Void)) {
+        self.decorator = decorator
+    }
+    
+    func decorate(_ view: GButton) {
+        decorator(view)
+    }
 }

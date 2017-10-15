@@ -176,7 +176,7 @@ public class GLabelSpec {
         self.decorator = decorator
     }
     
-    func decorate(_ label: GLabel) {
-        decorator(label)
+    func decorate(_ view: GLabel) {
+        decorator(view)
     }
 }

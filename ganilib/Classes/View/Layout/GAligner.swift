@@ -2,6 +2,7 @@
 import UIKit
 
 open class GAligner: UIView {
+    private var horizontalAlign: GAlignerHorizontalGravity = .center
     private var helper: ViewHelper!
     
     public init() {
@@ -23,6 +24,11 @@ open class GAligner: UIView {
         helper.didMoveToSuperview()
     }
     
+    public func align(_ align: GAlignerHorizontalGravity) -> Self {
+        self.horizontalAlign = align
+        return self
+    }
+    
     public func withView(_ child: UIView) -> Self {
         // The hope is this makes things more predictable
         child.translatesAutoresizingMaskIntoConstraints = false
@@ -30,7 +36,13 @@ open class GAligner: UIView {
         addSubview(child)
                 
         self.snp.makeConstraints { make in
-            make.centerX.equalTo(child)
+            switch horizontalAlign {
+            case .center: make.centerX.equalTo(child)
+            case .right: make.rightMargin.equalTo(child.snp.right)
+            case .left: make.leftMargin.equalTo(child.snp.left)
+            }
+            
+//            make.centerX.equalTo(child)
             make.centerY.equalTo(child)
 
             // So that it is at least the size of the child
@@ -67,10 +79,12 @@ open class GAligner: UIView {
         return self
     }
     
-    public enum GAlignerGravity {
+    public enum GAlignerHorizontalGravity {
         case center
-        case centerVertical
-        case centerHorizontal
+        case left
+        case right
+//        case centerVertical
+//        case centerHorizontal
 //        case left
 //        case right
     }
