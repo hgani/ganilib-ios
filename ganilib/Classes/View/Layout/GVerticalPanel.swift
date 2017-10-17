@@ -48,13 +48,10 @@ open class GVerticalPanel: UIView {
         addInitialBottomConstraint()
         
         previousViewElement = nil
-//        previousConstraint = nil
 
         for view in subviews {
             view.removeFromSuperview()
         }
-        
-//        addInitialBottomConstraint()
     }
     
     public func addView(_ child : UIView, top : CGFloat? = nil) {
@@ -77,41 +74,23 @@ open class GVerticalPanel: UIView {
     private func initChildConstraints(child : UIView, top : CGFloat) {
         child.snp.makeConstraints { make in
             if previousViewElement == nil {
-                  // For some reason there seems to be a negative offset so we need to add a magic number, i.e. 8
-//                make.topMargin.equalTo(self).offset(top + 8)
-//                make.top.equalTo(self).offset(top)
-//                    .offset(helper.paddings.top + top)
-                
                 make.top.equalTo(self.snp.topMargin).offset(top)
             }
             else {
                 make.top.equalTo(previousViewElement.snp.bottom).offset(top)
-                
-//                make.top.equalTo(previousViewElement.snp.bottom)
-//                    .offset(top)
             }
             
             make.left.equalTo(self.snp.leftMargin)
-//            make.left.equalTo(self)
-//                .offset(helper.paddings.left)
         }
     }
     
     private func adjustSelfConstraints(child : UIView) {
         self.snp.makeConstraints { (make) -> Void in
-//            make.bottom.greaterThanOrEqualTo(child).offset(paddings.bottom)
-            
             make.rightMargin.greaterThanOrEqualTo(child.snp.right)
-            
-//            make.right.greaterThanOrEqualTo(child)
-//                .offset(helper.paddings.right)
         }
         
         if !helper.shouldHeightMatchParent() {
-//            if previousConstraint != nil {
             self.removeConstraint(previousConstraint)
-//            }
-            
             
             previousConstraint = NSLayoutConstraint(item: child,
                                                     attribute: .bottom,
@@ -151,29 +130,6 @@ open class GVerticalPanel: UIView {
         helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
-    
-//    public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
-////        let orig = self.paddings
-////        
-////        let top = top ?? orig.top
-////        let left = left ?? orig.left
-////        let bottom = bottom ?? orig.bottom
-////        let right = right ?? orig.right
-////        
-////        self.paddings = UIEdgeInsetsMake(top, left, bottom, right)
-//        
-//        
-//        let orig = self.layoutMargins
-//        
-//        let top = top ?? orig.top
-//        let left = left ?? orig.left
-//        let bottom = bottom ?? orig.bottom
-//        let right = right ?? orig.right
-//        
-//        self.layoutMargins = UIEdgeInsetsMake(top, left, bottom, right)
-//        
-//        return self
-//    }
     
     public func color(bg: UIColor) -> Self {
         self.backgroundColor = bg

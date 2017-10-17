@@ -46,29 +46,29 @@ open class GFormScreen: FormViewController {
         // To be overridden
     }
     
-    public func headerForm(title: String?, height: CGFloat) -> HeaderFooterView<UIView> {
-        var header = HeaderFooterView<UIView>(.class)
-        header.height = {height}
-        header.onSetupView = { view, section in
-            view.backgroundColor = .white
-            
-            let label = UILabel()
-            label.text = title
-            label.numberOfLines = 0
-            label.textAlignment = .center
-            
-            view.addSubview(label)
-            
-            label.snp.makeConstraints { (make) -> Void in
-                make.width.equalTo(view).offset(-20)
-                make.height.equalTo(view)
-                make.left.equalTo(10)
-                make.right.equalTo(10)
-            }
-        }
-        
-        return header
-    }
+//    public func headerForm(title: String?, height: CGFloat) -> HeaderFooterView<UIView> {
+//        var header = HeaderFooterView<UIView>(.class)
+//        header.height = {height}
+//        header.onSetupView = { view, section in
+//            view.backgroundColor = .white
+//
+//            let label = UILabel()
+//            label.text = title
+//            label.numberOfLines = 0
+//            label.textAlignment = .center
+//
+//            view.addSubview(label)
+//
+//            label.snp.makeConstraints { (make) -> Void in
+//                make.width.equalTo(view).offset(-20)
+//                make.height.equalTo(view)
+//                make.left.equalTo(10)
+//                make.right.equalTo(10)
+//            }
+//        }
+//
+//        return header
+//    }
     
     public func leftMenu(controller: UITableViewController) -> Self {
         helper.leftMenu(controller: controller)

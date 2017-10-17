@@ -190,7 +190,7 @@ open class GButton: UIButton {
         return self
     }
     
-    @objc private func performClick() {
+    @objc open func performClick() {
         if let callback = self.onClick {
             callback(self)
         }

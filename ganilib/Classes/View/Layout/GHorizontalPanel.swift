@@ -5,7 +5,6 @@ open class GHorizontalPanel : UIView {
     private var helper: ViewHelper!
     private var previousViewElement : UIView!
     private var previousConstraint : NSLayoutConstraint!
-//    private var paddings = UIEdgeInsetsMake(0, 0, 0, 0)
     
     public init() {
         super.init(frame: .zero)
@@ -57,11 +56,9 @@ open class GHorizontalPanel : UIView {
     private func initChildConstraints(child: UIView, left: CGFloat) {
         child.snp.makeConstraints { make in
             make.top.equalTo(self.snp.topMargin)
-//                .offset(paddings.top)
             
             if previousViewElement == nil {
                 make.left.equalTo(self.snp.leftMargin).offset(left)
-//                    .offset(paddings.left + left)
             }
             else {
                 make.left.equalTo(previousViewElement.snp.right).offset(left)
@@ -71,9 +68,7 @@ open class GHorizontalPanel : UIView {
     
     private func adjustParentBottomConstraint(child : UIView) {
         self.snp.makeConstraints { make in
-            make.bottomMargin.greaterThanOrEqualTo(child.snp.bottomMargin)
-//                .offset(paddings.bottom)
-//            make.bottom.greaterThanOrEqualTo(child).offset(paddings.bottom)
+            make.bottomMargin.greaterThanOrEqualTo(child.snp.bottom)
         }
 
         if !helper.shouldWidthMatchParent() {
@@ -116,21 +111,6 @@ open class GHorizontalPanel : UIView {
         helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
-    
-    
-//    // TODO: Rewrite to add a wrapper view? Then rename this method to offsets
-//    // NOTE: At the moment, this only works it gets called before children get added
-//    public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
-//        let orig = self.paddings
-//        
-//        let top = top ?? orig.top
-//        let left = left ?? orig.left
-//        let bottom = bottom ?? orig.bottom
-//        let right = right ?? orig.right
-//        
-//        self.paddings = UIEdgeInsetsMake(top, left, bottom, right)
-//        return self
-//    }
     
     public func color(bg: UIColor) -> Self {
         self.backgroundColor = bg

@@ -87,6 +87,11 @@ open class GLabel: UILabel {
 //        return self
 //    }
     
+    public func iconify() -> Self {
+        self.parseIcon()
+        return self
+    }
+    
     public func width(_ width: Int) -> Self {
         helper.width(width)
         return self
