@@ -66,27 +66,6 @@ open class GLabel: UILabel {
         return self
     }
     
-//    public func font(size: Float? = nil, traits: UIFontDescriptorSymbolicTraits...) -> Self {
-//        var f = self.font.withTraits(traits)
-//        if let s = size {
-//           f = f.withSize(CGFloat(s))
-//        }
-////        if let t = traits {
-////            f = f.withTraits(traits)
-////        }
-//        return font(f)
-//    }
-
-    // TODO: Consider deprecating this, but how about underline()
-    public func bold() -> Self {
-        return font(self.font.bold())
-    }
-    
-//    public func size(w: Int?, h: Int?) -> Self {
-//        helper.size(width: w, height: h)
-//        return self
-//    }
-    
     public func iconify() -> Self {
         self.parseIcon()
         return self
