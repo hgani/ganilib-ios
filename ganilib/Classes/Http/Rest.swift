@@ -32,6 +32,8 @@ public class Rest {
         if let r = self.request {
             r.cancel()
         }
+        
+        // TODO: Consider setting request to nil so that the listener (including all its references) can be garbage collected
     }
     
     private func executeGeneric(indicator: ProgressIndicator, onHttpSuccess: @escaping (Json) -> Bool) {
