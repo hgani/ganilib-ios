@@ -1,10 +1,17 @@
 import UIKit
+import WebKit
 
-open class GWebView: UIWebView {
+open class GWebView: WKWebView {
     private var helper : ViewHelper!
 
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
+    lazy fileprivate var refresher: GRefreshControl = {
+        return GRefreshControl().onValueChanged {
+            self.reload()
+        }
+    }()
+    
+    public init() {
+        super.init(frame: .zero, configuration: WKWebViewConfiguration())
         initialize()
     }
     
@@ -15,6 +22,9 @@ open class GWebView: UIWebView {
     
     private func initialize() {
         self.helper = ViewHelper(self)
+        self.navigationDelegate = self
+        
+        self.scrollView.addSubview(refresher)
     }
     
     open override func didMoveToSuperview() {
@@ -55,7 +65,9 @@ open class GWebView: UIWebView {
     }
     
     public func load(url: URL) -> Self {
-        loadRequest(URLRequest(url: url))
+        Log.i("Loading \(url) ...")
+        self.refresher.show()
+        load(URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 30))
         return self
     }
     
@@ -67,3 +79,11 @@ open class GWebView: UIWebView {
         // Ends chaining
     }
 }
+
+extension GWebView: WKNavigationDelegate {
+    public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        Log.t("Finished")
+        self.refresher.hide()
+    }
+}
+
