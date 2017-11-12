@@ -15,16 +15,15 @@ open class GScrollView: UIScrollView {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         
 //        self.backgroundColor = .green
-//        contentView.backgroundColor = .red
-        
+//        contentView.backgroundColor = .blue
         
         self.addSubview(contentView)
         contentView.snp.makeConstraints { make in
             make.centerX.equalTo(self)
             make.width.equalTo(self)
             
-            make.top.equalTo(self)
-            make.bottom.equalTo(self)
+//            make.top.equalTo(self)
+//            make.bottom.equalTo(self)
         }
     }
     

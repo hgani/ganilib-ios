@@ -2,18 +2,24 @@
 import UIKit
 
 open class GScreen: UIViewController {
-    public let container = GScreenContainer()
+    public let container: GScreenContainer
     
     private var helper : ScreenHelper!
     public var launch : LaunchHelper!
     public var indicator : IndicatorHelper!
     public var nav : NavHelper!
     
-    public init() {
+    public init(container: GScreenContainer) {
+        self.container = container
         super.init(nibName: nil, bundle: nil)
     }
     
+    convenience public init() {
+        self.init(container: GScreenContainer(scrollView: GScrollView()))
+    }
+    
     public required init?(coder aDecoder: NSCoder) {
+        self.container = GScreenContainer(scrollView: GScrollView())
         super.init(coder: aDecoder)
     }
     
@@ -104,18 +110,28 @@ extension GScreen: ScreenProtocol {
 
 public class GScreenContainer: GHamburgerPanel {
     public let header = GVerticalPanel().width(.matchParent)
-    private let content = GScrollView().width(.matchParent)
+    private let scrollView: GScrollView?
+    private let content: UIView
     public let footer = GVerticalPanel().width(.matchParent)
-//        .height(50)
     
-    public override init() {
+    public init(scrollView: GScrollView) {
+        self.content = scrollView.width(.matchParent)
+        self.scrollView = scrollView
+        
+        super.init()
+        initialize()
+    }
+    
+    public init(webView: GWebView) {
+        self.content = webView.width(.matchParent)
+        self.scrollView = nil
+        
         super.init()
         initialize()
     }
     
     required public init?(coder: NSCoder) {
-        super.init(coder: coder)
-        initialize()
+        fatalError("Unsupported operation")
     }
     
     private func initialize() {
@@ -127,10 +143,10 @@ public class GScreenContainer: GHamburgerPanel {
     }
     
     public func clearViews() {
-        content.clearViews()
+        scrollView?.clearViews()
     }
     
     public func addView(_ view: UIView, top : CGFloat? = nil) {
-        content.addView(view, top: top)
+        scrollView?.addView(view, top: top)
     }
 }
