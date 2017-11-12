@@ -13,17 +13,14 @@ open class GScrollView: UIScrollView {
         // See https://github.com/zaxonus/AutoLayScroll
 //        self.translatesAutoresizingMaskIntoConstraints = false
         contentView.translatesAutoresizingMaskIntoConstraints = false
-        
-//        self.backgroundColor = .green
-//        contentView.backgroundColor = .blue
-        
+
         self.addSubview(contentView)
         contentView.snp.makeConstraints { make in
             make.centerX.equalTo(self)
             make.width.equalTo(self)
             
-//            make.top.equalTo(self)
-//            make.bottom.equalTo(self)
+            make.top.equalTo(self)
+            make.bottom.equalTo(self)
         }
     }
     
