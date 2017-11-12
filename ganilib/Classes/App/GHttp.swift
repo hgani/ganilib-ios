@@ -33,5 +33,14 @@ public class GHttp {
     public func hostUrl() -> URL {
         return URL(string: host())!
     }
+    
+    public func clearCookies() {
+        let cstorage = HTTPCookieStorage.shared
+        if let cookies = cstorage.cookies(for: GHttp.instance.hostUrl()) {
+            for cookie in cookies {
+                cstorage.deleteCookie(cookie)
+            }
+        }
+    }
 }
 
