@@ -36,7 +36,9 @@ public class Rest {
         // TODO: Consider setting request to nil so that the listener (including all its references) can be garbage collected
     }
     
-    private func executeGeneric(indicator: ProgressIndicator, onHttpSuccess: @escaping (Json) -> Bool) {
+    private func executeGeneric(indicator: ProgressIndicator,
+                                onHttpSuccess: @escaping (Json) -> Bool,
+                                onHttpFailure: @escaping (Error) -> Bool) {
         Log.i(string)
         
         indicator.show()
@@ -59,13 +61,17 @@ public class Rest {
                         indicator.show(error: json["message"].stringValue)
                     }
                 case .failure(let error):
-                    indicator.show(error: error.localizedDescription)
+                    if !onHttpFailure(error) {
+                        indicator.show(error: error.localizedDescription)
+                    }
                 }
             }
         }
     }
     
-    public func execute(indicator: ProgressIndicator = StandardProgressIndicator.shared, onHttpSuccess: @escaping (Json) -> Bool) -> Self {
+    public func execute(indicator: ProgressIndicator = StandardProgressIndicator.shared,
+                        onHttpFailure: @escaping (Error) -> Bool = { _ in return false },
+                        onHttpSuccess: @escaping (Json) -> Bool) -> Self {
         if canceled {
             return self
         }
@@ -99,12 +105,12 @@ public class Rest {
                     }
                     
                     self.request = upload
-                    self.executeGeneric(indicator: indicator, onHttpSuccess: onHttpSuccess)
+                    self.executeGeneric(indicator: indicator, onHttpSuccess: onHttpSuccess, onHttpFailure: onHttpFailure)
                 }
             })
         default:
             self.request = Alamofire.request(url, method: method.alamofire(), parameters: params, headers: headers)
-            executeGeneric(indicator: indicator, onHttpSuccess: onHttpSuccess)
+            executeGeneric(indicator: indicator, onHttpSuccess: onHttpSuccess, onHttpFailure: onHttpFailure)
         }
         return self
     }

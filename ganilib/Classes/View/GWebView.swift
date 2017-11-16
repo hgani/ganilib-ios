@@ -2,11 +2,12 @@ import UIKit
 import WebKit
 
 open class GWebView: WKWebView {
-    private var helper : ViewHelper!
+    private var helper: ViewHelper!
+    private var requestUrl: URL?
 
     lazy fileprivate var refresher: GRefreshControl = {
-        return GRefreshControl().onValueChanged {
-            self.reload()
+        return GRefreshControl().onValueChanged { [unowned self] in
+            self.refresh()
         }
     }()
     
@@ -65,6 +66,8 @@ open class GWebView: WKWebView {
     }
     
     public func load(url: URL) -> Self {
+        self.requestUrl = url
+        
         Log.i("Loading \(url) ...")
         self.refresher.show()
         load(URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 30))
@@ -75,15 +78,53 @@ open class GWebView: WKWebView {
         return load(url: URL(string: url)!)
     }
     
+    public func refresh() {
+        // It seems that reload() doesn't do anything when the initial load() failed.
+        if let url = self.requestUrl {
+            _ = self.load(url: url)
+        }
+    }
+    
     public func end() {
         // Ends chaining
     }
 }
 
 extension GWebView: WKNavigationDelegate {
+    public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        Log.t("didStartProvisionalNavigation")
+    }
+    
+    public func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+        Log.t("didReceiveServerRedirectForProvisionalNavigation")
+    }
+
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        Log.t("Finished")
         self.refresher.hide()
+    }
+    
+    public func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        handle(error: error)
+    }
+    
+    // E.g. SSL error
+    public func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        handle(error: error)
+    }
+    
+    private func handle(error: Error) {
+        self.refresher.hide()
+        
+        let alert = UIAlertController(title: nil,
+                                      message: error.localizedDescription,
+                                      preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: "Retry", style: .default) { [unowned self] (result) -> Void in
+            self.refresh()
+        })
+        
+        GApp.instance.navigationController.present(alert, animated: true, completion: nil)
     }
 }
 
