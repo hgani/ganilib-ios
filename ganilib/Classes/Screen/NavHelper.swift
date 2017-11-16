@@ -3,13 +3,9 @@ import UIKit
 import MessageUI
 
 open class NavHelper {
-    // NOTE: Not sure if we need to set this to weak. We tried unowned but got "bad access".
-    private var screen: ScreenProtocol?
+    private weak var screen: ScreenProtocol?
     private let navController: UINavigationController!
     private var showBar = true
-    
-    // TODO: Consider removing this now that we've got a generic solution for popAndRefresh()
-//    private var previous: ScreenProtocol?
     
     convenience public init(_ screen: ScreenProtocol) {
         self.init(navController: screen.navigationController!)
@@ -51,15 +47,11 @@ open class NavHelper {
     }
     
     public func push(_ controller : UIViewController, animated : Bool = true) {
-//        if var next = controller as? ScreenProtocol {
-//            next.previous = self.screen
-//        }
-
         navController.pushViewController(controller, animated: animated)
     }
     
     public func popAndPush(_ controller : UIViewController, animated : Bool = true) {
-//        // See http://stackoverflow.com/questions/6872852/popping-and-pushing-view-controllers-in-same-action
+        // See http://stackoverflow.com/questions/6872852/popping-and-pushing-view-controllers-in-same-action
         var vcArray = navController.viewControllers
         vcArray.removeLast()
         vcArray.append(controller)
@@ -70,11 +62,4 @@ open class NavHelper {
         navController.popViewController(animated: animated)
         return self
     }
-    
-//    public func popAndRefresh(animated : Bool = true) {
-//        if let p = screen?.previous {
-//            p.onRefresh()
-//        }
-//        pop(animated: animated)
-//    }
 }

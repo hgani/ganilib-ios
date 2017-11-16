@@ -34,13 +34,8 @@ open class MenuNavController: UITableViewController {
     }
     
     open func initMenu(_ menu: Menu) {
-//        let navigationController = AppDelegate.get().navigationController
-//        
-//        menus.append(Menu.init(title: "Home", icon: "io:ios-home"))
-        
-        Log.i("To be overridden")
+        fatalError("To be overridden")
     }
-    
     
     @objc private func clearBadge() {
         UIApplication.shared.applicationIconBadgeNumber = 0

@@ -2,12 +2,9 @@
 import UIKit
 import SwiftIconFont
 import SideMenu
-//import SnapKit
-//import IoniconsKit
 
 open class ScreenHelper {
-    // NOTE: Not sure if we need to set this to weak. We tried unowned but got "bad access".
-    private let screen: ScreenProtocol
+    private unowned let screen: ScreenProtocol
     
     private var navItem: UIBarButtonItem?
     
