@@ -32,8 +32,6 @@ public class Rest {
         if let r = self.request {
             r.cancel()
         }
-        
-        // TODO: Consider setting request to nil so that the listener (including all its references) can be garbage collected
     }
     
     private func executeGeneric(indicator: ProgressIndicator,
@@ -69,6 +67,9 @@ public class Rest {
         }
     }
     
+    // (16 Nov 2017) We've tested using CFGetRetainCount() and deinit() to make sure that onHttpSuccess doesn't linger
+    // after the request finishes. This is so even in the case where the request object (i.e. Rest) is assigned to an
+    // instance variable, so it is safe to pass a closure that accesses `self` without `unowned`.
     public func execute(indicator: ProgressIndicator = StandardProgressIndicator.shared,
                         onHttpFailure: @escaping (Error) -> Bool = { _ in return false },
                         onHttpSuccess: @escaping (Json) -> Bool) -> Self {
