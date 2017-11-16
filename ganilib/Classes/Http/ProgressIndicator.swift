@@ -7,7 +7,18 @@ public protocol ProgressIndicator {
     func show(success: String)
 }
 
-public class StandardProgressIndicator: ProgressIndicator {
+public class ProgressIndicatorEnum {
+    public static let null = ProgressIndicatorEnum(NullProgressIndicator.shared)
+    public static let standard = ProgressIndicatorEnum(StandardProgressIndicator.shared)
+    
+    public let delegate: ProgressIndicator
+    
+    init(_ delegate: ProgressIndicator) {
+        self.delegate = delegate
+    }
+}
+
+private class StandardProgressIndicator: ProgressIndicator {
     public static let shared = StandardProgressIndicator()
     
     public func show() {
@@ -27,7 +38,7 @@ public class StandardProgressIndicator: ProgressIndicator {
     }
 }
 
-public class NullProgressIndicator: ProgressIndicator {
+private class NullProgressIndicator: ProgressIndicator {
     public static let shared = NullProgressIndicator()
     
     public func show() {

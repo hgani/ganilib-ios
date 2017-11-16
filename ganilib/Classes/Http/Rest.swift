@@ -67,10 +67,16 @@ public class Rest {
         }
     }
     
+    public func execute(indicator: ProgressIndicatorEnum = .standard,
+                        onHttpFailure: @escaping (Error) -> Bool = { _ in return false },
+                        onHttpSuccess: @escaping (Json) -> Bool) -> Self {
+        return self.execute(indicator: indicator.delegate, onHttpFailure: onHttpFailure, onHttpSuccess: onHttpSuccess)
+    }
+    
     // (16 Nov 2017) We've tested using CFGetRetainCount() and deinit() to make sure that onHttpSuccess doesn't linger
-    // after the request finishes. This is so even in the case where the request object (i.e. Rest) is assigned to an
+    // after the request finishes. This is true even in the case where the request object (i.e. Rest) is assigned to an
     // instance variable, so it is safe to pass a closure that accesses `self` without `unowned`.
-    public func execute(indicator: ProgressIndicator = StandardProgressIndicator.shared,
+    public func execute(indicator: ProgressIndicator,
                         onHttpFailure: @escaping (Error) -> Bool = { _ in return false },
                         onHttpSuccess: @escaping (Json) -> Bool) -> Self {
         if canceled {

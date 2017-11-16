@@ -36,7 +36,11 @@ public class Http {
         self.request = request
     }
     
-    public func execute(indicator: ProgressIndicator = StandardProgressIndicator.shared, onHttpSuccess: @escaping (String) -> String?) {
+    public func execute(indicator: ProgressIndicatorEnum = .standard, onHttpSuccess: @escaping (String) -> String?) {
+        self.execute(indicator: indicator.delegate, onHttpSuccess: onHttpSuccess)
+    }
+
+    public func execute(indicator: ProgressIndicator, onHttpSuccess: @escaping (String) -> String?) {
         Log.i("\(actualMethod.alamofire().rawValue) \(request.request?.url?.absoluteString ?? "")")
         
         indicator.show()

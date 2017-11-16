@@ -34,7 +34,7 @@ open class MenuNavController: UITableViewController {
     }
     
     open func initMenu(_ menu: Menu) {
-        fatalError("To be overridden")
+        fatalError("Must be overridden")
     }
     
     @objc private func clearBadge() {
