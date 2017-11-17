@@ -22,15 +22,6 @@ open class MenuNavController: UITableViewController {
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        menus.removeLast(1)
-//        
-//        let notificationPrefix = (UIApplication.shared.applicationIconBadgeNumber > 0) ? " *" : ""
-//        notificationItem.title = "Notifications\(notificationPrefix)"
-        
-        Log.t("RELOADING DATA")
-        
-//        initMenu(menu)
-        
         updateMenu(menu)
         tableView.reloadData()
     }

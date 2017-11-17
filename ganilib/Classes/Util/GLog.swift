@@ -1,4 +1,4 @@
-open class Log {
+open class GLog {
     static public func e(_ str: String) {
         NSLog("[ERROR] \(str)")
     }

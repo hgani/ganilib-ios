@@ -41,7 +41,7 @@ public class Http {
     }
 
     public func execute(indicator: ProgressIndicator, onHttpSuccess: @escaping (String) -> String?) {
-        Log.i("\(actualMethod.alamofire().rawValue) \(request.request?.url?.absoluteString ?? "")")
+        GLog.i("\(actualMethod.alamofire().rawValue) \(request.request?.url?.absoluteString ?? "")")
         
         indicator.show()
         request.responseString { response in

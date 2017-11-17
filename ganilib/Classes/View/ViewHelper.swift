@@ -2,7 +2,7 @@
 import UIKit
 import SnapKit
 
-open class ViewHelper {
+public class ViewHelper {
     private unowned let view: UIView
     private var matchParentWidthMultiplier: Float?
     private var matchParentHeightMultiplier: Float?

@@ -68,7 +68,7 @@ open class GWebView: WKWebView {
     public func load(url: URL) -> Self {
         self.requestUrl = url
         
-        Log.i("Loading \(url) ...")
+        GLog.i("Loading \(url) ...")
         self.refresher.show()
         load(URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 30))
         return self
@@ -91,14 +91,6 @@ open class GWebView: WKWebView {
 }
 
 extension GWebView: WKNavigationDelegate {
-    public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        Log.t("didStartProvisionalNavigation")
-    }
-    
-    public func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
-        Log.t("didReceiveServerRedirectForProvisionalNavigation")
-    }
-
     public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         self.refresher.hide()
     }

@@ -26,7 +26,7 @@ public class Rest {
     }
     
     public func cancel() {
-        Log.i("Request canceled: \(string)")
+        GLog.i("Request canceled: \(string)")
         self.canceled = true
         
         if let r = self.request {
@@ -37,7 +37,7 @@ public class Rest {
     private func executeGeneric(indicator: ProgressIndicator,
                                 onHttpSuccess: @escaping (Json) -> Bool,
                                 onHttpFailure: @escaping (Error) -> Bool) {
-        Log.i(string)
+        //GLog.i(string)
         
         indicator.show()
         if let r = request {
@@ -54,7 +54,7 @@ public class Rest {
                     indicator.hide()
                     
                     let json = JSON(parseJSON: value)
-                    Log.d("Result: \(json)")
+                    GLog.d("Result: \(json)")
                     if !onHttpSuccess(json) {
                         indicator.show(error: json["message"].stringValue)
                     }
