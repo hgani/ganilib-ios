@@ -5,7 +5,7 @@ open class MenuNavController: UITableViewController {
 //    static private var currentItem: MenuItem?
     
     private let menu = Menu()
-    private var notificationItem : MenuItem!
+//    private var notificationItem : MenuItem!
     public var nav : NavHelper!
     
     open override func viewDidLoad() {
@@ -15,8 +15,9 @@ open class MenuNavController: UITableViewController {
 //        self.navigationController?.setNavigationBarHidden(true, animated: false)
         
         initMenu(menu)
+        
         tableView.register(MenuCell.self, forCellReuseIdentifier: NSStringFromClass(MenuCell.self))
-        tableView.tableFooterView = UIView()
+//        tableView.tableFooterView = UIView()
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -26,20 +27,31 @@ open class MenuNavController: UITableViewController {
 //        let notificationPrefix = (UIApplication.shared.applicationIconBadgeNumber > 0) ? " *" : ""
 //        notificationItem.title = "Notifications\(notificationPrefix)"
         
-        Log.i("RELOADING DATA")
+        Log.t("RELOADING DATA")
         
-        menu.clear()
-        initMenu(menu)
+//        initMenu(menu)
+        
+        updateMenu(menu)
         tableView.reloadData()
     }
+    
+//    open override func viewDidDisappear(_ animated: Bool) {
+//        Log.t("CLEARING MENU")
+//        menu.clear()
+//        tableView.reloadData()
+//    }
     
     open func initMenu(_ menu: Menu) {
         fatalError("Must be overridden")
     }
     
-    @objc private func clearBadge() {
-        UIApplication.shared.applicationIconBadgeNumber = 0
+    open func updateMenu(_ menu: Menu) {
+        // To be overridden
     }
+    
+//    @objc private func clearBadge() {
+//        UIApplication.shared.applicationIconBadgeNumber = 0
+//    }
     
     open override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return menu.count

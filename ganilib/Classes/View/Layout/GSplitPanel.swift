@@ -5,7 +5,6 @@ open class GSplitPanel : UIView {
     private var helper : ViewHelper!
     private var previousViewElement : UIView!
     private var previousConstraint : NSLayoutConstraint!
-//    private var paddings = UIEdgeInsetsMake(0, 0, 0, 0)
     
     public init() {
         super.init(frame: .zero)
@@ -38,15 +37,11 @@ open class GSplitPanel : UIView {
         
         left.snp.makeConstraints { make in
             make.top.equalTo(self.snp.topMargin)
-//                .offset(paddings.top)
             make.left.equalTo(self.snp.leftMargin)
-//                .offset(paddings.left)
         }
         right.snp.makeConstraints { make in
             make.top.equalTo(self.snp.topMargin)
-//                .offset(paddings.top)
             make.right.equalTo(self.snp.rightMargin)
-//                .offset(paddings.right)
         }
         
 //        DispatchQueue.main.async {
@@ -86,19 +81,6 @@ open class GSplitPanel : UIView {
         helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
-    
-//    // NOTE: At the moment, this only works it gets called before children get added
-//    public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
-//        let orig = self.paddings
-//        
-//        let top = top ?? orig.top
-//        let left = left ?? orig.left
-//        let bottom = bottom ?? orig.bottom
-//        let right = right ?? orig.right
-//        
-//        self.paddings = UIEdgeInsetsMake(top, left, bottom, right)
-//        return self
-//    }
     
     public func color(bg: UIColor) -> Self {
         self.backgroundColor = bg

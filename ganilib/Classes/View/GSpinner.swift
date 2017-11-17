@@ -2,6 +2,7 @@
 import UIKit
 
 open class GSpinner<T>: GButton {
+    // TODO: make unowned
     private var screen: GScreen?  // Nil if instantiated from NSCoder
 
     private var data = [T]()

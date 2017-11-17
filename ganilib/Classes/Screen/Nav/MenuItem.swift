@@ -8,7 +8,8 @@ public enum MenuType {
 }
 
 public class MenuItem {
-    private(set) var title: String
+//    private(set) var title: String
+    public var title: String
     private(set) var icon: String
     private(set) var controller: UIViewController?
     var url: URL?
