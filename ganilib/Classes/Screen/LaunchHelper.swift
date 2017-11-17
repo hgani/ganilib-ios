@@ -84,17 +84,17 @@ open class LaunchHelper {
         }
     }
     
-    // TODO: Remove. Use NavHelper instead.
-    public func screen(_ controller : UIViewController, animated : Bool, pop : Bool = false) {
-        if pop {
-            // See http://stackoverflow.com/questions/6872852/popping-and-pushing-view-controllers-in-same-action
-            var vcArray = screen.navigationController?.viewControllers
-            vcArray!.removeLast()
-            vcArray!.append(controller)
-            screen.navigationController?.setViewControllers(vcArray!, animated: animated)
-        }
-        else {
-            screen.navigationController?.pushViewController(controller, animated: animated)
-        }
-    }
+//    // TODO: Remove. Use NavHelper instead.
+//    public func screen(_ controller : UIViewController, animated : Bool, pop : Bool = false) {
+//        if pop {
+//            // See http://stackoverflow.com/questions/6872852/popping-and-pushing-view-controllers-in-same-action
+//            var vcArray = screen.navigationController?.viewControllers
+//            vcArray!.removeLast()
+//            vcArray!.append(controller)
+//            screen.navigationController?.setViewControllers(vcArray!, animated: animated)
+//        }
+//        else {
+//            screen.navigationController?.pushViewController(controller, animated: animated)
+//        }
+//    }
 }

@@ -92,19 +92,6 @@ open class GAttributedLabel : TTTAttributedLabel {
         return self
     }
     
-//    public func spec(_ spec : GLabelSpec) -> Self {
-//        spec.initialize(self)
-//        return self
-//    }
-    
-//    // NOTE: Deprecated. Use onClick() instead
-//    public func click(_ target: Any, action: Selector) -> GLabel {
-//        self.isUserInteractionEnabled = true
-//        let gestureRecognizer = UITapGestureRecognizer(target: target, action: action)
-//        self.addGestureRecognizer(gestureRecognizer)
-//        return self
-//    }
-    
     // Use block instead of selector from now on. See https://stackoverflow.com/questions/24007650/selector-in-swift
     public func onClick(_ command: @escaping () -> Void) -> Self {
         self.onClick = command

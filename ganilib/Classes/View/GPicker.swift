@@ -31,9 +31,7 @@ open class GPicker: UIPickerView, UIPickerViewDataSource, UIPickerViewDelegate {
         return data.count
     }
     
-    public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        //NSLog("ROW: \(row) -- \(data[row])")
-        
+    public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {        
         return self.data[row]
     }
 }

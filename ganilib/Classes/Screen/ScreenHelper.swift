@@ -36,53 +36,19 @@ open class ScreenHelper {
     public func leftMenu(controller: UITableViewController) {
         setupLeftMenuButton()
         
-//        let menuNavigationController = MenuNavigationController()
         let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: controller)
         menuLeftNavigationController.leftSide = true
         
-        SideMenuManager.menuLeftNavigationController = menuLeftNavigationController
-        SideMenuManager.menuAddPanGestureToPresent(toView: screen.navigationController!.navigationBar)
-        SideMenuManager.menuAddScreenEdgePanGesturesToPresent(toView: screen.navigationController!.view)
-        SideMenuManager.menuPresentMode = .viewSlideOut
-        SideMenuManager.menuFadeStatusBar = false
+        SideMenuManager.default.menuLeftNavigationController = menuLeftNavigationController
+        SideMenuManager.default.menuAddPanGestureToPresent(toView: screen.navigationController!.navigationBar)
+        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: screen.navigationController!.view)
+        SideMenuManager.default.menuPresentMode = .viewSlideOut
+        SideMenuManager.default.menuFadeStatusBar = false
     }
-    
-//    public func rightBarButton(item: GBarButtonItem) {
-//        screen.navigationItem.rightBarButtonItem = item
-//        
-////        setupLeftMenuButton()
-////        
-////        //        let menuNavigationController = MenuNavigationController()
-////        let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: controller)
-////        menuLeftNavigationController.leftSide = true
-////        
-////        SideMenuManager.menuLeftNavigationController = menuLeftNavigationController
-////        SideMenuManager.menuAddPanGestureToPresent(toView: screen.navigationController!.navigationBar)
-////        SideMenuManager.menuAddScreenEdgePanGesturesToPresent(toView: screen.navigationController!.view)
-////        SideMenuManager.menuPresentMode = .viewSlideOut
-////        SideMenuManager.menuFadeStatusBar = false
-//    }
-    
-//    public func setupRightMenuButton(icon: Ionicons, target: UIViewController, action: Selector) {
-//        let icon = UIImage.ionicon(with: icon, textColor: UIColor.white, size: CGSize(width: 24, height: 24))
-//        let button = UIButton(type: .custom)
-//        button.frame = CGRect(x: 0.0, y: 0.0, width: icon.size.width, height: icon.size.height)
-//        button.setBackgroundImage(icon, for: UIControlState())
-//        button.addTarget(target, action: action, for: UIControlEvents.touchUpInside)
-//        navItem = UIBarButtonItem(customView: button)
-//
-//        screen.navigationItem.rightBarButtonItem = navItem
-//    }
     
     @objc func leftMenuButtonPressed() {
-        screen.controller.present(SideMenuManager.menuLeftNavigationController!, animated: true, completion: nil)
+        screen.controller.present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
     }
-    
-//    func populate() {
-//        DispatchQueue.main.async {  // Make sure that the subclass' viewDidLoad() has finished executing
-//            self.screen.onRefresh()
-//        }
-//    }
     
     // Made public so that it's accessible from GaniWeb
     public func viewWillAppear() {

@@ -23,9 +23,7 @@ open class GFormScreen: FormViewController {
         self.helper = ScreenHelper(self)
         self.launch = LaunchHelper(self)
         self.indicator = IndicatorHelper(self)
-        self.nav = NavHelper(self)
-        
-//        helper.populate()
+        self.nav = NavHelper(self)        
     }
     
     override open func viewWillAppear(_ animated: Bool) {

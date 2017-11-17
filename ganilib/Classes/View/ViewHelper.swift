@@ -6,8 +6,6 @@ open class ViewHelper {
     private let view: UIView
     private var matchParentWidthMultiplier: Float?
     private var matchParentHeightMultiplier: Float?
-//    private var paddings = UIEdgeInsetsMake(0, 0, 0, 0)
-//    let paddings = ViewPaddings()
     
     public init(_ view: UIView) {
         self.view = view
@@ -19,7 +17,6 @@ open class ViewHelper {
                 view.snp.makeConstraints { make in
                     if multiplier == 1 {
                         make.right.equalTo(superview.snp.rightMargin)  // Consume remaining space
-//                        make.right.equalTo(superview)  // Consume remaining space
                     }
                     else {
                         make.width.equalTo(superview).multipliedBy(multiplier)
@@ -101,10 +98,6 @@ open class ViewHelper {
         view.layer.cornerRadius = CGFloat(corner)
     }
     
-//    public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) {
-//        paddings.update(t: top, l: left, b: bottom, r: right)
-//    }
-    
     public func paddings(t top: CGFloat?, l left: CGFloat?, b bottom: CGFloat?, r right: CGFloat?) {
         let orig = view.layoutMargins
         
@@ -116,42 +109,6 @@ open class ViewHelper {
         view.layoutMargins = UIEdgeInsetsMake(top, left, bottom, right)
     }
 }
-
-//public class ViewPaddings {
-//    private var paddings = UIEdgeInsetsMake(0, 0, 0, 0)
-//    
-//    var top: CGFloat {
-//        get {
-//            return paddings.top
-//        }
-//    }
-//    var bottom: CGFloat {
-//        get {
-//            return paddings.bottom
-//        }
-//    }
-//    var left: CGFloat {
-//        get {
-//            return paddings.left
-//        }
-//    }
-//    var right: CGFloat {
-//        get {
-//            return paddings.right
-//        }
-//    }
-//    
-//    public func update(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) {
-//        let orig = self.paddings
-//        
-//        let top = top ?? orig.top
-//        let left = left ?? orig.left
-//        let bottom = bottom ?? orig.bottom
-//        let right = right ?? orig.right
-//        
-//        self.paddings = UIEdgeInsetsMake(top, left, bottom, right)
-//    }
-//}
 
 public enum LayoutSize {
     case matchParent, wrapContent

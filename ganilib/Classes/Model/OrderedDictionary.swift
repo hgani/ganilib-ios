@@ -62,7 +62,7 @@ extension OrderedDictionary: CustomStringConvertible {
             result += isString ? "\"\(key)\"" : "\(key)"
             result += ": \(self[key]!), "
         }
-        result = String(result.characters.dropLast(2))
+        result = String(result.dropLast(2))
         result += "]"
         return result
     }
