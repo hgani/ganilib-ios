@@ -54,7 +54,11 @@ public class Rest {
                     indicator.hide()
                     
                     let json = JSON(parseJSON: value)
-                    GLog.d("Result: \(json)")
+                    var status = "Unknown status"
+                    if let code = response.response?.statusCode {
+                        status = String(code)
+                    }
+                    GLog.d("[\(status)]: \(json)")
                     if !onHttpSuccess(json) {
                         indicator.show(error: json["message"].stringValue)
                     }
@@ -133,8 +137,8 @@ public class Rest {
         }
     }
     
-    private static func request(_ path: String, _ method: HttpMethod, _ params: GParams, _ headers: HTTPHeaders?) -> Rest {
-        let url = "\(GHttp.instance.host())\(path)"
+    private static func request(_ url: String, _ method: HttpMethod, _ params: GParams, _ headers: HTTPHeaders?) -> Rest {
+        //let url = "\(GHttp.instance.host())\(path)"
         let augmentedParams = augmentPostParams(params, method)
         let preparedParams = prepareParams(GHttp.instance.delegate.restParams(from: augmentedParams, method: method))
         return Rest(method: method, url: url, params: preparedParams, headers: headers)
@@ -153,23 +157,51 @@ public class Rest {
         return data
     }
     
+    // MARK: URL-based
+    
+    public static func post(url: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+        return request(url, .post, params, headers)
+    }
+    
+    public static func patch(url: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+        return request(url, .patch, params, headers)
+    }
+    
+    public static func delete(url: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+        return request(url, .delete, params, headers)
+    }
+    
+    public static func get(url: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+        return request(url, .get, params, headers)
+    }
+    
+    public static func multipart(url: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+        return request(url, .multipart, params, headers)
+    }
+    
+    // MARK: Path-based
+    
+    private static func url(from path: String) -> String {
+        return "\(GHttp.instance.host())\(path)"
+    }
+    
     public static func post(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
-        return request(path, .post, params, headers)
+        return post(url: url(from: path), params: params, headers: headers)
     }
     
     public static func patch(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
-        return request(path, .patch, params, headers)
+        return patch(url: url(from: path), params: params, headers: headers)
     }
     
     public static func delete(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
-        return request(path, .delete, params, headers)
+        return delete(url: url(from: path), params: params, headers: headers)
     }
     
     public static func get(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
-        return request(path, .get, params, headers)
+        return get(url: url(from: path), params: params, headers: headers)
     }
     
     public static func multipart(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
-        return request(path, .multipart, params, headers)
+        return multipart(url: url(from: path), params: params, headers: headers)
     }
 }
