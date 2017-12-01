@@ -14,8 +14,10 @@ open class GScreen: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    convenience public init() {
-        self.init(container: GScreenContainer(scrollView: GScrollView()))
+    // Don't make this `convenience` so that child class can delegate to it.
+    public init() {
+        self.container = GScreenContainer(scrollView: GScrollView())
+        super.init(nibName: nil, bundle: nil)
     }
     
     public required init?(coder aDecoder: NSCoder) {
