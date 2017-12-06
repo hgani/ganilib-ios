@@ -141,6 +141,11 @@ public class Rest {
         //let url = "\(GHttp.instance.host())\(path)"
         let augmentedParams = augmentPostParams(params, method)
         let preparedParams = prepareParams(GHttp.instance.delegate.restParams(from: augmentedParams, method: method))
+        
+        #if DEBUG || ADHOC
+        GLog.i("Params: \(preparedParams)")
+        #endif
+        
         return Rest(method: method, url: url, params: preparedParams, headers: headers)
     }
     
