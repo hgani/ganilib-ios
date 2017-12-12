@@ -60,21 +60,6 @@ open class MenuNavController: UITableViewController {
 //        MenuNavController.currentItem = item
         
         dismiss(animated: true, completion: {
-//            Log.i("ITEM: \(previousItem) === \(item)")
-//            if item === previousItem {
-//                return
-//            }
-            
-//            let navigationController = AppDelegate.get().navigationController
-//            
-//            // TODO: better use this for checking auth before navigate to screen
-//            // or override viewWillAppear, but Turbolinks.VisitableViewController cant be overriden
-//            if menu.requireAuth && AppDelegate.get().currentUser == nil {
-//                let signinController = SigninController()
-//                navigationController?.pushViewController(signinController, animated: true)
-//                return
-//            }
-            
             if item.isRoot {
                 self.nav.backToHome()
             }

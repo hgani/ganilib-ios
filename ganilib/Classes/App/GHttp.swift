@@ -4,12 +4,16 @@ import Alamofire
 public protocol GHttpDelegate {
     // Parameters is a Dictionary which is a struct so the delegate can safely modify it.
     func restParams(from params: GParams, method: HttpMethod) -> GParams
-//    optional func processResponse(response: HTTPURLResponse) -> Bool
     func processResponse(_ response: HTTPURLResponse) -> Bool;
+    func processHttpStatus(code: Int) -> Bool;
 }
 
 extension GHttpDelegate {
     public func processResponse(_ response: HTTPURLResponse) -> Bool {
+        return processHttpStatus(code: response.statusCode)
+    }
+    
+    public func processHttpStatus(_ code: Int) -> Bool {
         return true
     }
 }
@@ -18,7 +22,7 @@ public class GHttp {
     static public let instance = GHttp()
     
     private var buildConfig: BuildConfig!
-    private(set) var delegate: GHttpDelegate!
+    public private(set) var delegate: GHttpDelegate!
     
     public func initialize(buildConfig: BuildConfig, delegate: GHttpDelegate) {
         self.buildConfig = buildConfig
