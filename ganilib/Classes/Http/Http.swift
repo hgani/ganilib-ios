@@ -75,10 +75,10 @@ public class Http {
         }
     }
     
-    private static func request(_ path: String, _ method: HttpMethod, _ params: GParams, _ headers: HTTPHeaders?) -> Http {
+    private static func request(_ url: String, _ method: HttpMethod, _ params: GParams, _ headers: HTTPHeaders?) -> Http {
         let augmentedParams = augmentPostParams(params, method)
         
-        return Http(method: method, request: Alamofire.request("\(GHttp.instance.host())\(path)",
+        return Http(method: method, request: Alamofire.request(url,
             method: method.alamofire(),
             parameters: prepareParams(augmentedParams),
             headers: headers))
@@ -97,19 +97,43 @@ public class Http {
         return data
     }
     
+    // MARK: URL-based
+    
+    public static func post(url: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Http {
+        return request(url, .post, params, headers)
+    }
+    
+    public static func patch(url: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Http {
+        return request(url, .patch, params, headers)
+    }
+    
+    public static func delete(url: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Http {
+        return request(url, .delete, params, headers)
+    }
+    
+    public static func get(url: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Http {
+        return request(url, .get, params, headers)
+    }
+    
+    // MARK: Path-based
+    
+    private static func url(from path: String) -> String {
+        return "\(GHttp.instance.host())\(path)"
+    }
+    
     public static func post(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Http {
-        return request(path, .post, params, headers)
+        return post(url: url(from: path), params: params, headers: headers)
     }
     
     public static func patch(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Http {
-        return request(path, .patch, params, headers)
+        return patch(url: url(from: path), params: params, headers: headers)
     }
     
     public static func delete(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Http {
-        return request(path, .delete, params, headers)
+        return delete(url: url(from: path), params: params, headers: headers)
     }
     
     public static func get(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Http {
-        return request(path, .get, params, headers)
+        return get(url: url(from: path), params: params, headers: headers)
     }
 }

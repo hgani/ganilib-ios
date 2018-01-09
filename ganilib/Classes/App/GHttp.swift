@@ -13,7 +13,7 @@ extension GHttpDelegate {
         return processHttpStatus(code: response.statusCode)
     }
     
-    public func processHttpStatus(_ code: Int) -> Bool {
+    public func processHttpStatus(code: Int) -> Bool {
         return true
     }
 }
