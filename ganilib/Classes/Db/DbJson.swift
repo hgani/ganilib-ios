@@ -1,3 +1,5 @@
+#if INCLUDE_REALM
+
 import RealmSwift
 
 public class DbJson: Object {
@@ -50,3 +52,5 @@ public class DbJson: Object {
         }
     }
 }
+
+#endif

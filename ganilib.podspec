@@ -50,6 +50,16 @@ TODO: Add long description of the pod here.
   s.dependency 'Alamofire'
   s.dependency 'SwiftyJSON'
   s.dependency 'SVProgressHUD'
-	
-  s.dependency 'RealmSwift'
+  
+  # http://www.dbotha.com/2014/12/04/optional-cocoapod-dependencies/
+  s.default_subspec = 'Core'
+
+  s.subspec 'Core' do |image|
+    image.xcconfig = { 'OTHER_SWIFT_FLAGS' => '' }
+  end
+
+  s.subspec 'Realm' do |image|
+    image.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_REALM' }
+    image.dependency 'RealmSwift', '~> 3.0'
+  end
 end
