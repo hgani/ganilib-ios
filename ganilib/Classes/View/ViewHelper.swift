@@ -6,6 +6,7 @@ public class ViewHelper {
     private unowned let view: UIView
     private var matchParentWidthMultiplier: Float?
     private var matchParentHeightMultiplier: Float?
+    private var paddings = UIEdgeInsetsMake(0, 0, 0, 0)
     
     public init(_ view: UIView) {
         self.view = view
@@ -99,14 +100,17 @@ public class ViewHelper {
     }
     
     public func paddings(t top: CGFloat?, l left: CGFloat?, b bottom: CGFloat?, r right: CGFloat?) {
-        let orig = view.layoutMargins
+        // Use our own variable to store the definitive values just in case layoutMargins gets changed directly,
+        // which can get confusing.
+        let orig = self.paddings
         
         let top = top ?? orig.top
         let left = left ?? orig.left
         let bottom = bottom ?? orig.bottom
         let right = right ?? orig.right
         
-        view.layoutMargins = UIEdgeInsetsMake(top, left, bottom, right)
+        self.paddings = UIEdgeInsetsMake(top, left, bottom, right)
+        view.layoutMargins = self.paddings
     }
 }
 
