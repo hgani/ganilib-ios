@@ -114,8 +114,11 @@ public class Rest {
                     indicator.show(error: error.localizedDescription)
                 case .success(let upload, _, _):
                     upload.uploadProgress { progress in
-                        let percentage = (progress.fractionCompleted * 100).rounded()
-                        indicator.show(success: "Uploading (\(percentage)%)")
+                        // Subtract because it's potentially confusing to the user when we are at 100% for a few seconds.
+                        let fraction = progress.fractionCompleted - 0.02
+                        let percentage = (fraction * 100).rounded()
+                        GLog.t("Uploading (\(percentage)%) -- \(fraction)")
+                        indicator.show(progress: Float(fraction))
                     }
                     
                     self.request = upload

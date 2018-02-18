@@ -54,6 +54,10 @@ open class GRefreshControl: UIRefreshControl, ProgressIndicator {
         SVProgressHUD.showSuccess(withStatus: success)
     }
     
+    public func show(progress: Float) {
+        // Not applicable yet
+    }
+    
     public func end() {
         // End chaining initialisation
     }

@@ -5,6 +5,7 @@ public protocol ProgressIndicator {
     func hide()
     func show(error: String)
     func show(success: String)
+    func show(progress: Float)
 }
 
 public class ProgressIndicatorEnum {
@@ -36,6 +37,10 @@ private class StandardProgressIndicator: ProgressIndicator {
     public func show(success: String) {
         SVProgressHUD.showSuccess(withStatus: success)
     }
+    
+    public func show(progress: Float) {
+        SVProgressHUD.showProgress(progress)
+    }
 }
 
 private class NullProgressIndicator: ProgressIndicator {
@@ -54,6 +59,10 @@ private class NullProgressIndicator: ProgressIndicator {
     }
     
     public func show(success: String) {
+        // Do nothing
+    }
+    
+    public func show(progress: Float) {
         // Do nothing
     }
 }
