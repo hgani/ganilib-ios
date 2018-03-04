@@ -61,6 +61,11 @@ open class GImageView : UIImageView {
         return self
     }
     
+    public func image(_ image: UIImage) -> Self {
+        self.image = image
+        return self
+    }
+    
     public func adjustHeight() {
         if let i = image {
             layoutIfNeeded();

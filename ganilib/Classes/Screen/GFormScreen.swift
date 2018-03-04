@@ -44,6 +44,11 @@ open class GFormScreen: FormViewController {
         // To be overridden
     }
     
+    public func rightBarButton(item: UIBarButtonItem) -> Self {
+        self.navigationItem.rightBarButtonItem = item
+        return self
+    }
+    
 //    public func headerForm(title: String?, height: CGFloat) -> HeaderFooterView<UIView> {
 //        var header = HeaderFooterView<UIView>(.class)
 //        header.height = {height}

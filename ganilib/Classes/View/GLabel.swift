@@ -4,9 +4,9 @@ import SwiftIconFont
 import TTTAttributedLabel
 
 open class GLabel: UILabel {
-    private var helper : ViewHelper!
+    private var helper: ViewHelper!
     private var isUnderlined = false
-    private var onClick : ((GLabel) -> Void)?
+    private var onClick: ((GLabel) -> Void)?
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
