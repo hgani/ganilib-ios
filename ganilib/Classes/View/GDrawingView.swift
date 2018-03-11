@@ -7,10 +7,10 @@ open class GDrawingView: UIView {
     private var bezierPath: UIBezierPath!
     private var pointCounter: Int = 0
     private let pointLimit: Int = 128
-    private var preRenderImage: UIImage!
+    private var preRenderImage: UIImage?
     
     private var helper: ViewHelper!
-    public var image: UIImage {
+    public var image: UIImage? {
         get {
             return preRenderImage
         }
@@ -115,8 +115,8 @@ open class GDrawingView: UIView {
     func renderToImage() {
         
         UIGraphicsBeginImageContextWithOptions(self.bounds.size, false, 0.0)
-        if preRenderImage != nil {
-            preRenderImage.draw(in: self.bounds)
+        if let img = preRenderImage {
+            img.draw(in: self.bounds)
         }
         
         bezierPath.lineWidth = lineWidth
@@ -134,8 +134,8 @@ open class GDrawingView: UIView {
     override open func draw(_ rect: CGRect) {
         super.draw(rect)
         
-        if preRenderImage != nil {
-            preRenderImage.draw(in: self.bounds)
+        if let img = preRenderImage {
+            img.draw(in: self.bounds)
         }
         
         bezierPath.lineWidth = lineWidth
