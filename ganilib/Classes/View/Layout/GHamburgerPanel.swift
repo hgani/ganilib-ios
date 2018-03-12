@@ -1,7 +1,7 @@
 
 import UIKit
 
-open class GHamburgerPanel: UIView {
+open class GHamburgerPanel: UIView, GContainer {
     private var helper: ViewHelper!
 //    private let contentView = GVerticalPanel()
 //    private let headerView = GVerticalPanel()

@@ -1,5 +1,6 @@
 
 import UIKit
+import Kingfisher
 
 open class GImageView : UIImageView {
     private var helper : ViewHelper!
@@ -24,6 +25,7 @@ open class GImageView : UIImageView {
         self.helper = ViewHelper(self)
     }
     
+    // Needed for helper.width() and helper.height()
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
         helper.didMoveToSuperview()
@@ -56,14 +58,29 @@ open class GImageView : UIImageView {
         return self
     }
 
-    public func namedImage(_ name: String) -> Self {
+    public func image(_ image: UIImage) -> Self {
+        self.image = image
+        return self
+    }
+    
+    // Deprecated
+//    public func namedImage(_ name: String) -> Self {
+//        self.image = UIImage(named: name)
+//        return self
+//    }
+    
+    public func source(name: String) -> Self {
         self.image = UIImage(named: name)
         return self
     }
     
-    public func image(_ image: UIImage) -> Self {
-        self.image = image
+    public func source(url: URL?, placeholder: UIImage? = nil) -> Self {
+        self.kf.setImage(with: url, placeholder: placeholder)
         return self
+    }
+    
+    public func source(url: String, placeholder: UIImage? = nil) -> Self {
+        return source(url: URL(string: url), placeholder: placeholder)
     }
     
     public func adjustHeight() {

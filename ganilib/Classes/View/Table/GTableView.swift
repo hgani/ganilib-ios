@@ -1,7 +1,7 @@
 
 import UIKit
 
-open class GTableView: UITableView {
+open class GTableView: UITableView, GContainer {
     private var helper: ViewHelper!
     
     public override init(frame: CGRect, style: UITableViewStyle) {
@@ -89,6 +89,11 @@ open class GTableView: UITableView {
         return T.init(style: style)
     }
     
+    public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+    
     public func end() {
         // Ends chaining
     }
@@ -121,6 +126,10 @@ open class GTableViewCell: UITableViewCell {
     public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
         helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
+    }
+    
+    public func end() {
+        // End call chaining
     }
 
     static func nibName() -> String {
@@ -178,6 +187,11 @@ open class GTableViewCustomCell: GTableViewCell {
     
     public func addView(_ view: UIView, top : CGFloat? = nil) {
         container.addView(view, top: top)
+    }
+    
+    public func append(_ view: UIView, top : CGFloat? = nil) -> Self {
+        container.addView(view, top: top)
+        return self
     }
 }
 

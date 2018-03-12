@@ -91,7 +91,9 @@ open class GScreen: UIViewController {
     }
     
     public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
-        _ = container.paddings(t: top, l: left, b: bottom, r: right)
+        if let view = screenContent() as? GContainer {
+            _ = view.paddings(t: top, l: left, b: bottom, r: right)
+        }
         return self
     }
     
@@ -152,3 +154,4 @@ public class GScreenContainer: GHamburgerPanel {
         scrollView?.addView(view, top: top)
     }
 }
+

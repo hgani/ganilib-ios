@@ -38,6 +38,7 @@ open class GDrawingView: UIView {
         bezierPath.lineJoinStyle = CGLineJoin.round
     }
     
+    // Needed for helper.width() and helper.height()
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
         helper.didMoveToSuperview()
