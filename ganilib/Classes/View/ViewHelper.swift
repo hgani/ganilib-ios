@@ -97,6 +97,7 @@ public class ViewHelper {
         }
         view.layer.borderWidth = CGFloat(width)
         view.layer.cornerRadius = CGFloat(corner)
+        view.layer.masksToBounds = true
     }
     
     public func paddings(t top: CGFloat?, l left: CGFloat?, b bottom: CGFloat?, r right: CGFloat?) {

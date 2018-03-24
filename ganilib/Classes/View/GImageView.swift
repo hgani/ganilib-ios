@@ -83,6 +83,11 @@ open class GImageView : UIImageView {
         return source(url: URL(string: url), placeholder: placeholder)
     }
     
+    public func border(color: UIColor?, width: Float = 1, corner: Float = 6) -> Self {
+        helper.border(color: color, width: width, corner: corner)
+        return self
+    }
+    
     public func adjustHeight() {
         if let i = image {
             layoutIfNeeded();
