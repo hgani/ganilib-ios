@@ -66,7 +66,7 @@ open class GScreen: UIViewController {
         nav.viewWillAppear()
     }
     
-    public func leftMenu(controller: UITableViewController) -> Self {
+    public func leftMenu(controller: UIViewController) -> Self {
         helper.leftMenu(controller: controller)
         return self
     }

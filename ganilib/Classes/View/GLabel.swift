@@ -48,10 +48,12 @@ open class GLabel: UILabel {
         return self
     }
     
-    public func icon(_ icon: String, size: CGFloat) -> Self {
+    public func icon(_ icon: String, size: CGFloat? = nil) -> Self {
         self.numberOfLines = 0
         self.text = icon
-        self.font = self.font.withSize(size)
+        if let s = size {
+            self.font = self.font.withSize(s)
+        }
         self.parseIcon()
         return self
     }

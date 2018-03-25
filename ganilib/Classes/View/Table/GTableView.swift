@@ -86,7 +86,7 @@ open class GTableView: UITableView, GContainer {
         if let cell = self.dequeueReusableCell(withIdentifier: type.reuseIdentifier()) as? T {
             return cell
         }
-        return T.init(style: style)
+        return type.init(style: style)
     }
     
     public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
@@ -191,6 +191,11 @@ open class GTableViewCustomCell: GTableViewCell {
     
     public func append(_ view: UIView, top : CGFloat? = nil) -> Self {
         container.addView(view, top: top)
+        return self
+    }
+    
+    public func color(bg: UIColor) -> Self {
+        contentView.backgroundColor = bg
         return self
     }
 }

@@ -73,7 +73,7 @@ open class GFormScreen: FormViewController {
 //        return header
 //    }
     
-    public func leftMenu(controller: UITableViewController) -> Self {
+    public func leftMenu(controller: GScreen) -> Self {
         helper.leftMenu(controller: controller)
         return self
     }

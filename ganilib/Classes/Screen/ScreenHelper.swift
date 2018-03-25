@@ -33,7 +33,7 @@ open class ScreenHelper {
         screen.controller.navigationItem.leftBarButtonItem = navItem
     }
     
-    public func leftMenu(controller: UITableViewController) {
+    public func leftMenu(controller: UIViewController) {
         setupLeftMenuButton()
         
         let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: controller)

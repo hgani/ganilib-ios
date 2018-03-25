@@ -1,58 +1,57 @@
 
-public enum MenuType {
-    case popToRoot
-    case push
-    case turbolinks
-    case notification
-    case method
-}
+//public enum MenuType {
+//    case popToRoot
+//    case push
+//    case turbolinks
+//    case notification
+//}
 
 public class MenuItem {
-//    private(set) var title: String
-    public var title: String
-    private(set) var icon: String
+    public private(set) var title: String
+    public private(set) var icon: String?
     private(set) var controller: UIViewController?
-    var url: URL?
-    //var method: Selector?
-    var requireAuth: Bool = false
-    var type: MenuType
     private(set) var onClick: (() -> Void)?
+    
     private(set) var isRoot = false
+    private(set) var cellClass: GTableViewCustomCell.Type = MenuCell.self
     
-    public init(title: String, icon: String) {
+    public init(title: String, icon: String, root: Bool) {
         self.title = title
         self.icon = icon
-        self.type = MenuType.popToRoot
-        self.isRoot = true
+        self.isRoot = root
     }
     
-    public init(title: String, icon: String, controller: UIViewController) {
+    public init(title: String) {
         self.title = title
-        self.icon = icon
-        self.controller = controller
-        self.type = MenuType.push
     }
     
-//    public init(title: String, icon: String, url: URL, requireAuth: Bool = false, onClick: Selector? = nil, type: MenuType = .turbolinks) {
-//        self.title = title
-//        self.icon = icon
-//        self.url = url
-//        self.requireAuth = requireAuth
-//        self.type = type
-//        self.onClick = onClick
-//    }
-//    
-//    public init(title: String, icon: String, onClick: Selector) {
+//    public init(title: String, icon: String, onClick: @escaping () -> Void) {
 //        self.title = title
 //        self.icon = icon
 //        self.onClick = onClick
-//        self.type = MenuType.method
 //    }
     
-    public init(title: String, icon: String, onClick: @escaping () -> Void) {
-        self.title = title
+    public func icon(_ icon: String) -> Self {
         self.icon = icon
+        return self
+    }
+    
+    public func screen(_ screen: GScreen) -> Self {
+        self.controller = screen
+        return self
+    }
+    
+    public func onClick(_ onClick: @escaping () -> Void) -> Self {
         self.onClick = onClick
-        self.type = MenuType.method
+        return self
+    }
+    
+    public func cellClass(_ cellClass: GTableViewCustomCell.Type) -> Self {
+        self.cellClass = cellClass
+        return self
+    }
+    
+    public func hasAction() -> Bool {
+        return controller != nil || onClick != nil
     }
 }
