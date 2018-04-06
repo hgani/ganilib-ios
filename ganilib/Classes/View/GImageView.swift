@@ -70,7 +70,13 @@ open class GImageView : UIImageView {
 //    }
     
     public func source(name: String) -> Self {
-        self.image = UIImage(named: name)
+//        self.image = UIImage(named: name)
+//        return self
+        return source(image: UIImage(named: name))
+    }
+    
+    public func source(image: UIImage?) -> Self {
+        self.image = image
         return self
     }
     

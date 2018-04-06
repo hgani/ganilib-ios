@@ -143,12 +143,21 @@ public class Rest {
         }
     }
     
-    private static func request(_ url: String, _ method: HttpMethod, _ params: GParams, _ headers: HTTPHeaders?) -> Rest {
-        //let url = "\(GHttp.instance.host())\(path)"
+    private static func request(_ url: String, _ method: HttpMethod, _ params: GParams, _ headers: HttpHeaders) -> Rest {
         let augmentedParams = augmentPostParams(params, method)
-        let preparedParams = prepareParams(GHttp.instance.delegate.restParams(from: augmentedParams, method: method))
+        let request = HttpRequest(method: method, url: url, params: params, headers: headers)
         
-        return Rest(method: method, url: url, params: preparedParams, headers: headers)
+        let restParams: NonNullParams, restHeaders: HttpHeaders
+        if url.starts(with: GHttp.instance.host()) {
+            restParams  = prepareParams(GHttp.instance.delegate.restParams(from: augmentedParams, request: request))
+            restHeaders  = GHttp.instance.delegate.restHeaders(from: headers, request: request)
+        }
+        else {
+            restParams = prepareParams(augmentedParams)
+            restHeaders = headers
+        }
+        
+        return Rest(method: method, url: url, params: restParams, headers: restHeaders)
     }
     
     private static func prepareParams(_ params: GParams) -> NonNullParams {
@@ -166,23 +175,23 @@ public class Rest {
     
     // MARK: URL-based
     
-    public static func post(url: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+    public static func post(url: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Rest {
         return request(url, .post, params, headers)
     }
     
-    public static func patch(url: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+    public static func patch(url: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Rest {
         return request(url, .patch, params, headers)
     }
     
-    public static func delete(url: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+    public static func delete(url: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Rest {
         return request(url, .delete, params, headers)
     }
     
-    public static func get(url: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+    public static func get(url: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Rest {
         return request(url, .get, params, headers)
     }
     
-    public static func multipart(url: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+    public static func multipart(url: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Rest {
         return request(url, .multipart, params, headers)
     }
     
@@ -192,23 +201,23 @@ public class Rest {
         return "\(GHttp.instance.host())\(path)"
     }
     
-    public static func post(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+    public static func post(path: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Rest {
         return post(url: url(from: path), params: params, headers: headers)
     }
     
-    public static func patch(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+    public static func patch(path: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Rest {
         return patch(url: url(from: path), params: params, headers: headers)
     }
     
-    public static func delete(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+    public static func delete(path: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Rest {
         return delete(url: url(from: path), params: params, headers: headers)
     }
     
-    public static func get(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+    public static func get(path: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Rest {
         return get(url: url(from: path), params: params, headers: headers)
     }
     
-    public static func multipart(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Rest {
+    public static func multipart(path: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Rest {
         return multipart(url: url(from: path), params: params, headers: headers)
     }
 }

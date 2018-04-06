@@ -3,6 +3,7 @@ import SwiftyJSON
 import SVProgressHUD
 
 public typealias GParams = [String: Any?]
+public typealias HttpHeaders = [String: String]
 
 public enum HttpMethod {
     case get
@@ -24,6 +25,20 @@ public enum HttpMethod {
         case .multipart:
             return HTTPMethod.post
         }
+    }
+}
+
+public class HttpRequest {
+    public let method: HttpMethod
+    public let url: String
+    public let params: GParams
+    public let headers: HttpHeaders
+    
+    init(method: HttpMethod, url: String, params: GParams, headers: HttpHeaders) {
+        self.method = method
+        self.url = url
+        self.params = params
+        self.headers = headers
     }
 }
 
