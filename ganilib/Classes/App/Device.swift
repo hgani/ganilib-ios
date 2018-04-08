@@ -6,5 +6,7 @@ public class Device {
     // If not, it will fallback to the default language.
     public static let longLang = Locale.current.identifier
     public static let shortLang = Locale.current.languageCode
+    
+    public static let region = Locale.current.regionCode
 }
 

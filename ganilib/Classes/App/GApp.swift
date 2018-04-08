@@ -2,6 +2,9 @@
 import UIKit
 
 public class GApp {
+    private static let info = (Bundle.main.infoDictionary ?? [:])
+    public static let version = (info["CFBundleShortVersionString"] as? String) ?? "Unknown"
+    
     public var navigationController: GNavigationController!
     public var window: UIWindow!
 
