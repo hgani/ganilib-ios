@@ -26,8 +26,7 @@ public class ViewHelper {
             }
             if let multiplier = matchParentHeightMultiplier {
                 view.snp.makeConstraints { make in
-                    make.bottom.equalTo(superview)
-                        //.multipliedBy(multiplier)
+                    make.bottom.equalTo(superview.snp.bottomMargin)
                 }
             }
         }

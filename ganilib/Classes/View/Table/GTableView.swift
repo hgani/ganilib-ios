@@ -198,6 +198,11 @@ open class GTableViewCustomCell: GTableViewCell {
         contentView.backgroundColor = bg
         return self
     }
+    
+    public func interactive(_ value: Bool) -> Self {
+        self.isUserInteractionEnabled = value
+        return self
+    }
 }
 
 open class GHeaderFooterView: UIView {

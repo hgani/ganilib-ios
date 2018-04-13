@@ -117,6 +117,21 @@ open class GHorizontalPanel : UIView {
         return self
     }
     
+//    open func split() -> Self {
+//        let count = subviews.count
+//        GLog.i("Splitting \(count) views ...")
+//        for view in subviews {
+//            if let weightable = view as? GWeightable {
+//                _ = weightable.width(weight: 1.0 / 3)
+//            }
+//            else {
+//                GLog.e("Invalid child view: \(view)")
+//            }
+//        }
+//        
+//        return self
+//    }
+    
     open override func addSubview(_ view: UIView) {
         fatalError("Use addView() instead")
     }

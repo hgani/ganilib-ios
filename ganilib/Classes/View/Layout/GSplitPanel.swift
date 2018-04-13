@@ -38,21 +38,18 @@ open class GSplitPanel : UIView {
         left.snp.makeConstraints { make in
             make.top.equalTo(self.snp.topMargin)
             make.left.equalTo(self.snp.leftMargin)
+            
+            make.right.greaterThanOrEqualTo(right.snp.left)
         }
         right.snp.makeConstraints { make in
             make.top.equalTo(self.snp.topMargin)
             make.right.equalTo(self.snp.rightMargin)
         }
         
-//        DispatchQueue.main.async {
-            self.snp.makeConstraints { make in
-                make.bottomMargin.greaterThanOrEqualTo(left.snp.bottom)
-//                    .offset(self.paddings.bottom)
-                make.bottomMargin.greaterThanOrEqualTo(right.snp.bottom)
-//                    .offset(self.paddings.bottom)
-//                    .priority(240)
-            }
-//        }
+        self.snp.makeConstraints { make in
+            make.bottomMargin.greaterThanOrEqualTo(left.snp.bottom)
+            make.bottomMargin.greaterThanOrEqualTo(right.snp.bottom)
+        }
         
         return self
     }

@@ -1,7 +1,7 @@
 
 import UIKit
 
-open class GVerticalPanel: UIView {
+open class GVerticalPanel: UIView, GWeightable {
     private var helper: ViewHelper!
     private var previousViewElement: UIView!
     private var previousConstraint: NSLayoutConstraint!
@@ -116,6 +116,11 @@ open class GVerticalPanel: UIView {
         return self
     }
     
+    public func width(weight: Float) -> Self {
+        helper.width(weight: weight)
+        return self
+    }
+    
     public func height(_ height: Int) -> Self {
         helper.height(height)
         return self
@@ -138,5 +143,9 @@ open class GVerticalPanel: UIView {
     
     open override func addSubview(_ view: UIView) {
         fatalError("Use addView() instead")
+    }
+    
+    public func end() {
+        // Ends chaining
     }
 }

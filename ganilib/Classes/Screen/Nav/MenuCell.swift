@@ -32,8 +32,6 @@ open class MenuCell: GTableViewCustomCell, MenuCellType {
         }
         _ = self.title.text(item.title)
         
-        GLog.t("UPDATE: \(item.hasAction())")
-        
         self.isUserInteractionEnabled = item.hasAction()
         
         setNeedsLayout()

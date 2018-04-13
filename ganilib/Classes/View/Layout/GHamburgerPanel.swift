@@ -84,11 +84,6 @@ open class GHamburgerPanel: UIView, GContainer {
         middle.translatesAutoresizingMaskIntoConstraints = false
         bottom.translatesAutoresizingMaskIntoConstraints = false
         
-//        top.hug
-//        top.setContentHuggingPriority(1000, for: .vertical)
-//        top.setContentCompressionResistancePriority(100, for: .vertical)
-//        middle.setContentCompressionResistancePriority(900, for: .vertical)
-        
         addSubview(top)
         addSubview(middle)
         addSubview(bottom)
