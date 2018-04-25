@@ -1,4 +1,3 @@
-
 import UIKit
 
 open class GScreen: UIViewController {
@@ -35,9 +34,10 @@ open class GScreen: UIViewController {
         self.helper = ScreenHelper(self)
         self.launch = LaunchHelper(self)
         self.indicator = IndicatorHelper(self)
-        self.nav = NavHelper(self)
+        self.nav = NavHelper(navController: GApp.instance.navigationController)
+//        self.nav = NavHelper(self)
         
-        if !self.navigationController!.navigationBar.isTranslucent {
+        if let navController = self.navigationController, !navController.navigationBar.isTranslucent {
             // If nav bar is visible and actually consumes space, we want our view to be start just below the bar.
             // Otherwise, we want the view to start right from the top (i.e. status bar)
             self.edgesForExtendedLayout = []
@@ -81,6 +81,11 @@ open class GScreen: UIViewController {
         return self
     }
     
+    public func title(_ title: String) -> Self {
+        self.title = title
+        return self
+    }
+    
     public func end() {
         // Ends chaining
     }
@@ -104,6 +109,8 @@ open class GScreen: UIViewController {
     }
 }
 
+
+
 extension GScreen: ScreenProtocol {
     public var controller: UIViewController {
         get {
@@ -111,6 +118,18 @@ extension GScreen: ScreenProtocol {
         }
     }
 }
+
+
+
+import XLPagerTabStrip
+
+extension GScreen: IndicatorInfoProvider {
+    public func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: title)
+    }
+}
+
+
 
 public class GScreenContainer: GHamburgerPanel {
     public let header = GVerticalPanel().width(.matchParent)

@@ -51,6 +51,7 @@ TODO: Add long description of the pod here.
   s.dependency 'SwiftyJSON'
   s.dependency 'SVProgressHUD'
   s.dependency 'Kingfisher', '~> 4.0'
+  s.dependency 'XLPagerTabStrip', '~> 8.0'
   
   # http://www.dbotha.com/2014/12/04/optional-cocoapod-dependencies/
   s.default_subspec = 'Core'
