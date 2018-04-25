@@ -3,13 +3,13 @@ import UIKit
 import MessageUI
 
 open class NavHelper {
-    private weak var screen: ScreenProtocol?
+//    private weak var screen: ScreenProtocol?
     private let navController: UINavigationController!
     private var showBar = true
     
     convenience public init(_ screen: ScreenProtocol) {
         self.init(navController: screen.navigationController!)
-        self.screen = screen
+//        self.screen = screen
     }
     
     init(navController: UINavigationController) {
@@ -20,10 +20,10 @@ open class NavHelper {
         self.showBar = false
     }
     
-    public func title(_ title: String) -> Self {
-        screen?.controller.title = title
-        return self
-    }
+//    public func title(_ title: String) -> Self {
+//        screen?.controller.title = title
+//        return self
+//    }
     
     public func color(bg: UIColor, text: UIColor) {
         navController.navigationBar.barTintColor = bg
