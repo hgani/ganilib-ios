@@ -66,7 +66,7 @@ open class GMapView: MKMapView {
         self.onUserLocationUpdate = command
         return self
     }
-    
+
     public func trackUser() {
         if CLLocationManager.authorizationStatus() == .authorizedAlways {
             self.showsUserLocation = true
@@ -76,7 +76,7 @@ open class GMapView: MKMapView {
             locationManager.requestWhenInUseAuthorization()
         }
     }
-
+    
     public func end() {
         // Ends chaining
     }
@@ -105,9 +105,7 @@ extension GMapView: MKMapViewDelegate {
         // the device is rotated.
         if distance > 10 {  // 10 meters
             GLog.i("User location updated: \(userLocation.coordinate)")
-            if let handler = self.onUserLocationUpdate {
-                handler(self)
-            }
+            self.onUserLocationUpdate?(self)
         }
         
         self.previousLocation = currentLocation
@@ -128,6 +126,10 @@ extension GMapView: MKMapViewDelegate {
     }
     
     public func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let annotation = view.annotation as? GPointAnnotation {
+            annotation.performClick()
+        }
+        
         if !direction {
             return
         }
@@ -166,12 +168,11 @@ extension GMapView: MKMapViewDelegate {
             return nil
         }
         
-        let identifier = "MyPin"
-
         if annotation.isKind(of: MKUserLocation.self) {
             return nil
         }
 
+        let identifier = "MyPin"
         let view: MKPinAnnotationView
         if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
             view = annotationView
@@ -204,6 +205,9 @@ extension GMapView: MKMapViewDelegate {
 }
 
 public class GPointAnnotation: MKPointAnnotation {
+    private var onClick: ((GPointAnnotation) -> Void)?
+//    var object: Any?
+    
     public func coordinate(_ coordinate: CLLocationCoordinate2D) -> Self {
         self.coordinate = coordinate
         return self
@@ -217,5 +221,19 @@ public class GPointAnnotation: MKPointAnnotation {
     public func subtitle(_ subtitle: String) -> Self {
         self.subtitle = subtitle
         return self
+    }
+    
+//    public func object(_ object: Any?) -> Self {
+//        self.object = object
+//        return self
+//    }
+    
+    public func onClick(_ command: @escaping (GPointAnnotation) -> Void) -> Self {
+        self.onClick = command
+        return self
+    }
+    
+    public func performClick() {
+        onClick?(self)
     }
 }
