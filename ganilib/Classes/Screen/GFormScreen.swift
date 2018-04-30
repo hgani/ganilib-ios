@@ -9,6 +9,12 @@ open class GFormScreen: FormViewController {
     public var nav : NavHelper!
     public var previous: ScreenProtocol?
     
+    lazy public var refresher: GRefreshControl = {
+        return GRefreshControl().onValueChanged {
+            self.onRefresh()
+        }
+    }()
+    
     public init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -23,7 +29,19 @@ open class GFormScreen: FormViewController {
         self.helper = ScreenHelper(self)
         self.launch = LaunchHelper(self)
         self.indicator = IndicatorHelper(self)
-        self.nav = NavHelper(self)        
+        self.nav = NavHelper(self)
+        
+        appendRefresher()
+    }
+    
+    private func appendRefresher() {
+        tableView?.addSubview(refresher)
+        
+        // Eureka-specific requirements
+        refresher.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(4)
+            make.centerX.equalTo(tableView!)
+        }
     }
     
     override open func viewWillAppear(_ animated: Bool) {
@@ -91,6 +109,23 @@ open class GFormScreen: FormViewController {
     // See https://stackoverflow.com/questions/44616409/declarations-in-extensions-cannot-override-yet-error-in-swift-4
     open func onRefresh() {
         // To be overridden
+    }
+    
+    public func values() -> GParams {
+        let wrapped = form.values(includeHidden: true)
+        var unwrapped = GParams()
+        
+        for (k, v) in wrapped {
+//            if let rowValue = self.form.rowBy(tag: k)?.baseValue as? KeyValue {
+//                unwrapped[k] = rowValue.value
+//            }
+//            else {
+//                unwrapped[k] = v
+//            }
+            unwrapped[k] = v
+        }
+        
+        return unwrapped
     }
 }
 
