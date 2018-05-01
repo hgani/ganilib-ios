@@ -8,6 +8,12 @@ open class GScreen: UIViewController {
     public var indicator : IndicatorHelper!
     public var nav : NavHelper!
     
+    lazy public var refresher: GRefreshControl = {
+        return GRefreshControl().onValueChanged {
+            self.onRefresh()
+        }
+    }()
+    
     public init(container: GScreenContainer) {
         self.container = container
         super.init(nibName: nil, bundle: nil)
