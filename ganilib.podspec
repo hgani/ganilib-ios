@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'GaniLib'
-  s.version          = '0.5.1'
+  s.version          = '0.6.0'
   s.summary          = 'Simplify iOS development'
 
 # This description is used to generate tags and improve search results.
@@ -38,12 +38,9 @@ TODO: Add long description of the pod here.
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  #s.dependency 'SwiftIconFont'
-  s.dependency 'SwiftIconFont', '~> 2.7'
+  s.dependency 'SwiftIconFont', '2.7.3'
   s.dependency 'SideMenu', '~> 3.0'
-  #s.dependency 'SnapKit', '~> 3.2'
 	s.dependency 'SnapKit', '~> 4.0'
-  #s.dependency 'Eureka', '~> 3.1'
   s.dependency 'Eureka', '~> 4.0'
   s.dependency 'TTTAttributedLabel'
 
