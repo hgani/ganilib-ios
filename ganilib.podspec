@@ -41,7 +41,7 @@ TODO: Add long description of the pod here.
   s.dependency 'SwiftIconFont', '2.7.3'
   s.dependency 'SideMenu', '~> 3.0'
 	s.dependency 'SnapKit', '~> 4.0'
-  s.dependency 'Eureka', '~> 4.0'
+  s.dependency 'Eureka', '~> 4.1'
   s.dependency 'TTTAttributedLabel'
 
   s.dependency 'Alamofire'
