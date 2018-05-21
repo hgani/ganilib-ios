@@ -6,6 +6,14 @@ open class GHorizontalPanel : UIView {
     private var previousViewElement : UIView!
     private var previousConstraint : NSLayoutConstraint!
     
+    private var totalGap = Float(0.0)
+    
+    private var paddings: Paddings {
+        get {
+            return helper.paddings
+        }
+    }
+    
     public init() {
         super.init(frame: .zero)
         initialize()
@@ -36,7 +44,9 @@ open class GHorizontalPanel : UIView {
         }
     }
     
-    public func addView(_ child : UIView, left: CGFloat = 0) {
+    public func addView(_ child : UIView, left: Float = 0) {
+        totalGap += left
+        
         // The hope is this makes things more predictable
         child.translatesAutoresizingMaskIntoConstraints = false
         
@@ -47,13 +57,13 @@ open class GHorizontalPanel : UIView {
         previousViewElement = child
     }
     
-    public func append(_ child : UIView, left: CGFloat = 0) -> Self {
+    public func append(_ child : UIView, left: Float = 0) -> Self {
         addView(child, left: left)
         return self
     }
     
     // See https://github.com/zaxonus/AutoLayScroll/blob/master/AutoLayScroll/ViewController.swift
-    private func initChildConstraints(child: UIView, left: CGFloat) {
+    private func initChildConstraints(child: UIView, left: Float) {
         child.snp.makeConstraints { make in
             make.top.equalTo(self.snp.topMargin)
             
@@ -107,7 +117,7 @@ open class GHorizontalPanel : UIView {
         return self
     }
     
-    public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
+    public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
         helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
@@ -117,20 +127,22 @@ open class GHorizontalPanel : UIView {
         return self
     }
     
-//    open func split() -> Self {
-//        let count = subviews.count
-//        GLog.i("Splitting \(count) views ...")
-//        for view in subviews {
-//            if let weightable = view as? GWeightable {
-//                _ = weightable.width(weight: 1.0 / 3)
-//            }
-//            else {
-//                GLog.e("Invalid child view: \(view)")
-//            }
-//        }
-//        
-//        return self
-//    }
+    open func split() -> Self {
+        let count = subviews.count
+        GLog.i("Splitting \(count) views ...")
+        let weight = 1.0 / Float(count)
+        let offset = -(totalGap + paddings.l + paddings.r) / Float(count)
+        for view in subviews {
+            if let weightable = view as? GWeightable {
+                _ = weightable.width(weight: weight, offset: offset)
+            }
+            else {
+                GLog.e("Invalid child view: \(view)")
+            }
+        }
+        
+        return self
+    }
     
     open override func addSubview(_ view: UIView) {
         fatalError("Use addView() instead")

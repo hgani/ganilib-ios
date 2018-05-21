@@ -1,3 +1,3 @@
 public protocol GContainer {
-    func paddings(t top: CGFloat?, l left: CGFloat?, b bottom: CGFloat?, r right: CGFloat?) -> Self
+    func paddings(t top: Float?, l left: Float?, b bottom: Float?, r right: Float?) -> Self
 }

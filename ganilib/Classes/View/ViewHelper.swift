@@ -6,13 +6,19 @@ public class ViewHelper {
     private unowned let view: UIView
     private var matchParentWidthMultiplier: Float?
     private var matchParentHeightMultiplier: Float?
-    private var paddings = UIEdgeInsetsMake(0, 0, 0, 0)
+    var paddings = Paddings(t: 0, l: 0, b: 0, r: 0)
+//    private var paddings = UIEdgeInsetsMake(0, 0, 0, 0)
     
     public init(_ view: UIView) {
         self.view = view
     }
     
     func didMoveToSuperview() {
+        updateWidthConstraints()
+        updateHeightConstraints()
+    }
+    
+    private func updateWidthConstraints(offset: Float = 0) {
         if let superview = view.superview {
             if let multiplier = matchParentWidthMultiplier {
                 view.snp.makeConstraints { make in
@@ -20,10 +26,15 @@ public class ViewHelper {
                         make.right.equalTo(superview.snp.rightMargin)  // Consume remaining space
                     }
                     else {
-                        make.width.equalTo(superview).multipliedBy(multiplier)
+                        make.width.equalTo(superview).multipliedBy(multiplier).offset(offset)
                     }
                 }
             }
+        }
+    }
+    
+    private func updateHeightConstraints() {
+        if let superview = view.superview {
             if let multiplier = matchParentHeightMultiplier {
                 view.snp.makeConstraints { make in
                     make.bottom.equalTo(superview.snp.bottomMargin)
@@ -61,8 +72,9 @@ public class ViewHelper {
         }
     }
     
-    public func width(weight: Float) {
+    public func width(weight: Float, offset: Float = 0) {
         self.matchParentWidthMultiplier = weight
+        updateWidthConstraints(offset: offset)
     }
     
     public func height(_ height : Int) {
@@ -99,18 +111,19 @@ public class ViewHelper {
         view.layer.masksToBounds = true
     }
     
-    public func paddings(t top: CGFloat?, l left: CGFloat?, b bottom: CGFloat?, r right: CGFloat?) {
+    public func paddings(t top: Float?, l left: Float?, b bottom: Float?, r right: Float?) {
         // Use our own variable to store the definitive values just in case layoutMargins gets changed directly,
         // which can get confusing.
         let orig = self.paddings
         
-        let top = top ?? orig.top
-        let left = left ?? orig.left
-        let bottom = bottom ?? orig.bottom
-        let right = right ?? orig.right
+        let top = top ?? orig.t
+        let left = left ?? orig.l
+        let bottom = bottom ?? orig.b
+        let right = right ?? orig.r
         
-        self.paddings = UIEdgeInsetsMake(top, left, bottom, right)
-        view.layoutMargins = self.paddings
+//        self.paddings = UIEdgeInsetsMake(top, left, bottom, right)
+        self.paddings = Paddings(t: top, l: left, b: bottom, r: right)
+        view.layoutMargins = paddings.toEdgeInsets()
     }
 }
 
@@ -118,3 +131,13 @@ public enum LayoutSize {
     case matchParent, wrapContent
 }
 
+public struct Paddings {
+    public let t: Float
+    public let l: Float
+    public let b: Float
+    public let r: Float
+    
+    public func toEdgeInsets() -> UIEdgeInsets {
+        return UIEdgeInsetsMake(CGFloat(t), CGFloat(l), CGFloat(b), CGFloat(r))
+    }
+}

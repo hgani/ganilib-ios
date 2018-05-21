@@ -1,3 +1,3 @@
 public protocol GWeightable {
-    func width(weight: Float) -> Self
+    func width(weight: Float, offset: Float) -> Self
 }

@@ -2,7 +2,7 @@
 import UIKit
 import SwiftIconFont
 
-open class GButton: UIButton {
+open class GButton: UIButton, GWeightable {
     private var helper: ViewHelper!
     private var onClick: ((GButton) -> Void)?
     
@@ -150,8 +150,8 @@ open class GButton: UIButton {
         return self
     }
     
-    public func width(weight: Float) -> Self {
-        helper.width(weight: weight)
+    public func width(weight: Float, offset: Float = 0) -> Self {
+        helper.width(weight: weight, offset: offset)
         return self
     }
     
