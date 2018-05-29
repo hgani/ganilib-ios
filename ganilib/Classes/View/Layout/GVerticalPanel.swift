@@ -65,6 +65,11 @@ open class GVerticalPanel: UIView {
         previousViewElement = child
     }
     
+    public func clear() -> Self {
+        clearViews()
+        return self
+    }
+    
     public func append(_ child : UIView, top : CGFloat? = nil) -> Self {
         addView(child, top: top)
         return self

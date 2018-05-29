@@ -13,15 +13,18 @@ public class ViewHelper {
         self.view = view
     }
     
-    func didMoveToSuperview() {
-        updateWidthConstraints()
+    func didMoveToSuperview(debug: Bool = false) {
+        updateWidthConstraints(debug: debug)
         updateHeightConstraints()
     }
     
-    private func updateWidthConstraints(offset: Float = 0) {
+    private func updateWidthConstraints(offset: Float = 0, debug: Bool = false) {
         if let superview = view.superview {
             if let multiplier = matchParentWidthMultiplier {
                 view.snp.makeConstraints { make in
+                    if debug {
+                        GLog.t("updateWidthConstraints() with multiplier \(multiplier)")
+                    }
                     if multiplier == 1 {
                         make.right.equalTo(superview.snp.rightMargin)  // Consume remaining space
                     }

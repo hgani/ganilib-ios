@@ -4,7 +4,7 @@ import Kingfisher
 
 open class GImageView : UIImageView {
     private var helper : ViewHelper!
-    private var onClick : (() -> Void)?
+    private var onClick : ((GImageView) -> Void)?
     
     public init() {
         super.init(frame: .zero)
@@ -70,8 +70,6 @@ open class GImageView : UIImageView {
 //    }
     
     public func source(name: String) -> Self {
-//        self.image = UIImage(named: name)
-//        return self
         return source(image: UIImage(named: name))
     }
     
@@ -94,6 +92,26 @@ open class GImageView : UIImageView {
         return self
     }
     
+    public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+    
+    open func onClick(_ command: @escaping (GImageView) -> Void) -> Self {
+        self.onClick = command
+        
+        let singleTap = UITapGestureRecognizer(target: self, action: #selector(performClick))
+        self.isUserInteractionEnabled = true
+        self.addGestureRecognizer(singleTap)
+        return self
+    }
+    
+    @objc open func performClick() {
+        if let callback = self.onClick {
+            callback(self)
+        }
+    }
+    
     public func adjustHeight() {
         if let i = image {
             layoutIfNeeded();
@@ -107,5 +125,9 @@ open class GImageView : UIImageView {
                 make.height.equalTo(height)
             }
         }
+    }
+    
+    public func end() {
+        // End chaining initialisation
     }
 }

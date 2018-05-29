@@ -41,6 +41,11 @@ public class MenuItem {
         return self
     }
     
+    public func screen(_ screen: GFormScreen) -> Self {
+        self.controller = screen
+        return self
+    }
+    
     public func onClick(_ onClick: @escaping () -> Void) -> Self {
         self.onClick = onClick
         return self
