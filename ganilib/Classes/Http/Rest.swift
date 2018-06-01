@@ -63,7 +63,7 @@ public class Rest {
                     }
                     GLog.d("[\(status)]: \(json)")
                     if !onHttpSuccess(json) {
-                        indicator.show(error: json["message"].stringValue)
+                        indicator.show(error: json["message"].string ?? json["error"].string ?? "")
                     }
                 case .failure(let error):
                     if !onHttpFailure(error) {
