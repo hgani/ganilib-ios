@@ -132,6 +132,10 @@ public class Rest {
         return self
     }
     
+    public func done() {
+        // End chaining
+    }
+    
     private static func augmentPostParams(_ params: GParams, _ method: HttpMethod) -> GParams {
         switch method {
         case .patch, .delete:

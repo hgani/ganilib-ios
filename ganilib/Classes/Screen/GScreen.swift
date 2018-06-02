@@ -92,7 +92,7 @@ open class GScreen: UIViewController {
         return self
     }
     
-    public func end() {
+    public func done() {
         // Ends chaining
     }
     

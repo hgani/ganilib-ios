@@ -128,7 +128,7 @@ open class GTableViewCell: UITableViewCell {
         return self
     }
     
-    public func end() {
+    public func done() {
         // End call chaining
     }
 

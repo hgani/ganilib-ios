@@ -243,8 +243,8 @@ open class GButton: UIButton, GWeightable {
         return self
     }
     
-    public func end() {
-        // End chaining initialisation
+    public func done() {
+        // End chaining
     }
 }
 

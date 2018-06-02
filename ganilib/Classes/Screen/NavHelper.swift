@@ -62,4 +62,8 @@ open class NavHelper {
         navController.popViewController(animated: animated)
         return self
     }
+    
+    public func done() {
+        // End chaining
+    }
 }

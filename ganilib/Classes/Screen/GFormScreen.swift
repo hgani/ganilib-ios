@@ -101,7 +101,7 @@ open class GFormScreen: FormViewController {
         return self
     }
     
-    public func end() {
+    public func done() {
         // Ends chaining
     }
     

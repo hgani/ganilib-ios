@@ -23,7 +23,7 @@ open class MenuCell: GTableViewCustomCell, MenuCellType {
     open func populate() {
         self
             .append(GHorizontalPanel().paddings(t: 5, l: 10, b: 5, r: 10).append(icon).append(title, left: 5))
-            .end()
+            .done()
     }
     
     open func update(item: MenuItem) {
