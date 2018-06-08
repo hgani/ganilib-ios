@@ -94,7 +94,7 @@ open class GTableView: UITableView, GContainer {
         return self
     }
     
-    public func end() {
+    public func done() {
         // Ends chaining
     }
 }

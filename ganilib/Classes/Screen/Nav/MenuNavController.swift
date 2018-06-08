@@ -24,7 +24,7 @@ open class MenuNavController: GScreen {
             .delegate(self)
             .source(self)
             .reload()
-            .end()
+            .done()
     }
     
     open override func viewWillAppear(_ animated: Bool) {
