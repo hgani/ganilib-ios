@@ -34,14 +34,20 @@ open class GScreen: UIViewController {
         return container
     }
     
+    // Useful for when we don't have one global nav controller.
+    public func localNavController(_ navController: UINavigationController) {
+        self.nav = NavHelper(navController: navController)
+    }
+    
     override open func viewDidLoad() {
         super.viewDidLoad()
         
         self.helper = ScreenHelper(self)
         self.launch = LaunchHelper(self)
         self.indicator = IndicatorHelper(self)
-        self.nav = NavHelper(navController: GApp.instance.navigationController)
-//        self.nav = NavHelper(self)
+        if (nav == nil) {
+            self.nav = NavHelper(navController: GApp.instance.navigationController)
+        }
         
         if let navController = self.navigationController, !navController.navigationBar.isTranslucent {
             // If nav bar is visible and actually consumes space, we want our view to be start just below the bar.

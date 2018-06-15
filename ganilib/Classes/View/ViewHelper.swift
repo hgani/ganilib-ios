@@ -7,7 +7,14 @@ public class ViewHelper {
     private var matchParentWidthMultiplier: Float?
     private var matchParentHeightMultiplier: Float?
     var paddings = Paddings(t: 0, l: 0, b: 0, r: 0)
-//    private var paddings = UIEdgeInsetsMake(0, 0, 0, 0)
+    
+    private var heightConstraint: Constraint?
+    
+    public var size: CGSize {
+        get {
+            return view.bounds.size
+        }
+    }
     
     public init(_ view: UIView) {
         self.view = view
@@ -80,14 +87,24 @@ public class ViewHelper {
         updateWidthConstraints(offset: offset)
     }
     
-    public func height(_ height : Int) {
+    private func resetHeight() {
+        heightConstraint?.deactivate()
+        heightConstraint = nil
         self.matchParentHeightMultiplier = nil
+    }
+    
+    public func height(_ height : Int) {
+//        self.matchParentHeightMultiplier = nil
+        resetHeight()
+        
         view.snp.makeConstraints { (make) -> Void in
-            make.height.equalTo(height)
+            heightConstraint = make.height.equalTo(height).constraint
         }
     }
     
     public func height(_ height: LayoutSize) {
+        resetHeight()
+        
         switch height {
         case .matchParent:
             self.matchParentHeightMultiplier = 1

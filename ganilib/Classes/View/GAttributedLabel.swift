@@ -81,11 +81,11 @@ open class GAttributedLabel : TTTAttributedLabel {
 //    public func bold() -> Self {
 //        return font(self.font.bold())
 //    }
-    
-    public func size(w: Int?, h: Int?) -> Self {
-        helper.size(width: w, height: h)
-        return self
-    }
+//    
+//    public func size(w: Int?, h: Int?) -> Self {
+//        helper.size(width: w, height: h)
+//        return self
+//    }
     
     public func align(_ alignment : NSTextAlignment) -> Self {
         self.textAlignment = alignment

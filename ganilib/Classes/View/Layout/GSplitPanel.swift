@@ -3,8 +3,15 @@ import UIKit
 
 open class GSplitPanel : UIView {
     private var helper : ViewHelper!
+    private var event : EventHelper<GSplitPanel>!
     private var previousViewElement : UIView!
     private var previousConstraint : NSLayoutConstraint!
+    
+    public var size: CGSize {
+        get {
+            return helper!.size
+        }
+    }
     
     public init() {
         super.init(frame: .zero)
@@ -18,6 +25,7 @@ open class GSplitPanel : UIView {
     
     private func initialize() {
         self.helper = ViewHelper(self)
+        self.event = EventHelper(self)
         
         _ = paddings(t: 0, l: 0, b: 0, r: 0)
     }
@@ -39,7 +47,8 @@ open class GSplitPanel : UIView {
             make.top.equalTo(self.snp.topMargin)
             make.left.equalTo(self.snp.leftMargin)
             
-            make.right.greaterThanOrEqualTo(right.snp.left)
+//            make.right.greaterThanOrEqualTo(right.snp.left)
+            make.right.lessThanOrEqualTo(right.snp.left)
         }
         right.snp.makeConstraints { make in
             make.top.equalTo(self.snp.topMargin)
@@ -83,4 +92,18 @@ open class GSplitPanel : UIView {
         self.backgroundColor = bg
         return self
     }
+    
+    open func onClick(_ command: @escaping (GSplitPanel) -> Void) -> Self {
+//        self.onClick = command
+//        addTarget(self, action: #selector(performClick), for: .touchUpInside)
+        event.onClick(command)
+        return self
+    }
+    
+//    @objc open func performClick() {
+////        if let callback = self.onClick {
+////            callback(self)
+////        }
+//    }
+    
 }
