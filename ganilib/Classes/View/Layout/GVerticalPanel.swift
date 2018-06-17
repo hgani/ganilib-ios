@@ -150,7 +150,7 @@ open class GVerticalPanel: UIView {
         fatalError("Use addView() instead")
     }
     
-    public func end() {
+    public func done() {
         // Ends chaining
     }
 }

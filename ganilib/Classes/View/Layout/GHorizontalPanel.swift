@@ -147,4 +147,8 @@ open class GHorizontalPanel : UIView {
     open override func addSubview(_ view: UIView) {
         fatalError("Use addView() instead")
     }
+    
+    public func done() {
+        // Ends chaining
+    }
 }

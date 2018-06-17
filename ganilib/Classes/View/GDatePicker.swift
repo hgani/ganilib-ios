@@ -2,8 +2,9 @@
 import UIKit
 
 open class GDatePicker: UIDatePicker {
-    private var helper: ViewHelper!
-    private var onSelect: ((GDatePicker) -> Void)?
+    private var helper: ControlHelper<GDatePicker>!
+//    private var helper: ViewHelper!
+//    private var onSelect: ((GDatePicker) -> Void)?
     
     public var size: CGSize {
         get {
@@ -22,7 +23,7 @@ open class GDatePicker: UIDatePicker {
     }
     
     private func initialize() {
-        self.helper = ViewHelper(self)
+        self.helper = ControlHelper(self)
         
         // Make sure that contentEdgeInsets' values is always initialized properly (i.e. non-zero)
 //        _ = self.paddings(t: 10, l: 20, b: 10, r: 20)
@@ -71,65 +72,19 @@ open class GDatePicker: UIDatePicker {
 //        return self
 //    }
 //
-//    public func spec(_ spec: GButtonSpec) -> Self {
-//        spec.decorate(self)
-//        return self
-//    }
-//
-//    // Use block instead of selector from now on. See https://stackoverflow.com/questions/24007650/selector-in-swift
-//    open func onClick(_ command: @escaping (GButton) -> Void) -> Self {
-//        self.onClick = command
-//        addTarget(self, action: #selector(performClick), for: .touchUpInside)
-//        return self
-//    }
-//
-//    @objc open func performClick() {
-//        if let callback = self.onClick {
-//            callback(self)
-//        }
-//    }
-//
-//    public func font(_ font: UIFont) -> Self {
-//        self.titleLabel!.font = font
-//        return self
-//    }
-//
-//    public func textSize(_ size: Float) -> Self {
-//        return font(self.titleLabel!.font.withSize(CGFloat(size)))
-//    }
-//
-////    public func text(size: Float?, align: UIControlContentHorizontalAlignment? = nil) -> Self {
-//    public func text(size: Float?, align: NSTextAlignment? = nil) -> Self {
-//        if let textSize = size {
-//            _ = font(self.titleLabel!.font.withSize(CGFloat(textSize)))
-//        }
-//
-//        if let textAlign = align {
-////            self.contentHorizontalAlignment = textAlign;
-//
-//            // The following works better when the button has multi-line text compared to
-//            // self.contentHorizontalAlignment which only aligns the label itself rather than the label's text
-//            self.titleLabel?.textAlignment = textAlign
-//        }
-//
-//        return self
-//    }
-//
     
-    open func onSelect(_ command: @escaping (GDatePicker) -> Void) -> Self {
-        self.onSelect = command
-//        addTarget(self, action: #selector(performClick), for: .touchUpInside)
-        
-//        cell.datePickerView.removeTarget(nil, action: nil, for: .valueChanged)
-        addTarget(self, action: #selector(performSelect), for: .valueChanged)
+    public func onSelect(_ command: @escaping (GDatePicker) -> Void) -> Self {
+//        self.onSelect = command
+//        addTarget(self, action: #selector(performSelect), for: .valueChanged)
+        helper.onSelect(command)
         return self
     }
 
-    @objc open func performSelect() {
-        if let callback = self.onSelect {
-            callback(self)
-        }
-    }
+//    @objc open func performSelect() {
+//        if let callback = self.onSelect {
+//            callback(self)
+//        }
+//    }
     
     public func color(bg: UIColor?, text: UIColor?) -> Self {
         if let bgColor = bg {
