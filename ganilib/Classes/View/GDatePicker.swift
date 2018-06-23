@@ -74,17 +74,9 @@ open class GDatePicker: UIDatePicker {
 //
     
     public func onSelect(_ command: @escaping (GDatePicker) -> Void) -> Self {
-//        self.onSelect = command
-//        addTarget(self, action: #selector(performSelect), for: .valueChanged)
         helper.onSelect(command)
         return self
     }
-
-//    @objc open func performSelect() {
-//        if let callback = self.onSelect {
-//            callback(self)
-//        }
-//    }
     
     public func color(bg: UIColor?, text: UIColor?) -> Self {
         if let bgColor = bg {

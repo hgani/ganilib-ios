@@ -101,10 +101,6 @@ open class GPicker: UIPickerView {
 //        }
 //    }
     
-//    public func headings() {
-//
-//    }
-    
     public func dataArray(_ data : [String]) -> GPicker {
         self.data = data
         return self
@@ -123,8 +119,6 @@ extension GPicker: UIPickerViewDataSource {
         return data.count
     }
 }
-
-
 
 extension GPicker: UIPickerViewDelegate {
     public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {

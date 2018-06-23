@@ -12,8 +12,7 @@ public class DbJson: Object {
         return realm.objects(DbJson.self).filter("key = %@", key).first
     }
     
-    // TODO: Make it thread safe
-    public static func set(_ key: String, _ obj: Json) {
+    public static func put(_ key: String, _ obj: Json) {
         if let str = obj.rawString() {
             try! realm.write {
                 if let row = row(key: key) {
@@ -43,10 +42,9 @@ public class DbJson: Object {
         return Json(NSNull())
     }
     
-    // TODO: Make it thread safe
-    public static func delete(_ key: String) {
-        if let row = row(key: key) {
-            try! realm.write {
+    public static func remove(_ key: String) {
+        try! realm.write {
+            if let row = row(key: key) {
                 realm.delete(row)
             }
         }

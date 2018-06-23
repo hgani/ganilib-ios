@@ -11,6 +11,18 @@ public class ControlHelper<T: UIControl>: ViewHelper {
         super.init(view)
     }
     
+    open func onClick(_ command: @escaping (T) -> Void) -> Self {
+        self.onClick = command
+        view.addTarget(self, action: #selector(performClick), for: .touchUpInside)
+        return self
+    }
+    
+    @objc open func performClick() {
+        if let callback = self.onClick {
+            callback(view)
+        }
+    }
+    
     open func onSelect(_ command: @escaping (T) -> Void) -> Self {
         self.onSelect = command
         view.addTarget(self, action: #selector(performSelect), for: .valueChanged)
