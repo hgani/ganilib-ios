@@ -47,52 +47,6 @@ open class GButton: UIButton, GWeightable {
 //        return self
 //    }
     
-//    public func title(_ title: String) -> GButton {
-//        let wrapper = UIView()
-//        wrapper.isUserInteractionEnabled = false
-////        wrapper.backgroundColor = UIColor.blue
-//        
-//        let icon = UILabel()
-//        icon.isUserInteractionEnabled = false
-////        icon.backgroundColor = UIColor.red
-//        
-////        if let str = iconString {
-////            icon.font = UIFont.icon(from: .Ionicon, ofSize: 24.0)
-////            icon.text = String.fontIonIcon(str)
-////        }
-//
-//        icon.sizeToFit()
-//        
-//        self.myTitleLabel = GLabel().text(title)
-//        myTitleLabel.isUserInteractionEnabled = false
-//        //        label.backgroundColor = UIColor.yellow
-////        label.text = title
-//        label.sizeToFit()
-//        
-//        self.titleLabel = label
-//        
-//        wrapper.addSubview(icon)
-//        wrapper.addSubview(label)
-//        self.addSubview(wrapper)
-//        
-//        wrapper.snp.makeConstraints { (make) in
-//            make.edges.equalTo(self).inset(UIEdgeInsetsMake(10, 10, 10, 10))
-//        }
-//        
-////        icon.snp.makeConstraints { (make) in
-////            make.top.equalTo(wrapper)
-////            make.left.equalTo(10)
-////            make.width.equalTo(16)
-////        }
-//        
-//        label.snp.makeConstraints { (make) in
-//            make.centerY.equalTo(wrapper)
-//            make.left.equalTo(icon.snp.right).offset(5)
-//        }
-//        
-//        return self
-//    }
-
     public func title(_ title: String) -> Self {
         self.titleLabel!.numberOfLines = 0
         self.setTitle(title, for: .normal)
@@ -103,42 +57,6 @@ open class GButton: UIButton, GWeightable {
         self.parseIcon()
         return self
     }
-    
-//    public func custom(_ title: String, iconString: String) -> GButton {
-//        let wrapper = UIView()
-//        wrapper.isUserInteractionEnabled = false
-//        
-//        let icon = UILabel()
-//        icon.font = UIFont.icon(from: .Ionicon, ofSize: 24.0)
-//        icon.text = String.fontIonIcon(iconString)
-//        icon.sizeToFit()
-//        
-//        let label = UILabel()
-//        label.isUserInteractionEnabled = false
-//        label.text = title
-//        label.sizeToFit()
-//        
-//        wrapper.addSubview(icon)
-//        wrapper.addSubview(label)
-//        self.addSubview(wrapper)
-//        
-//        wrapper.snp.makeConstraints { (make) in
-//            make.edges.equalTo(self).inset(UIEdgeInsetsMake(10, 10, 10, 10))
-//        }
-//        
-//        icon.snp.makeConstraints { (make) in
-//            make.top.equalTo(wrapper)
-//            make.left.equalTo(10)
-//            make.width.equalTo(16)
-//        }
-//        
-//        label.snp.makeConstraints { (make) in
-//            make.top.equalTo(wrapper)
-//            make.left.equalTo(icon.snp.right).offset(5)
-//        }
-//        
-//        return self
-//    }
     
     public func width(_ width: Int) -> Self {
         helper.width(width)
@@ -196,29 +114,19 @@ open class GButton: UIButton, GWeightable {
         }
     }
     
-    public func font(_ font: UIFont) -> Self {
-        self.titleLabel!.font = font
+    public func font(_ font: UIFont?, size: Float? = nil, traits: UIFontDescriptorSymbolicTraits...) -> Self {
+        var f = (font ?? self.titleLabel!.font).withTraits(traits)
+        if let s = size {
+            f = f.withSize(CGFloat(s))
+        }
+        self.titleLabel!.font = f
         return self
     }
     
-    public func textSize(_ size: Float) -> Self {
-        return font(self.titleLabel!.font.withSize(CGFloat(size)))
-    }
-    
-//    public func text(size: Float?, align: UIControlContentHorizontalAlignment? = nil) -> Self {
-    public func text(size: Float?, align: NSTextAlignment? = nil) -> Self {
-        if let textSize = size {
-            _ = font(self.titleLabel!.font.withSize(CGFloat(textSize)))
-        }
-        
-        if let textAlign = align {
-//            self.contentHorizontalAlignment = textAlign;
-            
-            // The following works better when the button has multi-line text compared to
-            // self.contentHorizontalAlignment which only aligns the label itself rather than the label's text
-            self.titleLabel?.textAlignment = textAlign
-        }
-        
+    public func align(_ alignment : NSTextAlignment) -> Self {
+        // The following works better when the button has multi-line text compared to
+        // self.contentHorizontalAlignment which only aligns the label itself rather than the label's text
+        self.titleLabel?.textAlignment = alignment
         return self
     }
     
@@ -240,6 +148,11 @@ open class GButton: UIButton, GWeightable {
     public func enabled(_ value : Bool) -> Self {
         self.isEnabled = value
         self.alpha = value ? 1.0 : 0.5
+        return self
+    }
+    
+    public func hidden(_ hidden : Bool) -> Self {
+        self.isHidden = hidden
         return self
     }
     

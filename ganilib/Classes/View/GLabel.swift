@@ -128,7 +128,7 @@ open class GLabel: UILabel {
         return self
     }
     
-    public func end() {
+    public func done() {
         // Ends chaining
     }
     
