@@ -68,19 +68,6 @@ open class GControl: UIControl {
         addSubview(child)
         
         self.snp.makeConstraints { make in
-//            switch horizontalAlign {
-//            case .center: make.centerX.equalTo(child)
-//            case .right: make.rightMargin.equalTo(child.snp.right)
-//            case .left: make.leftMargin.equalTo(child.snp.left)
-//            }
-//
-//            //            make.centerX.equalTo(child)
-//            make.centerY.equalTo(child)
-            
-//            // So that it is at least the size of the child
-//            make.width.greaterThanOrEqualTo(child)
-//            make.height.greaterThanOrEqualTo(child)
-            
             make.left.equalTo(child)
             make.top.equalTo(child)
             
@@ -90,22 +77,7 @@ open class GControl: UIControl {
         return self
     }
     
-//    public func withView(_ child: UIView) -> Self {
-//        // The hope is this makes things more predictable
-//        child.translatesAutoresizingMaskIntoConstraints = false
-//        
-//        addSubview(child)
-//        
-//        self.snp.makeConstraints { make in
-//            switch horizontalAlign {
-//            case .center: make.centerX.equalTo(child)
-//            case .right: make.rightMargin.equalTo(child.snp.right)
-//            case .left: make.leftMargin.equalTo(child.snp.left)
-//            }
-//            
-//            //            make.centerX.equalTo(child)
-//            make.centerY.equalTo(child)
-//        }
-//        return self
-//    }
+    public func done() {
+        // End chaining
+    }
 }

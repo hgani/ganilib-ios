@@ -1,6 +1,16 @@
 
 import UIKit
 
+public protocol IView {
+    var size: CGSize { get }
+
+    func width(_ width: Int) -> Self
+    func width(_ width: LayoutSize) -> Self
+    
+    func height(_ height: Int) -> Self
+    func height(_ height: LayoutSize) -> Self
+}
+
 open class GView: UIView {
     private var helper : ViewHelper!
 

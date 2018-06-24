@@ -18,6 +18,7 @@ public class ViewHelper {
     
     public init(_ view: UIView) {
         self.view = view
+        view.layoutMargins = paddings.toEdgeInsets()
     }
     
     func didMoveToSuperview(debug: Bool = false) {
@@ -141,7 +142,6 @@ public class ViewHelper {
         let bottom = bottom ?? orig.b
         let right = right ?? orig.r
         
-//        self.paddings = UIEdgeInsetsMake(top, left, bottom, right)
         self.paddings = Paddings(t: top, l: left, b: bottom, r: right)
         view.layoutMargins = paddings.toEdgeInsets()
     }

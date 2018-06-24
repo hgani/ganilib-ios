@@ -184,5 +184,9 @@ public class GScreenContainer: GHamburgerPanel {
     public func addView(_ view: UIView, top : CGFloat? = nil) {
         scrollView?.addView(view, top: top)
     }
+    
+    public func delayTouch(_ delay: Bool) {
+        scrollView?.delaysContentTouches = false
+    }
 }
 
