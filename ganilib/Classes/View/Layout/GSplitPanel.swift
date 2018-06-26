@@ -28,7 +28,7 @@ open class GSplitPanel : UIView {
         self.event = EventHelper(self)
         
         // Avoid blocking click event propagation to parent by default.
-        self.isUserInteractionEnabled = false
+//        self.isUserInteractionEnabled = false
         
         _ = paddings(t: 0, l: 0, b: 0, r: 0)
     }
