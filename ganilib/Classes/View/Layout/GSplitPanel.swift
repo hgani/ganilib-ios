@@ -27,9 +27,6 @@ open class GSplitPanel : UIView {
         self.helper = ViewHelper(self)
         self.event = EventHelper(self)
         
-        // Avoid blocking click event propagation to parent by default.
-//        self.isUserInteractionEnabled = false
-        
         _ = paddings(t: 0, l: 0, b: 0, r: 0)
     }
     
@@ -96,8 +93,13 @@ open class GSplitPanel : UIView {
         return self
     }
     
-    open func onClick(_ command: @escaping (GSplitPanel) -> Void) -> Self {
+    public func onClick(_ command: @escaping (GSplitPanel) -> Void) -> Self {
         event.onClick(command)
+        return self
+    }
+    
+    public func interaction(_ enabled: Bool) -> Self {
+        self.isUserInteractionEnabled = enabled
         return self
     }
 }

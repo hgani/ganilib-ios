@@ -185,8 +185,9 @@ public class GScreenContainer: GHamburgerPanel {
         scrollView?.addView(view, top: top)
     }
     
+    // UIScrollView delays touch event handling by default.
     public func delayTouch(_ delay: Bool) {
-        scrollView?.delaysContentTouches = false
+        scrollView?.delaysContentTouches = delay
     }
 }
 
