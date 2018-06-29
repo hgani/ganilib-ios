@@ -1,7 +1,3 @@
-//import UIKit
-//import SnapKit
-//import SwiftIconFont
-
 public protocol MenuCellType {
     func update(item: MenuItem)
 }
@@ -22,6 +18,7 @@ open class MenuCell: GTableViewCustomCell, MenuCellType {
     
     open func populate() {
         self
+            .paddings(t: 8, l: 14, b: 8, r: 14)
             .append(GHorizontalPanel().paddings(t: 5, l: 10, b: 5, r: 10).append(icon).append(title, left: 5))
             .done()
     }

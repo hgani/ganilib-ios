@@ -185,6 +185,11 @@ open class GTableViewCustomCell: GTableViewCell {
         }
     }
     
+    override public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
+        container.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+    
     public func addView(_ view: UIView, top : CGFloat? = nil) {
         container.addView(view, top: top)
     }

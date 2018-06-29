@@ -7,6 +7,7 @@ open class GLabel: UILabel {
     private var helper: ViewHelper!
     private var isUnderlined = false
     private var onClick: ((GLabel) -> Void)?
+    var paddings = Paddings(t: 0, l: 0, b: 0, r: 0)
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -127,13 +128,32 @@ open class GLabel: UILabel {
         self.isUnderlined = true
         return self
     }
+
+    public func paddings(t top: Float?, l left: Float?, b bottom: Float?, r right: Float?) -> Self {
+        let orig = self.paddings
+
+        let top = top ?? orig.t
+        let left = left ?? orig.l
+        let bottom = bottom ?? orig.b
+        let right = right ?? orig.r
+
+        self.paddings = Paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
     
     public func done() {
         // Ends chaining
     }
     
+    // See https://stackoverflow.com/questions/27459746/adding-space-padding-to-a-uilabel
+    override open var intrinsicContentSize: CGSize {
+        let size = super.intrinsicContentSize
+        return CGSize(width: size.width + CGFloat(paddings.l + paddings.r),
+                      height: size.height + CGFloat(paddings.t + paddings.b))
+    }
+    
     override open func draw(_ rect: CGRect) {
-        super.draw(rect)
+        super.drawText(in: UIEdgeInsetsInsetRect(rect, paddings.toEdgeInsets()))
         
         if isUnderlined {
             let startingPoint   = CGPoint(x: rect.minX, y: rect.maxY - 2)
