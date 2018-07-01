@@ -65,7 +65,12 @@ open class GTextField: UITextField {
         return self
     }
     
-    public func border(color : UIColor?, width : Float = 1, corner : Float = 6) -> Self {
+    public func border(style: UITextBorderStyle) -> Self {
+        self.borderStyle = style
+        return self
+    }
+    
+    public func border(color: UIColor?, width: Float = 1, corner: Float = 6) -> Self {
         helper.border(color: color, width: width, corner: corner)
         return self
     }
@@ -88,5 +93,22 @@ open class GTextField: UITextField {
     public func height(_ height: LayoutSize) -> Self {
         helper.height(height)
         return self
+    }
+    
+    public func spec(_ spec : GTextFieldSpec) -> Self {
+        spec.decorate(self)
+        return self
+    }
+}
+
+public class GTextFieldSpec {
+    private var decorator: ((GTextField) -> Void)
+    
+    public init(_ decorator: @escaping ((GTextField) -> Void)) {
+        self.decorator = decorator
+    }
+    
+    func decorate(_ view: GTextField) {
+        decorator(view)
     }
 }
