@@ -45,7 +45,7 @@ TODO: Add long description of the pod here.
   s.dependency 'TTTAttributedLabel'
 
   s.dependency 'Alamofire'
-  s.dependency 'SwiftyJSON'
+  s.dependency 'SwiftyJSON', '~> 4.1'
   s.dependency 'SVProgressHUD'
   s.dependency 'Kingfisher', '~> 4.0'
   s.dependency 'XLPagerTabStrip', '~> 8.0'
