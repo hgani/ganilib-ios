@@ -95,8 +95,13 @@ open class GTextField: UITextField {
         return self
     }
     
-    public func spec(_ spec : GTextFieldSpec) -> Self {
+    public func spec(_ spec: GTextFieldSpec) -> Self {
         spec.decorate(self)
+        return self
+    }
+    
+    public func secure(_ secure: Bool) -> Self {
+        self.isSecureTextEntry = secure
         return self
     }
 }
