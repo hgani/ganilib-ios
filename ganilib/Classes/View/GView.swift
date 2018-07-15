@@ -8,7 +8,7 @@ public protocol IView {
     func width(_ width: LayoutSize) -> Self
     
     func height(_ height: Int) -> Self
-    func height(_ height: LayoutSize) -> Self
+    func height(_ height: LayoutSize) -> Self    
 }
 
 open class GView: UIView {
@@ -44,6 +44,11 @@ open class GView: UIView {
         return self
     }
     
+    public func width(weight: Float) -> Self {
+        helper.width(weight: weight)
+        return self
+    }
+    
     public func height(_ height: Int) -> Self {
         helper.height(height)
         return self
@@ -58,6 +63,11 @@ open class GView: UIView {
         if let bgColor = bg {
             self.backgroundColor = bgColor
         }
+        return self
+    }
+    
+    public func border(color: UIColor?, width: Float = 1, corner: Float = 6) -> Self {
+        helper.border(color: color, width: width, corner: corner)
         return self
     }
 }

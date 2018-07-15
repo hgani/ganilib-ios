@@ -8,7 +8,7 @@ open class GPicker: UIPickerView, IView {
 
     public var size: CGSize {
         get {
-            return helper!.size
+            return helper.size
         }
     }
     

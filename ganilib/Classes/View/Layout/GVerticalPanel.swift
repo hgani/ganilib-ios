@@ -150,6 +150,11 @@ open class GVerticalPanel: UIView {
         fatalError("Use addView() instead")
     }
     
+    public func border(color: UIColor?, width: Float = 1, corner: Float = 6) -> Self {
+        helper.border(color: color, width: width, corner: corner)
+        return self
+    }
+    
     public func done() {
         // Ends chaining
     }

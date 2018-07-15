@@ -1,8 +1,14 @@
 
 import UIKit
 
-open class GTableView: UITableView, GContainer {
+open class GTableView: UITableView, IContainer {
     private var helper: ViewHelper!
+    
+    public var size: CGSize {
+        get {
+            return helper.size
+        }
+    }
     
     public override init(frame: CGRect, style: UITableViewStyle) {
         super.init(frame: frame, style: style)
@@ -91,6 +97,11 @@ open class GTableView: UITableView, GContainer {
     
     public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
         helper.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+    
+    public func separator(_ style: UITableViewCellSeparatorStyle) -> Self {
+        self.separatorStyle = style
         return self
     }
     

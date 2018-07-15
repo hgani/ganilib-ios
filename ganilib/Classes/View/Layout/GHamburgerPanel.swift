@@ -1,17 +1,14 @@
 
 import UIKit
 
-open class GHamburgerPanel: UIView, GContainer {
+open class GHamburgerPanel: UIView, IContainer {
     private var helper: ViewHelper!
-//    private let contentView = GVerticalPanel()
-//    private let headerView = GVerticalPanel()
-//    private let contentView = GScrollView()
-//    private let footerView = GVerticalPanel()
     
-//    public override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        initialize()
-//    }
+    public var size: CGSize {
+        get {
+            return helper.size
+        }
+    }
     
     public init() {
         super.init(frame: .zero)
@@ -128,24 +125,30 @@ open class GHamburgerPanel: UIView, GContainer {
         return self
     }
     
+    open override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        helper.didMoveToSuperview()
+    }
     
-//    open override func didMoveToSuperview() {
-//        super.didMoveToSuperview()
-//        helper.didMoveToSuperview()
-//    }
-//    
-//    public func clearViews() {
-//        contentView.clearViews()
-//    }
-//    
-//    public func addView(_ view: UIView, top : CGFloat? = nil) {
-//        contentView.addView(view, top: top)
-//    }
-//    
-//    public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
-//        _ = contentView.paddings(t: top, l: left, b: bottom, r: right)
-//        return self
-//    }
+    public func width(_ width: Int) -> Self {
+        helper.width(width)
+        return self
+    }
+    
+    public func width(_ width: LayoutSize) -> Self {
+        helper.width(width)
+        return self
+    }
+    
+    public func height(_ height: Int) -> Self {
+        helper.height(height)
+        return self
+    }
+    
+    public func height(_ height: LayoutSize) -> Self {
+        helper.height(height)
+        return self
+    }
     
     public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
         helper.paddings(t: top, l: left, b: bottom, r: right)

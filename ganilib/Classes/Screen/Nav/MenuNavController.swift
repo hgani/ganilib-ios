@@ -5,11 +5,10 @@ open class MenuNavController: GScreen {
     fileprivate let tableView = GTableView()
     
     open override func screenContent() -> UIView {
-        return self.tableView
+        return tableView
     }
     
     private let menu = Menu()
-//    public var mainNav: NavHelper!
     
     open override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,10 +72,6 @@ extension MenuNavController: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
-//    
-//    public func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-//        return nil
-//    }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = menu[indexPath.row] as MenuItem

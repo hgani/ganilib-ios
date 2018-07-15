@@ -1,7 +1,7 @@
 import UIKit
 
 open class GScreen: UIViewController {
-    public let container: GScreenContainer
+    public var container: GScreenContainer!
     
     private var helper : ScreenHelper!
     public var launch : LaunchHelper!
@@ -14,24 +14,17 @@ open class GScreen: UIViewController {
         }
     }()
     
-    public init(container: GScreenContainer) {
-        self.container = container
-        super.init(nibName: nil, bundle: nil)
-    }
-    
     // Don't make this `convenience` so that child class can delegate to it.
     public init() {
-        self.container = GScreenContainer(scrollView: GScrollView())
         super.init(nibName: nil, bundle: nil)
     }
     
     public required init?(coder aDecoder: NSCoder) {
-        self.container = GScreenContainer(scrollView: GScrollView())
         super.init(coder: aDecoder)
     }
-    
+
     open func screenContent() -> UIView {
-        return container
+        return GScrollView()
     }
     
     // Useful for when we don't have one global nav controller.
@@ -42,6 +35,7 @@ open class GScreen: UIViewController {
     override open func viewDidLoad() {
         super.viewDidLoad()
         
+        self.container = GScreenContainer(content: screenContent())
         self.helper = ScreenHelper(self)
         self.launch = LaunchHelper(self)
         self.indicator = IndicatorHelper(self)
@@ -61,9 +55,9 @@ open class GScreen: UIViewController {
     }
     
     private func setupContainer() {
-        screenContent().translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(screenContent())
-        screenContent().snp.makeConstraints { make in
+        container.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(container)
+        container.snp.makeConstraints { make in
             make.centerX.equalTo(view)
             make.width.equalTo(view)
             
@@ -107,12 +101,10 @@ open class GScreen: UIViewController {
         return self
     }
     
-    public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
-        if let view = screenContent() as? GContainer {
-            _ = view.paddings(t: top, l: left, b: bottom, r: right)
-        }
-        return self
-    }
+//    public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
+//        _ = container.paddings(t: top, l: left, b: bottom, r: right)
+//        return self
+//    }
     
     // Don't declare this in an extension or else we'll get compile error
     // See https://stackoverflow.com/questions/44616409/declarations-in-extensions-cannot-override-yet-error-in-swift-4
@@ -149,21 +141,21 @@ public class GScreenContainer: GHamburgerPanel {
     private let content: UIView
     public let footer = GVerticalPanel().width(.matchParent)
     
-    public init(scrollView: GScrollView) {
-        self.content = scrollView.width(.matchParent)
-        self.scrollView = scrollView
+    public init(content: UIView) {
+        self.content = content
+        self.scrollView = content as? GScrollView
         
         super.init()
         initialize()
     }
     
-    public init(webView: GWebView) {
-        self.content = webView.width(.matchParent)
-        self.scrollView = nil
-        
-        super.init()
-        initialize()
-    }
+//    public init(webView: GWebView) {
+//        self.content = webView.width(.matchParent)
+//        self.scrollView = nil
+//
+//        super.init()
+//        initialize()
+//    }
     
     required public init?(coder: NSCoder) {
         fatalError("Unsupported operation")
@@ -175,6 +167,16 @@ public class GScreenContainer: GHamburgerPanel {
             content,
             footer
         )
+        content.snp.makeConstraints { make in
+            make.right.equalTo(self.snp.rightMargin)
+        }
+    }
+    
+    override public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
+        if let view = content as? IContainer {
+            _ = view.paddings(t: top, l: left, b: bottom, r: right)
+        }
+        return self
     }
     
     public func clearViews() {

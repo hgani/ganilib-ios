@@ -1,9 +1,15 @@
 
 import UIKit
 
-open class GScrollView: UIScrollView {
+open class GScrollView: UIScrollView, IView {
     private var helper: ViewHelper!
     private let contentView = GVerticalPanel()
+    
+    public var size: CGSize {
+        get {
+            return helper.size
+        }
+    }
     
     public init() {
         super.init(frame: .zero)
