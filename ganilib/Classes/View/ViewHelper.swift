@@ -8,6 +8,7 @@ public class ViewHelper {
     private var matchParentHeightMultiplier: Float?
     var paddings = Paddings(t: 0, l: 0, b: 0, r: 0)
     
+    private var widthConstraint: Constraint?
     private var heightConstraint: Constraint?
     
     public var size: CGSize {
@@ -34,10 +35,10 @@ public class ViewHelper {
                         GLog.t("updateWidthConstraints() with multiplier \(multiplier)")
                     }
                     if multiplier == 1 {
-                        make.right.equalTo(superview.snp.rightMargin)  // Consume remaining space
+                        widthConstraint = make.right.equalTo(superview.snp.rightMargin).constraint  // Consume remaining space
                     }
                     else {
-                        make.width.equalTo(superview).multipliedBy(multiplier).offset(offset)
+                        widthConstraint = make.width.equalTo(superview).multipliedBy(multiplier).offset(offset).constraint
                     }
                 }
             }
@@ -48,7 +49,7 @@ public class ViewHelper {
         if let superview = view.superview {
             if let multiplier = matchParentHeightMultiplier {
                 view.snp.makeConstraints { make in
-                    make.bottom.equalTo(superview.snp.bottomMargin)
+                    heightConstraint = make.bottom.equalTo(superview.snp.bottomMargin).constraint
                 }
             }
         }
@@ -62,19 +63,29 @@ public class ViewHelper {
         return matchParentHeightMultiplier != nil
     }
     
-    public func width(_ width: Int) {
-        self.matchParentWidthMultiplier = nil
-        view.snp.makeConstraints { (make) -> Void in
-            make.width.equalTo(width)
-        }
-
-    }
-    
     private func nothingToDo() {
         // Nothing to do
     }
     
+    private func resetWidth() {
+        widthConstraint?.deactivate()
+        widthConstraint = nil
+        self.matchParentWidthMultiplier = nil
+    }
+    
+    public func width(_ width: Int) {
+        resetWidth()
+
+        self.matchParentWidthMultiplier = nil
+        view.snp.makeConstraints { (make) -> Void in
+            widthConstraint = make.width.equalTo(width).constraint
+        }
+
+    }
+    
     public func width(_ width: LayoutSize) {
+        resetWidth()
+
         switch width {
         case .matchParent:
             self.matchParentWidthMultiplier = 1
@@ -84,6 +95,8 @@ public class ViewHelper {
     }
     
     public func width(weight: Float, offset: Float = 0) {
+        resetWidth()
+        
         self.matchParentWidthMultiplier = weight
         updateWidthConstraints(offset: offset)
     }
@@ -95,7 +108,6 @@ public class ViewHelper {
     }
     
     public func height(_ height : Int) {
-//        self.matchParentHeightMultiplier = nil
         resetHeight()
         
         view.snp.makeConstraints { (make) -> Void in
