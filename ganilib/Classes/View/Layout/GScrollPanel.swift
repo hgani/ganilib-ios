@@ -1,7 +1,7 @@
 
 import UIKit
 
-open class GScrollView: UIScrollView, IView {
+open class GScrollPanel: UIScrollView, IContainer {
     private var helper: ViewHelper!
     private let contentView = GVerticalPanel()
     
@@ -72,9 +72,18 @@ open class GScrollView: UIScrollView, IView {
         contentView.addView(view, top: top)
     }
     
+    public func append(_ view: UIView, top : CGFloat? = nil) -> Self {
+        _ = contentView.append(view, top: top)
+        return self
+    }
+    
     public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
         _ = contentView.paddings(t: top, l: left, b: bottom, r: right)
         return self
+    }
+    
+    public func done() {
+        // End chaining
     }
     
 //    public func test() {

@@ -1,6 +1,7 @@
 import UIKit
 
 open class GScreen: UIViewController {
+    public let scrollPanel = GScrollPanel()
     public var container: GScreenContainer!
     
     private var helper : ScreenHelper!
@@ -24,7 +25,7 @@ open class GScreen: UIViewController {
     }
 
     open func screenContent() -> UIView {
-        return GScrollView()
+        return scrollPanel
     }
     
     // Useful for when we don't have one global nav controller.
@@ -137,26 +138,18 @@ extension GScreen: IndicatorInfoProvider {
 
 public class GScreenContainer: GHamburgerPanel {
     public let header = GVerticalPanel().width(.matchParent)
-    private let scrollView: GScrollView?
+//    private let scrollView: GScrollView?
     private let content: UIView
     public let footer = GVerticalPanel().width(.matchParent)
     
     public init(content: UIView) {
         self.content = content
-        self.scrollView = content as? GScrollView
+//        self.scrollView = content as? GScrollView
         
         super.init()
         initialize()
     }
-    
-//    public init(webView: GWebView) {
-//        self.content = webView.width(.matchParent)
-//        self.scrollView = nil
-//
-//        super.init()
-//        initialize()
-//    }
-    
+
     required public init?(coder: NSCoder) {
         fatalError("Unsupported operation")
     }
@@ -172,24 +165,24 @@ public class GScreenContainer: GHamburgerPanel {
         }
     }
     
-    override public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
-        if let view = content as? IContainer {
-            _ = view.paddings(t: top, l: left, b: bottom, r: right)
-        }
-        return self
-    }
-    
-    public func clearViews() {
-        scrollView?.clearViews()
-    }
-    
-    public func addView(_ view: UIView, top : CGFloat? = nil) {
-        scrollView?.addView(view, top: top)
-    }
-    
-    // UIScrollView delays touch event handling by default.
-    public func delayTouch(_ delay: Bool) {
-        scrollView?.delaysContentTouches = delay
-    }
+//    override public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
+//        if let view = content as? IContainer {
+//            _ = view.paddings(t: top, l: left, b: bottom, r: right)
+//        }
+//        return self
+//    }
+//
+//    public func clearViews() {
+//        scrollView?.clearViews()
+//    }
+//
+//    public func addView(_ view: UIView, top : CGFloat? = nil) {
+//        scrollView?.addView(view, top: top)
+//    }
+//
+//    // UIScrollView delays touch event handling by default.
+//    public func delayTouch(_ delay: Bool) {
+//        scrollView?.delaysContentTouches = delay
+//    }
 }
 
