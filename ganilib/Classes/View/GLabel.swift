@@ -104,8 +104,15 @@ open class GLabel: UILabel {
         return self
     }
     
-    public func spec(_ spec : GLabelSpec) -> Self {
-        spec.decorate(self)
+//    public func spec(_ spec : GLabelSpec) -> Self {
+//        spec.decorate(self)
+//        return self
+//    }
+    
+    public func specs(_ specs : GLabelSpec...) -> Self {
+        for spec in specs {
+            spec.decorate(self)
+        }
         return self
     }
     
@@ -145,11 +152,23 @@ open class GLabel: UILabel {
         // Ends chaining
     }
     
-    // See https://stackoverflow.com/questions/27459746/adding-space-padding-to-a-uilabel
-    override open var intrinsicContentSize: CGSize {
-        let size = super.intrinsicContentSize
-        return CGSize(width: size.width + CGFloat(paddings.l + paddings.r),
-                      height: size.height + CGFloat(paddings.t + paddings.b))
+//    // See https://stackoverflow.com/questions/27459746/adding-space-padding-to-a-uilabel
+//    override open var intrinsicContentSize: CGSize {
+//        let size = super.intrinsicContentSize
+//        return CGSize(width: size.width + CGFloat(paddings.l + paddings.r),
+//                      height: size.height + CGFloat(paddings.t + paddings.b))
+//    }
+    
+    // From https://stackoverflow.com/questions/21167226/resizing-a-uilabel-to-accommodate-insets/21267507#21267507
+    override open func textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
+        let textInsets = paddings.toEdgeInsets()
+        let insetRect = UIEdgeInsetsInsetRect(bounds, textInsets)
+        let textRect = super.textRect(forBounds: insetRect, limitedToNumberOfLines: numberOfLines)
+        let invertedInsets = UIEdgeInsets(top: -textInsets.top,
+                                          left: -textInsets.left,
+                                          bottom: -textInsets.bottom,
+                                          right: -textInsets.right)
+        return UIEdgeInsetsInsetRect(textRect, invertedInsets)
     }
     
     override open func draw(_ rect: CGRect) {
@@ -172,6 +191,39 @@ open class GLabel: UILabel {
             
             path.stroke()
         }
+    }
+}
+
+// From https://gist.github.com/zyrx/67fa2f42b567d1d4c8fef434c7987387
+extension GLabel {
+    public func copyable() -> Self {
+        isUserInteractionEnabled = true
+        addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(showMenu)))
+        return self
+    }
+    
+    override open var canBecomeFirstResponder: Bool {
+        return true
+    }
+    
+    @objc private func showMenu(sender: AnyObject?) {
+        becomeFirstResponder()
+        let menu = UIMenuController.shared
+        if !menu.isMenuVisible {
+            menu.setTargetRect(bounds, in: self)
+            menu.setMenuVisible(true, animated: true)
+        }
+    }
+    
+    override open func copy(_ sender: Any?) {
+        let board = UIPasteboard.general
+        board.string = text
+        let menu = UIMenuController.shared
+        menu.setMenuVisible(false, animated: true)
+    }
+    
+    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        return action == #selector(UIResponderStandardEditActions.copy)
     }
 }
 

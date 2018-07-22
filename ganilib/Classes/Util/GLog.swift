@@ -1,6 +1,9 @@
 open class GLog {
-    static public func e(_ str: String) {
+    static public func e(_ str: String, error: Error? = nil) {
         NSLog("[ERROR] \(str)")
+        if let message = error?.localizedDescription {
+            NSLog(message)
+        }
     }
     
     static public func w(_ str: String) {

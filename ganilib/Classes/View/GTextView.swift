@@ -1,11 +1,11 @@
 import UIKit
 
-open class GTextField: UITextField {
+open class GTextView: UITextView {
     private var helper: ViewHelper!
-    private var padding = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+//    private var padding = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
     
     public init() {
-        super.init(frame: .zero)
+        super.init(frame: .zero, textContainer: nil)
         initialize()
     }
     
@@ -23,37 +23,22 @@ open class GTextField: UITextField {
         helper.didMoveToSuperview()
     }
     
-    public func placeholder(_ str: String) -> Self {
-        self.placeholder = str
-        return self
-    }
+//    public func placeholder(_ str: String) -> Self {
+//        self.placeholder = str
+//        return self
+//    }
     
-    public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
-//        helper.padding(top: top, left: left, bottom: bottom, right: right)
-//        let padding = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5);
-        
-        let orig = self.padding
-        
-        let top = top ?? orig.top
-        let left = left ?? orig.left
-        let bottom = bottom ?? orig.bottom
-        let right = right ?? orig.right
-        
-        self.padding = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
-        return self
-    }
-    
-    override open func textRect(forBounds bounds: CGRect) -> CGRect {
-        return UIEdgeInsetsInsetRect(bounds, padding)
-    }
-    
-    override open func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return UIEdgeInsetsInsetRect(bounds, padding)
-    }
-    
-    override open func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return UIEdgeInsetsInsetRect(bounds, padding)
-    }
+//    public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
+//        let orig = self.padding
+//
+//        let top = top ?? orig.top
+//        let left = left ?? orig.left
+//        let bottom = bottom ?? orig.bottom
+//        let right = right ?? orig.right
+//
+//        self.padding = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
+//        return self
+//    }
     
     public func color(bg : UIColor?, text: UIColor? = nil) -> Self {
         if let bgColor = bg {
@@ -64,12 +49,7 @@ open class GTextField: UITextField {
         }
         return self
     }
-    
-//    public func border(style: UITextBorderStyle) -> Self {
-//        self.borderStyle = style
-//        return self
-//    }
-    
+
     public func border(color: UIColor?, width: Float = 1, corner: Float = 6) -> Self {
         helper.border(color: color, width: width, corner: corner)
         return self
@@ -95,7 +75,7 @@ open class GTextField: UITextField {
         return self
     }
     
-    public func specs(_ specs: GTextFieldSpec...) -> Self {
+    public func specs(_ specs: GTextViewSpec...) -> Self {
         for spec in specs {
             spec.decorate(self)
         }
@@ -113,14 +93,14 @@ open class GTextField: UITextField {
     }
 }
 
-public class GTextFieldSpec {
-    private var decorator: ((GTextField) -> Void)
+public class GTextViewSpec {
+    private var decorator: ((GTextView) -> Void)
     
-    public init(_ decorator: @escaping ((GTextField) -> Void)) {
+    public init(_ decorator: @escaping ((GTextView) -> Void)) {
         self.decorator = decorator
     }
     
-    func decorate(_ view: GTextField) {
+    func decorate(_ view: GTextView) {
         decorator(view)
     }
 }

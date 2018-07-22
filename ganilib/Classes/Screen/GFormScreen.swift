@@ -30,12 +30,10 @@ open class GFormScreen: FormViewController {
         self.launch = LaunchHelper(self)
         self.indicator = IndicatorHelper(self)
         self.nav = NavHelper(self)
-        
-        appendRefresher()
     }
     
-    private func appendRefresher() {
-        tableView?.addSubview(refresher)
+    public func appendRefresher() {
+        tableView.addSubview(refresher)
         
         // Eureka-specific requirements
         refresher.snp.makeConstraints { (make) -> Void in

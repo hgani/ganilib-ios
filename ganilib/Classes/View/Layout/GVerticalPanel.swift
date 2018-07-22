@@ -155,6 +155,11 @@ open class GVerticalPanel: UIView {
         return self
     }
     
+    public func hidden(_ hidden: Bool) -> Self {
+        self.isHidden = hidden
+        return self
+    }
+    
     public func done() {
         // Ends chaining
     }
