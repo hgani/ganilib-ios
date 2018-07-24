@@ -8,6 +8,7 @@ open class GLabel: UILabel {
     private var isUnderlined = false
     private var onClick: ((GLabel) -> Void)?
     var paddings = Paddings(t: 0, l: 0, b: 0, r: 0)
+    var clickRecognizer: UITapGestureRecognizer? = nil
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -120,8 +121,13 @@ open class GLabel: UILabel {
     public func onClick(_ command: @escaping (GLabel) -> Void) -> Self {
         self.onClick = command
         self.isUserInteractionEnabled = true
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(performClick))
-        self.addGestureRecognizer(gestureRecognizer)
+        
+        if let recognizer = clickRecognizer {
+            removeGestureRecognizer(recognizer)  // Clear previous
+        }
+        clickRecognizer = UITapGestureRecognizer(target: self, action: #selector(performClick))
+        addGestureRecognizer(clickRecognizer!)
+        
         return self
     }
     

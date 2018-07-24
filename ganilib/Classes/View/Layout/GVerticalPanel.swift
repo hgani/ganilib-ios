@@ -1,10 +1,16 @@
 
 import UIKit
 
-open class GVerticalPanel: UIView {
+open class GVerticalPanel: UIView, IView {
     private var helper: ViewHelper!
     private var previousViewElement: UIView!
     private var previousConstraint: NSLayoutConstraint!
+    
+    public var size: CGSize {
+        get {
+            return helper.size
+        }
+    }
     
     public init() {
         super.init(frame: .zero)

@@ -154,6 +154,18 @@ open class GTableViewCell: UITableViewCell {
     static func nib() -> UINib {
         return UINib(nibName: nibName(), bundle: nil)
     }
+    
+    public func interactive(_ value: Bool) -> Self {
+        self.isUserInteractionEnabled = value
+        
+        self.selectionStyle = .none
+        return self
+    }
+    
+    public func selectionStyle(_ value: UITableViewCellSelectionStyle) -> Self {
+        self.selectionStyle = value
+        return self
+    }
 }
 
 open class GTableViewCustomCell: GTableViewCell {
@@ -197,7 +209,7 @@ open class GTableViewCustomCell: GTableViewCell {
     }
     
     override public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
-        container.paddings(t: top, l: left, b: bottom, r: right)
+        _ = container.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
     
@@ -212,11 +224,6 @@ open class GTableViewCustomCell: GTableViewCell {
     
     public func color(bg: UIColor) -> Self {
         contentView.backgroundColor = bg
-        return self
-    }
-    
-    public func interactive(_ value: Bool) -> Self {
-        self.isUserInteractionEnabled = value
         return self
     }
 }
