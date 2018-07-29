@@ -67,7 +67,7 @@ open class GMapView: MKMapView {
         return self
     }
 
-    public func trackUser() {
+    public func trackUser() -> Self {
         if CLLocationManager.authorizationStatus() == .authorizedAlways {
             self.showsUserLocation = true
             self.userTrackingMode = .followWithHeading
@@ -75,6 +75,7 @@ open class GMapView: MKMapView {
             locationManager.delegate = self
             locationManager.requestWhenInUseAuthorization()
         }
+        return self
     }
     
     public func end() {

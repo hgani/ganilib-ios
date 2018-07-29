@@ -1,8 +1,8 @@
 import UIKit
 
 open class GScreen: UIViewController {
-    public let scrollPanel = GScrollPanel()
-    public var container: GScreenContainer!
+    public let scrollPanel = GScrollPanel().width(.matchParent)
+    public let container = GScreenContainer()
     
     private var helper : ScreenHelper!
     public var launch : LaunchHelper!
@@ -24,9 +24,9 @@ open class GScreen: UIViewController {
         super.init(coder: aDecoder)
     }
 
-    open func screenContent() -> UIView {
-        return scrollPanel
-    }
+//    open func screenContent() -> UIView {
+//        return scrollPanel
+//    }
     
     // Useful for when we don't have one global nav controller.
     public func localNavController(_ navController: UINavigationController) {
@@ -35,8 +35,7 @@ open class GScreen: UIViewController {
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.container = GScreenContainer(content: screenContent())
+
         self.helper = ScreenHelper(self)
         self.launch = LaunchHelper(self)
         self.indicator = IndicatorHelper(self)
@@ -102,11 +101,6 @@ open class GScreen: UIViewController {
         return self
     }
     
-//    public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
-//        _ = container.paddings(t: top, l: left, b: bottom, r: right)
-//        return self
-//    }
-    
     // Don't declare this in an extension or else we'll get compile error
     // See https://stackoverflow.com/questions/44616409/declarations-in-extensions-cannot-override-yet-error-in-swift-4
     open func onRefresh() {
@@ -138,14 +132,17 @@ extension GScreen: IndicatorInfoProvider {
 
 public class GScreenContainer: GHamburgerPanel {
     public let header = GVerticalPanel().width(.matchParent)
-//    private let scrollView: GScrollView?
-    private let content: UIView
+    public let content = GVerticalPanel().width(.matchParent)
     public let footer = GVerticalPanel().width(.matchParent)
+//
+//    public init(content: UIView) {
+//        self.content = content
+//
+//        super.init()
+//        initialize()
+//    }
     
-    public init(content: UIView) {
-        self.content = content
-//        self.scrollView = content as? GScrollView
-        
+    override public init() {
         super.init()
         initialize()
     }
@@ -164,25 +161,5 @@ public class GScreenContainer: GHamburgerPanel {
             make.right.equalTo(self.snp.rightMargin)
         }
     }
-    
-//    override public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
-//        if let view = content as? IContainer {
-//            _ = view.paddings(t: top, l: left, b: bottom, r: right)
-//        }
-//        return self
-//    }
-//
-//    public func clearViews() {
-//        scrollView?.clearViews()
-//    }
-//
-//    public func addView(_ view: UIView, top : CGFloat? = nil) {
-//        scrollView?.addView(view, top: top)
-//    }
-//
-//    // UIScrollView delays touch event handling by default.
-//    public func delayTouch(_ delay: Bool) {
-//        scrollView?.delaysContentTouches = delay
-//    }
 }
 

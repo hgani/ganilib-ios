@@ -2,11 +2,11 @@ import UIKit
 import SideMenu
 
 open class MenuNavController: GScreen {
-    fileprivate let tableView = GTableView()
+    fileprivate let tableView = GTableView().width(.matchParent)
     
-    open override func screenContent() -> UIView {
-        return tableView
-    }
+//    open override func screenContent() -> UIView {
+//        return tableView
+//    }
     
     private let menu = Menu()
     
@@ -18,12 +18,13 @@ open class MenuNavController: GScreen {
         
         initMenu(menu)
         
-        tableView
-            .autoRowHeight(estimate: 50)
-            .delegate(self)
-            .source(self)
-            .reload()
-            .done()
+        container.content.addView(
+            tableView
+                .autoRowHeight(estimate: 50)
+                .delegate(self)
+                .source(self)
+                .reload()
+        )
     }
     
     open override func viewWillAppear(_ animated: Bool) {

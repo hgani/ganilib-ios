@@ -8,5 +8,6 @@ public class Device {
     public static let shortLang = Locale.current.languageCode
     
     public static let region = Locale.current.regionCode
+    public static let os = "ios"
 }
 

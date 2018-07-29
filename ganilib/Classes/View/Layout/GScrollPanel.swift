@@ -82,6 +82,12 @@ open class GScrollPanel: UIScrollView, IContainer {
         return self
     }
     
+    // UIScrollView delays touch event handling by default.
+    public func delayTouch(_ delay: Bool) -> Self {
+        self.delaysContentTouches = delay
+        return self
+    }
+    
     public func done() {
         // End chaining
     }

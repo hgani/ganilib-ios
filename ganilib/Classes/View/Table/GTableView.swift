@@ -105,6 +105,11 @@ open class GTableView: UITableView, IContainer {
         return self
     }
     
+    public func withRefresher(_ refresher: GRefreshControl) -> Self {
+        addSubview(refresher)
+        return self
+    }
+    
     public func done() {
         // Ends chaining
     }
