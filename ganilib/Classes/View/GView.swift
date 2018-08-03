@@ -4,6 +4,8 @@ import UIKit
 public protocol IView {
     var size: CGSize { get }
 
+    func color(bg: UIColor) -> Self
+    
     func width(_ width: Int) -> Self
     func width(_ width: LayoutSize) -> Self
     

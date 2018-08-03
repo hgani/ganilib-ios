@@ -88,6 +88,11 @@ open class GScrollPanel: UIScrollView, IContainer {
         return self
     }
     
+    public func color(bg: UIColor) -> Self {
+        self.backgroundColor = bg
+        return self
+    }
+    
     public func done() {
         // End chaining
     }

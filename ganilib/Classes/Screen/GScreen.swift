@@ -23,10 +23,6 @@ open class GScreen: UIViewController {
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
-//    open func screenContent() -> UIView {
-//        return scrollPanel
-//    }
     
     // Useful for when we don't have one global nav controller.
     public func localNavController(_ navController: UINavigationController) {

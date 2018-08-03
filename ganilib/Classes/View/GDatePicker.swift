@@ -74,16 +74,20 @@ open class GDatePicker: UIDatePicker, IView {
 //
     
     public func onSelect(_ command: @escaping (GDatePicker) -> Void) -> Self {
-        helper.onSelect(command)
+        _ = helper.onSelect(command)
         return self
     }
     
-    public func color(bg: UIColor?, text: UIColor?) -> Self {
+    public func color(bg: UIColor) -> Self {
+        return color(bg: bg, text: nil)
+    }
+    
+    public func color(bg: UIColor?, text: UIColor? = nil) -> Self {
         if let bgColor = bg {
             self.backgroundColor = bgColor
         }
         if let textColor = text {
-            setValue(text, forKeyPath: "textColor")
+            setValue(textColor, forKeyPath: "textColor")
         }
         return self
     }

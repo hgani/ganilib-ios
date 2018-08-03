@@ -4,6 +4,9 @@ import UIKit
 open class GTableView: UITableView, IContainer {
     private var helper: ViewHelper!
     
+    // Useful for making sure an unattached delegate object sticks around.
+    private var retainedDelegate: UITableViewDelegate?
+    
     public var size: CGSize {
         get {
             return helper.size
@@ -29,15 +32,16 @@ open class GTableView: UITableView, IContainer {
         helper.didMoveToSuperview()
     }
     
-    public func color(bg: UIColor?) -> Self {
-        if let bgColor = bg {
-            self.backgroundColor = bgColor
-        }
+    public func color(bg: UIColor) -> Self {
+        self.backgroundColor = bg
         return self
     }
     
-    public func delegate(_ delegate: UITableViewDelegate) -> Self {
+    public func delegate(_ delegate: UITableViewDelegate, retain: Bool = false) -> Self {
         self.delegate = delegate
+        if retain {
+            self.retainedDelegate = delegate
+        }
         return self
     }
     

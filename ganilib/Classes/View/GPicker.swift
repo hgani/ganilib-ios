@@ -77,10 +77,8 @@ open class GPicker: UIPickerView, IView {
         return self
     }
     
-    public func color(bg: UIColor?) -> Self {
-        if let bgColor = bg {
-            self.backgroundColor = bgColor
-        }
+    public func color(bg: UIColor) -> Self {
+        self.backgroundColor = bg
         return self
     }
     
