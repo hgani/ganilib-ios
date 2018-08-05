@@ -1,6 +1,6 @@
 // See http://codeforcaffeine.com/programming/swift-3-ordered-dictionary/
 public struct OrderedDictionary<K: Hashable, V> {
-    var keys = [K]()
+    public var keys = [K]()
     var dict = [K:V]()
  
     public var count: Int {

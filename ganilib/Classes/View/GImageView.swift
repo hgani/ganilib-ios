@@ -1,6 +1,5 @@
 
 import UIKit
-import Kingfisher
 
 open class GImageView : UIImageView {
     private var helper : ViewHelper!
@@ -9,11 +8,6 @@ open class GImageView : UIImageView {
     public init() {
         super.init(frame: .zero)
         initialize()
-        
-//        self.helper = ViewHelper(self)
-//        
-        // Make sure that contentEdgeInsets' values is always initialized properly (i.e. non-zero)
-//        _ = self.padding(top: 10, left: 20, bottom: 10, right: 20)
     }
     
     required public init?(coder: NSCoder) {
@@ -63,12 +57,6 @@ open class GImageView : UIImageView {
         return self
     }
     
-    // Deprecated
-//    public func namedImage(_ name: String) -> Self {
-//        self.image = UIImage(named: name)
-//        return self
-//    }
-    
     public func source(name: String) -> Self {
         return source(image: UIImage(named: name))
     }
@@ -76,15 +64,6 @@ open class GImageView : UIImageView {
     public func source(image: UIImage?) -> Self {
         self.image = image
         return self
-    }
-    
-    public func source(url: URL?, placeholder: UIImage? = nil) -> Self {
-        self.kf.setImage(with: url, placeholder: placeholder)
-        return self
-    }
-    
-    public func source(url: String, placeholder: UIImage? = nil) -> Self {
-        return source(url: URL(string: url), placeholder: placeholder)
     }
     
     public func border(color: UIColor?, width: Float = 1, corner: Float = 6) -> Self {
@@ -131,3 +110,22 @@ open class GImageView : UIImageView {
         // End chaining initialisation
     }
 }
+
+
+
+#if INCLUDE_KINGFISHER
+
+import Kingfisher
+
+extension GImageView {
+    public func source(url: URL?, placeholder: UIImage? = nil) -> Self {
+        self.kf.setImage(with: url, placeholder: placeholder)
+        return self
+    }
+    
+    public func source(url: String, placeholder: UIImage? = nil) -> Self {
+        return source(url: URL(string: url), placeholder: placeholder)
+    }
+}
+
+#endif

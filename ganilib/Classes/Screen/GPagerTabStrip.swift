@@ -1,3 +1,5 @@
+#if INCLUDE_UILIBS
+
 import XLPagerTabStrip
 
 public typealias GPagerTabStripSettings = ButtonBarPagerTabStripSettings
@@ -29,3 +31,5 @@ open class GPagerTabStrip: ButtonBarPagerTabStripViewController {
         // To be overridden
     }
 }
+
+#endif

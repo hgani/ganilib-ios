@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'GaniLib'
-  s.version          = '0.7.2'
+  s.version          = '0.7.3'
   s.summary          = 'Simplify iOS development'
 
 # This description is used to generate tags and improve search results.
@@ -38,27 +38,35 @@ TODO: Add long description of the pod here.
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'SwiftIconFont', '2.7.3'
+  s.dependency 'SwiftIconFont', '~> 2.7'
   s.dependency 'SideMenu', '~> 3.0'
 	s.dependency 'SnapKit', '~> 4.0'
-  s.dependency 'Eureka', '~> 4.1'
-  s.dependency 'TTTAttributedLabel'
 
-  s.dependency 'Alamofire'
+  s.dependency 'Alamofire', '~> 4.7'
   s.dependency 'SwiftyJSON', '~> 4.1'
-  s.dependency 'SVProgressHUD'
-  s.dependency 'Kingfisher', '~> 4.0'
-  s.dependency 'XLPagerTabStrip', '~> 8.0'
-  
+  s.dependency 'SVProgressHUD', '~> 2.2'
+
   # http://www.dbotha.com/2014/12/04/optional-cocoapod-dependencies/
   s.default_subspec = 'Core'
 
-  s.subspec 'Core' do |image|
-    image.xcconfig = { 'OTHER_SWIFT_FLAGS' => '' }
+  s.subspec 'Core' do |sub|
+    sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_KINGFISHER' }
+    sub.dependency 'Kingfisher', '~> 4.0'
   end
 
-  s.subspec 'Realm' do |image|
-    image.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_REALM' }
-    image.dependency 'RealmSwift', '~> 3.0'
+  s.subspec 'Realm' do |sub|
+    sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_REALM' }
+    sub.dependency 'RealmSwift', '~> 3.0'
+  end
+
+  s.subspec 'Eureka' do |sub|
+    sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_EUREKA' }
+    sub.dependency 'Eureka', '~> 4.1'
+  end
+
+  s.subspec 'UILibs' do |sub|
+    sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_UILIBS' }
+    sub.dependency 'XLPagerTabStrip', '~> 8.0'
+    sub.dependency 'TTTAttributedLabel'  
   end
 end

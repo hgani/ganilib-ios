@@ -1,11 +1,4 @@
 
-//public enum MenuType {
-//    case popToRoot
-//    case push
-//    case turbolinks
-//    case notification
-//}
-
 public class MenuItem {
     public private(set) var title: String
     public private(set) var icon: String?
@@ -25,23 +18,12 @@ public class MenuItem {
         self.title = title
     }
     
-//    public init(title: String, icon: String, onClick: @escaping () -> Void) {
-//        self.title = title
-//        self.icon = icon
-//        self.onClick = onClick
-//    }
-    
     public func icon(_ icon: String) -> Self {
         self.icon = icon
         return self
     }
     
     public func screen(_ screen: GScreen) -> Self {
-        self.controller = screen
-        return self
-    }
-    
-    public func screen(_ screen: GFormScreen) -> Self {
         self.controller = screen
         return self
     }
@@ -60,3 +42,16 @@ public class MenuItem {
         return controller != nil || onClick != nil
     }
 }
+
+
+
+#if INCLUDE_EUREKA
+
+extension MenuItem {
+    public func screen(_ screen: GFormScreen) -> Self {
+        self.controller = screen
+        return self
+    }
+}
+
+#endif

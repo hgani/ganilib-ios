@@ -1,3 +1,5 @@
+#if INCLUDE_EUREKA
+
 import Eureka
 
 fileprivate protocol ConfigurableRow {
@@ -77,3 +79,5 @@ private class DataListSelectorViewController<OptionsRow: OptionsProviderRow>: Se
         section <<< row
     }
 }
+
+#endif

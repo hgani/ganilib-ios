@@ -1,3 +1,4 @@
+#if INCLUDE_EUREKA
 
 import UIKit
 import Eureka
@@ -74,5 +75,7 @@ open class GEurekaCell<T: Equatable>: Cell<T>, CellType {
         editingAccessoryType = accessoryType
         selectionStyle = row.isDisabled ? .none : .default
     }
-    
 }
+
+#endif
+

@@ -116,6 +116,8 @@ extension GScreen: ScreenProtocol {
 
 
 
+#if INCLUDE_UILIBS
+
 import XLPagerTabStrip
 
 extension GScreen: IndicatorInfoProvider {
@@ -124,19 +126,14 @@ extension GScreen: IndicatorInfoProvider {
     }
 }
 
+#endif
+
 
 
 public class GScreenContainer: GHamburgerPanel {
     public let header = GVerticalPanel().width(.matchParent)
     public let content = GVerticalPanel().width(.matchParent)
     public let footer = GVerticalPanel().width(.matchParent)
-//
-//    public init(content: UIView) {
-//        self.content = content
-//
-//        super.init()
-//        initialize()
-//    }
     
     override public init() {
         super.init()

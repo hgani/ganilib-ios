@@ -1,9 +1,10 @@
+#if INCLUDE_UILIBS
 
 import UIKit
 import SwiftIconFont
 import TTTAttributedLabel
 
-open class GAttributedLabel : TTTAttributedLabel {
+open class GAttributedLabel: TTTAttributedLabel {
     private var helper : ViewHelper!
     private var isUnderlined = false
     private var onClick : (() -> Void)?
@@ -135,3 +136,5 @@ open class GAttributedLabel : TTTAttributedLabel {
         }
     }
 }
+
+#endif

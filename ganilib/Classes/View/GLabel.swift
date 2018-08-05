@@ -1,7 +1,6 @@
 
 import UIKit
 import SwiftIconFont
-import TTTAttributedLabel
 
 open class GLabel: UILabel {
     private var helper: ViewHelper!
