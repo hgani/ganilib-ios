@@ -140,7 +140,6 @@ open class GTableViewCell: UITableViewCell {
     
     private func initialize() {
         self.helper = ViewHelper(self.contentView)
-//        self.contentView.addSubview(container)
     }
     
     public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
@@ -204,16 +203,14 @@ open class GTableViewCustomCell: GTableViewCell {
         container.snp.makeConstraints { (make) -> Void in
             // Snap the panel's vertical edges so that the tableView can determine the dynamic height of each row
             // See https://stackoverflow.com/questions/18746929/using-auto-layout-in-uitableview-for-dynamic-cell-layouts-variable-row-heights
-//            make.top.equalTo(self.contentView).offset(paddings.top)
-//            make.bottom.equalTo(self.contentView).offset(-paddings.bottom)
-//            
-//            make.left.equalTo(self.contentView).offset(paddings.left)
-//            make.right.equalTo(self.contentView).offset(-paddings.right)
-            make.top.equalTo(self.contentView.snp.topMargin)
-            make.bottom.equalTo(self.contentView.snp.bottomMargin)
+            //
+            // For some reason contentView's leftMargin and rightMargin are always non-zero, so for predictability,
+            // it's better to stick everything to the non-margin borders and set paddings on `container` instead.
+            make.top.equalTo(self.contentView.snp.top)
+            make.bottom.equalTo(self.contentView.snp.bottom)
             
-            make.left.equalTo(self.contentView.snp.leftMargin)
-            make.right.equalTo(self.contentView.snp.rightMargin)
+            make.left.equalTo(self.contentView.snp.left)
+            make.right.equalTo(self.contentView.snp.right)
         }
     }
     
