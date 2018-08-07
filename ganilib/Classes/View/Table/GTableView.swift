@@ -177,6 +177,8 @@ open class GTableViewCell: UITableViewCell {
 }
 
 open class GTableViewCustomCell: GTableViewCell {
+    public weak var tableView: GTableView?
+
     private let container = GVerticalPanel()
     
     public convenience init() {
