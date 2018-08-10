@@ -50,8 +50,8 @@ open class GTableView: UITableView, IContainer {
         return self
     }
     
-    public func register(_ type: GTableViewCell.Type) -> Self {
-        register(type.nib(), forCellReuseIdentifier: type.reuseIdentifier())
+    public func register(nibType: GTableViewCell.Type) -> Self {
+        register(nibType.nib(), forCellReuseIdentifier: nibType.reuseIdentifier())
         return self
     }
     
@@ -93,10 +93,13 @@ open class GTableView: UITableView, IContainer {
     }
     
     public func cellInstance<T: GTableViewCell>(of type: T.Type, style: UITableViewCellStyle = .default) -> T {
-        if let cell = self.dequeueReusableCell(withIdentifier: type.reuseIdentifier()) as? T {
-            return cell
+        var cell: T
+        if let c = self.dequeueReusableCell(withIdentifier: type.reuseIdentifier()) as? T {
+            cell = c
         }
-        return type.init(style: style)
+        cell = type.init(style: style)
+        cell.tableView = self
+        return cell
     }
     
     public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
@@ -120,6 +123,7 @@ open class GTableView: UITableView, IContainer {
 }
 
 open class GTableViewCell: UITableViewCell {
+    public fileprivate(set) weak var tableView: GTableView?
     private var helper: ViewHelper!
     
     public convenience init() {
@@ -177,8 +181,6 @@ open class GTableViewCell: UITableViewCell {
 }
 
 open class GTableViewCustomCell: GTableViewCell {
-    public weak var tableView: GTableView?
-
     private let container = GVerticalPanel()
     
     public convenience init() {

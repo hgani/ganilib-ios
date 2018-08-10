@@ -106,8 +106,8 @@ open class GImageView : UIImageView {
         }
     }
     
-    public func end() {
-        // End chaining initialisation
+    public func done() {
+        // End chaining
     }
 }
 

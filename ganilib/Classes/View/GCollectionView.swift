@@ -97,6 +97,18 @@ open class GCollectionView: UICollectionView {
         return self
     }
     
+    public func register(cellType: GCollectionViewCell.Type) -> Self {
+        register(cellType, forCellWithReuseIdentifier: cellType.reuseIdentifier())
+        return self
+    }
+    
+    public func cellInstance<T: GCollectionViewCell>(of type: T.Type, for indexPath: IndexPath) -> T {
+        if let cell = self.dequeueReusableCell(withReuseIdentifier: type.reuseIdentifier(), for: indexPath) as? T {
+            return cell
+        }
+        return type.init()
+    }
+    
     public func done() {
         // End chaining
     }
@@ -126,7 +138,68 @@ extension GCollectionView: UICollectionViewDelegateFlowLayout {
 
 
 
-//class GPageControl: UIPageControl {
-//
-//}
+open class GCollectionViewCell: UICollectionViewCell {
+    private let container = GVerticalPanel()
+    
+    public required init() {
+        super.init(frame: .zero)
+        internalInit()
+    }
 
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        internalInit()
+    }
+
+    required public init?(coder: NSCoder) {
+        super.init(coder: coder)
+        internalInit()
+    }
+    
+    private func internalInit() {
+        self.contentView.addSubview(container)
+        initialize()
+    }
+
+    open func initialize() {
+        // To be overridden
+    }
+    
+    open override func didMoveToSuperview() {
+        container.snp.makeConstraints { (make) -> Void in
+            // See GTableViewCustomCell
+            make.top.equalTo(self.contentView.snp.top)
+            make.bottom.equalTo(self.contentView.snp.bottom)
+            
+            make.left.equalTo(self.contentView.snp.left)
+            make.right.equalTo(self.contentView.snp.right)
+        }
+    }
+    
+    public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
+        _ = container.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+    
+    public func addView(_ view: UIView, top : CGFloat? = nil) {
+        container.addView(view, top: top)
+    }
+    
+    public func append(_ view: UIView, top : CGFloat? = nil) -> Self {
+        container.addView(view, top: top)
+        return self
+    }
+    
+    public func color(bg: UIColor) -> Self {
+        contentView.backgroundColor = bg
+        return self
+    }
+    
+    public func done() {
+        // End call chaining
+    }
+    
+    static func reuseIdentifier() -> String {
+        return String(describing: self)
+    }
+}

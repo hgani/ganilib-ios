@@ -154,7 +154,7 @@ open class GLabel: UILabel {
     }
     
     public func done() {
-        // Ends chaining
+        // End chaining
     }
     
 //    // See https://stackoverflow.com/questions/27459746/adding-space-padding-to-a-uilabel
