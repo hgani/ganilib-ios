@@ -141,27 +141,27 @@ extension GCollectionView: UICollectionViewDelegateFlowLayout {
 open class GCollectionViewCell: UICollectionViewCell {
     private let container = GVerticalPanel()
     
-    public required init() {
-        super.init(frame: .zero)
-        internalInit()
-    }
+//    public required init() {
+//        super.init(frame: .zero)
+//        initialize()
+//    }
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        internalInit()
+        initialize()
     }
 
     required public init?(coder: NSCoder) {
         super.init(coder: coder)
-        internalInit()
-    }
-    
-    private func internalInit() {
-        self.contentView.addSubview(container)
         initialize()
     }
+    
+    private func initialize() {
+        self.contentView.addSubview(container)
+        initContent()
+    }
 
-    open func initialize() {
+    open func initContent() {
         // To be overridden
     }
     

@@ -183,24 +183,27 @@ open class GTableViewCell: UITableViewCell {
 open class GTableViewCustomCell: GTableViewCell {
     private let container = GVerticalPanel()
     
-    public convenience init() {
-        self.init(style: .default)
-    }
+//    public convenience init() {
+//        self.init(style: .default)
+//    }
     
     public required init(style: UITableViewCellStyle) {
         super.init(style: style)
-        
         initialize()
     }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
         initialize()
     }
     
     private func initialize() {
         self.contentView.addSubview(container)
+        initContent()
+    }
+    
+    open func initContent() {
+        // To be overridden
     }
     
     open override func didMoveToSuperview() {
