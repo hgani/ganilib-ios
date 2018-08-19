@@ -298,7 +298,7 @@ open class GHeaderFooterView: UIView {
         return self
     }
     
-    public func end() {
+    public func done() {
         // Ends chaining
     }
     
