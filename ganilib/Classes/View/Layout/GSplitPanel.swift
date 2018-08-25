@@ -4,8 +4,8 @@ import UIKit
 open class GSplitPanel : UIView {
     private var helper : ViewHelper!
     private var event : EventHelper<GSplitPanel>!
-    private var previousViewElement : UIView!
-    private var previousConstraint : NSLayoutConstraint!
+//    private var previousViewElement : UIView!
+//    private var previousConstraint : NSLayoutConstraint!
     
     public var size: CGSize {
         get {
@@ -56,8 +56,11 @@ open class GSplitPanel : UIView {
         }
         
         self.snp.makeConstraints { make in
-            make.bottomMargin.greaterThanOrEqualTo(left.snp.bottom)
-            make.bottomMargin.greaterThanOrEqualTo(right.snp.bottom)
+            make.bottomMargin.equalTo(left.snp.bottom)
+            make.bottomMargin.equalTo(right.snp.bottom)
+            
+//            make.bottomMargin.greaterThanOrEqualTo(left.snp.bottom)
+//            make.bottomMargin.greaterThanOrEqualTo(right.snp.bottom)
         }
         
         return self

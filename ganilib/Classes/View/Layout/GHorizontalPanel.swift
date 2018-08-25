@@ -78,7 +78,9 @@ open class GHorizontalPanel : UIView {
     
     private func adjustParentBottomConstraint(child : UIView) {
         self.snp.makeConstraints { make in
-            make.bottomMargin.greaterThanOrEqualTo(child.snp.bottom)
+//            make.bottomMargin.greaterThanOrEqualTo(child.snp.bottom)
+            
+            make.bottomMargin.equalTo(child.snp.bottom)
         }
 
         if !helper.shouldWidthMatchParent() {

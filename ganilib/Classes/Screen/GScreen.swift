@@ -150,9 +150,9 @@ public class GScreenContainer: GHamburgerPanel {
             content,
             footer
         )
-        content.snp.makeConstraints { make in
-            make.right.equalTo(self.snp.rightMargin)
-        }
+//        content.snp.makeConstraints { make in
+//            make.right.equalTo(self.snp.rightMargin)
+//        }
     }
 }
 
