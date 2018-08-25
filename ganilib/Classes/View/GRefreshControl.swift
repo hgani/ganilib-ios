@@ -58,7 +58,7 @@ open class GRefreshControl: UIRefreshControl, ProgressIndicator {
         // Not applicable yet
     }
     
-    public func end() {
-        // End chaining initialisation
+    public func done() {
+        // End chaining
     }
 }
