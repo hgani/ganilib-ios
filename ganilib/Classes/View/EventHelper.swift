@@ -9,13 +9,12 @@ public class EventHelper<T: UIView> {
         self.view = view
     }
     
-    open func onClick(_ command: @escaping (T) -> Void) -> Self {
+    open func onClick(_ command: @escaping (T) -> Void) {
         self.onClick = command
 
         let singleTap = UITapGestureRecognizer(target: self, action: #selector(performClick))
         view.isUserInteractionEnabled = true
         view.addGestureRecognizer(singleTap)
-        return self
     }
 
     @objc open func performClick() {
