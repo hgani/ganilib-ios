@@ -37,6 +37,8 @@ public class GHttp {
     public func initialize(buildConfig: BuildConfig, delegate: GHttpDelegate) {
         self.buildConfig = buildConfig
         self.delegate = delegate
+        
+        JsonUi.register(buildConfig)
     }
     
     public func host() -> String {
