@@ -2,13 +2,19 @@
 import UIKit
 import SwiftIconFont
 
-open class GLabel: UILabel {
+open class GLabel: UILabel, IView {
     private var helper: ViewHelper!
     private var isUnderlined = false
     private var onClick: ((GLabel) -> Void)?
     var paddings = Paddings(t: 0, l: 0, b: 0, r: 0)
     var clickRecognizer: UITapGestureRecognizer? = nil
 
+    public var size: CGSize {
+        get {
+            return helper.size
+        }
+    }
+    
     public override init(frame: CGRect) {
         super.init(frame: frame)
         initialize()
@@ -33,7 +39,11 @@ open class GLabel: UILabel {
         return self
     }
     
-    public func color(bg : UIColor?, text: UIColor? = nil) -> Self {
+    public func color(bg: UIColor) -> Self {
+        return color(bg: bg, text: nil)
+    }
+    
+    public func color(bg: UIColor?, text: UIColor? = nil) -> Self {
         if let bgColor = bg {
             self.backgroundColor = bgColor
         }

@@ -1,8 +1,14 @@
 import UIKit
 
-open class GTextField: UITextField {
+open class GTextField: UITextField, IView {
     private var helper: ViewHelper!
     private var padding = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+    
+    public var size: CGSize {
+        get {
+            return helper.size
+        }
+    }
     
     public init() {
         super.init(frame: .zero)
@@ -28,20 +34,25 @@ open class GTextField: UITextField {
         return self
     }
     
-    public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
-//        helper.padding(top: top, left: left, bottom: bottom, right: right)
-//        let padding = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5);
-        
-        let orig = self.padding
-        
-        let top = top ?? orig.top
-        let left = left ?? orig.left
-        let bottom = bottom ?? orig.bottom
-        let right = right ?? orig.right
-        
-        self.padding = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
+    public func paddings(t top: Float?, l left: Float?, b bottom: Float?, r right: Float?) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
+    
+//    public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
+////        helper.padding(top: top, left: left, bottom: bottom, right: right)
+////        let padding = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5);
+//
+//        let orig = self.padding
+//
+//        let top = top ?? orig.top
+//        let left = left ?? orig.left
+//        let bottom = bottom ?? orig.bottom
+//        let right = right ?? orig.right
+//
+//        self.padding = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
+//        return self
+//    }
     
     override open func textRect(forBounds bounds: CGRect) -> CGRect {
         return UIEdgeInsetsInsetRect(bounds, padding)
@@ -53,6 +64,10 @@ open class GTextField: UITextField {
     
     override open func editingRect(forBounds bounds: CGRect) -> CGRect {
         return UIEdgeInsetsInsetRect(bounds, padding)
+    }
+    
+    public func color(bg: UIColor) -> Self {
+        return color(bg: bg, text: nil)
     }
     
     public func color(bg : UIColor?, text: UIColor? = nil) -> Self {
@@ -104,6 +119,11 @@ open class GTextField: UITextField {
     
     public func secure(_ secure: Bool) -> Self {
         self.isSecureTextEntry = secure
+        return self
+    }
+    
+    public func keyboardType(_ type: UIKeyboardType) -> Self {
+        self.keyboardType = type
         return self
     }
     

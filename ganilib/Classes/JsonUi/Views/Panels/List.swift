@@ -1,5 +1,3 @@
-import GaniLib
-
 class JsonView_Panels_ListV1: JsonView {
     private let tableView = GTableView().width(.matchParent).height(.matchParent)
     
@@ -15,6 +13,8 @@ class JsonView_Panels_ListV1: JsonView {
         
         return tableView
     }
+    
+    
     
     class Delegate: NSObject, UITableViewDataSource, UITableViewDelegate {
         private let listView: JsonView_Panels_ListV1
@@ -47,7 +47,7 @@ class JsonView_Panels_ListV1: JsonView {
         
         public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             let row = rows(at: indexPath.section)[indexPath.row]
-            JsonAction.executeAll(spec: row["onClick"], screen: listView.screen)
+            JsonAction.execute(spec: row["onClick"], screen: listView.screen, creator: nil)
         }
     }
 }

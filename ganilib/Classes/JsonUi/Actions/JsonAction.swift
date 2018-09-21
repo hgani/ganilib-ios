@@ -1,6 +1,7 @@
 open class JsonAction {
     public let spec: Json
     public let screen: GScreen
+    public var targetView: UIView? = nil
     
     required public init(_ spec: Json, _ screen: GScreen) {
         self.spec = spec
@@ -25,11 +26,17 @@ open class JsonAction {
         return nil
     }
 
-    public static func executeAll(spec: Json, screen: GScreen) {
-        create(spec: spec, screen: screen)?.execute()
-
-//        for actionSpec in spec.arrayValue {
-//            create(spec: actionSpec, screen: screen)?.execute()
-//        }
+    public static func execute(spec: Json, screen: GScreen, creator: UIView?) {
+        if let instance = create(spec: spec, screen: screen) {
+            instance.targetView = creator
+            instance.execute()
+        }
+    }
+    
+    public static func execute(spec: Json, screen: GScreen, creator: JsonAction) {
+        if let instance = create(spec: spec, screen: screen) {
+            instance.targetView = creator.targetView
+            instance.execute()
+        }
     }
 }

@@ -1,5 +1,3 @@
-import GaniLib
-
 class JsonView_LabelV1: JsonView {
     private let label = GLabel()
 

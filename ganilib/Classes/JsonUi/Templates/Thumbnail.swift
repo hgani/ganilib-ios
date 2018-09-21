@@ -1,5 +1,3 @@
-import GaniLib
-
 class JsonTemplate_ThumbnailV1: JsonTemplate {
     override func createCell() -> GTableViewCell {
         let cell = tableView.cellInstance(of: ThumbnailTableCell.self, style: .default)

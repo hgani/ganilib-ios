@@ -51,17 +51,17 @@ public class JsonUiScreen: GScreen {
 //            c.height.equalTo(50)
 //        }
 //    }
-    
-    public static func process(spec: Json, for screen: GScreen)  {
-        initVerticalPanel(screen.container.header, spec: spec["header"], screen: screen)
-        initVerticalPanel(screen.container.content, spec: spec["content"], screen: screen)
-        initVerticalPanel(screen.container.footer, spec: spec["footer"], screen: screen)
-        JsonAction.executeAll(spec: spec["onLoad"], screen: screen)
-    }
-    
-    private static func initVerticalPanel(_ panel: GVerticalPanel, spec: Json, screen: GScreen) {
-        _ = JsonView_Panels_VerticalV1(panel, spec, screen).createView()
-    }
+//    
+//    public static func process(spec: Json, for screen: GScreen)  {
+//        initVerticalPanel(screen.container.header, spec: spec["header"], screen: screen)
+//        initVerticalPanel(screen.container.content, spec: spec["content"], screen: screen)
+//        initVerticalPanel(screen.container.footer, spec: spec["footer"], screen: screen)
+//        JsonAction.execute(spec: spec["onLoad"], screen: screen, creator: nil)
+//    }
+//    
+//    private static func initVerticalPanel(_ panel: GVerticalPanel, spec: Json, screen: GScreen) {
+//        _ = JsonView_Panels_VerticalV1(panel, spec, screen).createView()
+//    }
 }
 
 // NOTE: Test code for pager

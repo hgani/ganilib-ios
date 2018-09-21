@@ -1,7 +1,7 @@
-class JsonUi {
+public class JsonUi {
     private static var moduleName: String?
     
-    public static func register(_ buildConfig: BuildConfig) {
+    static func register(_ buildConfig: BuildConfig) {
         moduleName = moduleName(from: type(of: buildConfig) as! AnyClass)
     }
     
@@ -36,5 +36,20 @@ class JsonUi {
         }
         
         return nil
+    }
+    
+    public static func parseResponse(_ spec: Json, screen: GScreen) {
+        JsonAction.execute(spec: spec["onResponse"], screen: screen, creator: nil)
+    }
+    
+    public static func parseScreen(_ spec: Json, screen: GScreen)  {
+        initVerticalPanel(screen.container.header, spec: spec["header"], screen: screen)
+        initVerticalPanel(screen.container.content, spec: spec["content"], screen: screen)
+        initVerticalPanel(screen.container.footer, spec: spec["footer"], screen: screen)
+        JsonAction.execute(spec: spec["onLoad"], screen: screen, creator: nil)
+    }
+    
+    private static func initVerticalPanel(_ panel: GVerticalPanel, spec: Json, screen: GScreen) {
+        _ = JsonView_Panels_VerticalV1(panel, spec, screen).createView()
     }
 }

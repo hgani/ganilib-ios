@@ -12,6 +12,7 @@ public protocol GHttpDelegate {
 
 extension GHttpDelegate {
     public func processResponse(_ response: HTTPURLResponse) -> Bool {
+        GHttp.saveCookies(response: response)
         return processHttpStatus(code: response.statusCode)
     }
     
@@ -29,6 +30,8 @@ extension GHttpDelegate {
 }
 
 public class GHttp {
+    private static let keyCookies = "__httpCookies"
+    
     static public let instance = GHttp()
     
     private var buildConfig: BuildConfig!
@@ -38,7 +41,34 @@ public class GHttp {
         self.buildConfig = buildConfig
         self.delegate = delegate
         
+        GHttp.loadCookies()
         JsonUi.register(buildConfig)
+    }
+    
+    // https://stackoverflow.com/questions/35105411/saving-cookies-in-alamofire-swift
+    fileprivate static func saveCookies(response: HTTPURLResponse) {
+        guard let headerFields = response.allHeaderFields as? [String: String] else { return }
+        guard let url = response.url else { return }
+        
+        let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: url)
+        var cookieArray = [[HTTPCookiePropertyKey: Any]]()
+        for cookie in cookies {
+            cookieArray.append(cookie.properties!)
+        }
+        UserDefaults.standard.set(cookieArray, forKey: keyCookies)
+        GLog.i("Saving \(cookieArray.count) cookies...")
+        UserDefaults.standard.synchronize()
+    }
+    
+    private static func loadCookies() {
+        guard let cookieArray = UserDefaults.standard.array(forKey: keyCookies) as? [[HTTPCookiePropertyKey: Any]] else { return }
+        
+        GLog.i("Loading \(cookieArray.count) cookies...")
+        for cookieProperties in cookieArray {
+            if let cookie = HTTPCookie(properties: cookieProperties) {
+                HTTPCookieStorage.shared.setCookie(cookie)
+            }
+        }
     }
     
     public func host() -> String {

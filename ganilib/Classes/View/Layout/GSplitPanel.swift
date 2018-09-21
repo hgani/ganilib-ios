@@ -1,7 +1,7 @@
 
 import UIKit
 
-open class GSplitPanel : UIView {
+open class GSplitPanel : UIView, IView {
     private var helper : ViewHelper!
     private var event : EventHelper<GSplitPanel>!
 //    private var previousViewElement : UIView!
@@ -35,12 +35,14 @@ open class GSplitPanel : UIView {
         helper.didMoveToSuperview()
     }
     
-    public func withViews(_ left: UIView, _ right: UIView) -> Self {
+    public func withViews(_ left: UIView, _ center: UIView, _ right: UIView) -> Self {
         // The hope is this makes things more predictable
         left.translatesAutoresizingMaskIntoConstraints = false
+        center.translatesAutoresizingMaskIntoConstraints = false
         right.translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(left)
+        addSubview(center)
         addSubview(right)
         
         left.snp.makeConstraints { make in
@@ -48,7 +50,11 @@ open class GSplitPanel : UIView {
             make.left.equalTo(self.snp.leftMargin)
             
 //            make.right.greaterThanOrEqualTo(right.snp.left)
-            make.right.lessThanOrEqualTo(right.snp.left)
+//            make.right.lessThanOrEqualTo(right.snp.left)
+        }
+        center.snp.makeConstraints { make in
+            make.left.equalTo(left.snp.right)
+            make.width.equalTo(self)
         }
         right.snp.makeConstraints { make in
             make.top.equalTo(self.snp.topMargin)
@@ -57,6 +63,7 @@ open class GSplitPanel : UIView {
         
         self.snp.makeConstraints { make in
             make.bottomMargin.equalTo(left.snp.bottom)
+            make.bottomMargin.equalTo(center.snp.bottom)
             make.bottomMargin.equalTo(right.snp.bottom)
             
 //            make.bottomMargin.greaterThanOrEqualTo(left.snp.bottom)

@@ -1,7 +1,7 @@
 
 import UIKit
 
-open class GDatePicker: UIDatePicker, IView {
+open class GDatePicker: UIDatePicker {
     private var helper: ControlHelper<GDatePicker>!
 //    private var helper: ViewHelper!
 //    private var onSelect: ((GDatePicker) -> Void)?

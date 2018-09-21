@@ -1,6 +1,6 @@
 import UIKit
 
-open class GPicker: UIPickerView, IView {
+open class GPicker: UIPickerView {
     private var helper: ViewHelper!
     private var data = [String]()
     private var onSelect: ((GDatePicker) -> Void)?

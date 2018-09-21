@@ -224,4 +224,21 @@ public class Rest {
     public static func multipart(path: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Rest {
         return multipart(url: url(from: path), params: params, headers: headers)
     }
+    
+    public static func from(method: String, url: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Rest? {
+        switch method {
+        case "post":
+            return post(url: url, params: params, headers: headers)
+        case "patch":
+            return patch(url: url, params: params, headers: headers)
+        case "delete":
+            return delete(url: url, params: params, headers: headers)
+        case "get":
+            return get(url: url, params: params, headers: headers)
+        case "multipart":
+            return multipart(url: url, params: params, headers: headers)
+        default:
+            return nil
+        }
+    }
 }

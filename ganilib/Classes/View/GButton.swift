@@ -6,6 +6,12 @@ open class GButton: UIButton, GWeightable {
     private var helper: ViewHelper!
     private var onClick: ((GButton) -> Void)?
     
+    public var size: CGSize {
+        get {
+            return helper.size
+        }
+    }
+    
     public init() {
         super.init(frame: .zero)
         initialize()

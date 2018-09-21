@@ -1,10 +1,8 @@
-import GaniLib
-
 class JsonView_Panels_VerticalV1: JsonView {
     private let panel: GVerticalPanel
     
     required convenience init(_ spec: Json, _ screen: GScreen) {
-        self.init(spec, screen)
+        self.init(GVerticalPanel(), spec, screen)
     }
     
     init(_ view: GVerticalPanel, _ spec: Json, _ screen: GScreen) {
@@ -14,6 +12,7 @@ class JsonView_Panels_VerticalV1: JsonView {
     
     override func initView() -> UIView {
         for viewSpec in spec["subviews"].arrayValue {
+            GLog.t("SPEC1: \(viewSpec)")
             if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
                 panel.addView(jsonView.createView())
             }
