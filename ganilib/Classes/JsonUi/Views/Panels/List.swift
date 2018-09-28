@@ -1,7 +1,7 @@
-class JsonView_Panels_ListV1: JsonView {
+open class JsonView_Panels_ListV1: JsonView {
     private let tableView = GTableView().width(.matchParent).height(.matchParent)
     
-    override func initView() -> UIView {
+    override open func initView() -> UIView {
         let delegate = Delegate(listView: self)
         
         tableView
@@ -18,11 +18,13 @@ class JsonView_Panels_ListV1: JsonView {
     
     class Delegate: NSObject, UITableViewDataSource, UITableViewDelegate {
         private let listView: JsonView_Panels_ListV1
-        private let sections: [Json]
+        private var sections: [Json]
+        private var nextUrl: String?
         
         init(listView: JsonView_Panels_ListV1) {
             self.listView = listView
             self.sections = listView.spec["sections"].arrayValue
+            self.nextUrl = listView.spec["nextUrl"].string
         }
         
         public func numberOfSections(in tableView: UITableView) -> Int {
@@ -48,6 +50,24 @@ class JsonView_Panels_ListV1: JsonView {
         public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             let row = rows(at: indexPath.section)[indexPath.row]
             JsonAction.execute(spec: row["onClick"], screen: listView.screen, creator: nil)
+        }
+        
+        func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+            let items = rows(at: indexPath.section)
+            
+            if indexPath.section == sections.count - 1, indexPath.row == items.count - 1, let url = self.nextUrl {
+                _ = Rest.get(url: url).execute { response in
+                    let result = response.content
+                    
+                    self.nextUrl = result["nextUrl"].string
+
+                    for section in result["sections"].arrayValue {
+                        self.sections.append(section)
+                    }
+                    tableView.reloadData()
+                    return true
+                }
+            }
         }
     }
 }
