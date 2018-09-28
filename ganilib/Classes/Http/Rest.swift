@@ -6,6 +6,11 @@ public typealias Json = JSON
 typealias NonNullParams = [String: Any]
 
 public class Rest {
+    public struct Response {
+        public let content: Json
+        public let headers: Json
+    }
+
     private let method: HttpMethod
     private let url: String
     private let params: NonNullParams
@@ -35,7 +40,7 @@ public class Rest {
     }
     
     private func executeGeneric(indicator: ProgressIndicator,
-                                onHttpSuccess: @escaping (Json) -> Bool,
+                                onHttpSuccess: @escaping (Response) -> Bool,
                                 onHttpFailure: @escaping (Error) -> Bool) {
         GLog.i(string)
         #if DEBUG || ADHOC
@@ -51,19 +56,29 @@ public class Rest {
                         return
                     }
                 }
-                
+                                
                 switch response.result {
                 case .success(let value):
                     indicator.hide()
                     
-                    let json = JSON(parseJSON: value)
                     var status = "Unknown status"
                     if let code = response.response?.statusCode {
                         status = String(code)
                     }
-                    GLog.d("[\(status)]: \(json)")
-                    if !onHttpSuccess(json) {
-                        indicator.show(error: json["message"].string ?? json["error"].string ?? "")
+                    
+                    var headers = Json()
+                    if let fields = response.response?.allHeaderFields {
+                        for field in fields {
+                            GLog.t("KEY: \(String(describing: field.key))")
+                            headers[String(describing: field.key)] = Json(field.value)
+                        }
+                    }
+
+                    let content = JSON(parseJSON: value)
+                    
+                    GLog.d("[\(status)]: \(content)")
+                    if !onHttpSuccess(Response(content: content, headers: headers)) {
+                        indicator.show(error: content["message"].string ?? content["error"].string ?? "")
                     }
                 case .failure(let error):
                     if !onHttpFailure(error) {
@@ -76,7 +91,7 @@ public class Rest {
     
     public func execute(indicator: ProgressIndicatorEnum = .standard,
                         onHttpFailure: @escaping (Error) -> Bool = { _ in return false },
-                        onHttpSuccess: @escaping (Json) -> Bool) -> Self {
+                        onHttpSuccess: @escaping (Response) -> Bool) -> Self {
         return self.execute(indicator: indicator.delegate, onHttpFailure: onHttpFailure, onHttpSuccess: onHttpSuccess)
     }
     
@@ -85,7 +100,7 @@ public class Rest {
     // instance variable, so it is safe to pass a closure that accesses `self` without `unowned`.
     public func execute(indicator: ProgressIndicator,
                         onHttpFailure: @escaping (Error) -> Bool = { _ in return false },
-                        onHttpSuccess: @escaping (Json) -> Bool) -> Self {
+                        onHttpSuccess: @escaping (Response) -> Bool) -> Self {
         if canceled {
             return self
         }
