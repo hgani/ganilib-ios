@@ -7,6 +7,7 @@ typealias NonNullParams = [String: Any]
 
 public class Rest {
     public struct Response {
+        public let statusCode: Int
         public let content: Json
         public let headers: Json
     }
@@ -17,7 +18,8 @@ public class Rest {
     private let headers: HTTPHeaders?
     private let string: String
     
-    private var request: DataRequest?
+//    private var request: DataRequest?
+    private var task: URLSessionDataTask?
     private var canceled: Bool
     
     init(method: HttpMethod, url: String, params: NonNullParams, headers: HTTPHeaders?) {
@@ -34,59 +36,60 @@ public class Rest {
         GLog.i("Request canceled: \(string)")
         self.canceled = true
         
-        if let r = self.request {
-            r.cancel()
-        }
+        // TODO
+//        if let r = self.request {
+//            r.cancel()
+//        }
     }
     
     private func executeGeneric(indicator: ProgressIndicator,
                                 onHttpSuccess: @escaping (Response) -> Bool,
                                 onHttpFailure: @escaping (Error) -> Bool) {
-        GLog.i(string)
-        #if DEBUG || ADHOC
-            GLog.i("Params: \(params)")
-        #endif
-        
-        indicator.show()
-        if let r = request {
-            r.responseString { response in
-                if let r = response.response {
-                    if !GHttp.instance.delegate.processResponse(r) {
-                        indicator.hide()
-                        return
-                    }
-                }
-                                
-                switch response.result {
-                case .success(let value):
-                    indicator.hide()
-                    
-                    var status = "Unknown status"
-                    if let code = response.response?.statusCode {
-                        status = String(code)
-                    }
-                    
-                    var headers = Json()
-                    if let fields = response.response?.allHeaderFields {
-                        for field in fields {
-                            GLog.t("KEY: \(String(describing: field.key))")
-                            headers[String(describing: field.key)] = Json(field.value)
-                        }
-                    }
-
-                    let content = JSON(parseJSON: value)
-                    
-                    GLog.d("[\(status)]: \(content)")
-                    if !onHttpSuccess(Response(content: content, headers: headers)) {
-                        indicator.show(error: content["message"].string ?? content["error"].string ?? "")
-                    }
-                case .failure(let error):
-                    if !onHttpFailure(error) {
-                        indicator.show(error: error.localizedDescription)
-                    }
-                }
-            }
-        }
+//        GLog.i(string)
+//        #if DEBUG || ADHOC
+//            GLog.i("Params: \(params)")
+//        #endif
+//
+//        indicator.show()
+//        if let r = request {
+//            r.responseString { response in
+//                if let r = response.response {
+//                    if !GHttp.instance.delegate.processResponse(r) {
+//                        indicator.hide()
+//                        return
+//                    }
+//                }
+//
+//                switch response.result {
+//                case .success(let value):
+//                    indicator.hide()
+//
+//                    var status = "Unknown status"
+//                    if let code = response.response?.statusCode {
+//                        status = String(code)
+//                    }
+//
+//                    var headers = Json()
+//                    if let fields = response.response?.allHeaderFields {
+//                        for field in fields {
+//                            GLog.t("KEY: \(String(describing: field.key))")
+//                            headers[String(describing: field.key)] = Json(field.value)
+//                        }
+//                    }
+//
+//                    let content = JSON(parseJSON: value)
+//
+//                    GLog.d("[\(status)]: \(content)")
+//                    if !onHttpSuccess(Response(content: content, headers: headers)) {
+//                        indicator.show(error: content["message"].string ?? content["error"].string ?? "")
+//                    }
+//                case .failure(let error):
+//                    if !onHttpFailure(error) {
+//                        indicator.show(error: error.localizedDescription)
+//                    }
+//                }
+//            }
+//        }
     }
     
     public func execute(indicator: ProgressIndicatorEnum = .standard,
@@ -107,44 +110,115 @@ public class Rest {
         
         switch method {
         case .multipart:
-            Alamofire.upload(multipartFormData: { (formData) in
-                for (key, value) in self.params {
-                    if value is UIImage {
-                        formData.append(UIImageJPEGRepresentation((value as! UIImage), 1)!,
-                                        withName: key,
-                                        fileName: "images.jpeg",
-                                        mimeType: "image/jpeg")
+            GLog.t("TODO")
+            
+//            Alamofire.upload(multipartFormData: { (formData) in
+//                for (key, value) in self.params {
+//                    if value is UIImage {
+//                        formData.append(UIImageJPEGRepresentation((value as! UIImage), 1)!,
+//                                        withName: key,
+//                                        fileName: "images.jpeg",
+//                                        mimeType: "image/jpeg")
+//                    }
+//                    else {
+//                        formData.append(String(describing: value).data(using: .utf8)!, withName: key)
+//                    }
+//                }
+//            }, usingThreshold: 0,
+//               to: self.url,
+//               method: HTTPMethod.post,
+//               headers: self.headers,
+//               encodingCompletion: { (result) in
+//                switch result {
+//                case .failure(let error):
+//                    indicator.show(error: error.localizedDescription)
+//                case .success(let upload, _, _):
+//                    upload.uploadProgress { progress in
+//                        // Subtract because it's potentially confusing to the user when we are at 100% for a few seconds.
+//                        let fraction = progress.fractionCompleted - 0.02
+//                        let percentage = (fraction * 100).rounded()
+//                        GLog.t("Uploading (\(percentage)%) -- \(fraction)")
+//                        indicator.show(progress: Float(fraction))
+//                    }
+//
+//                    self.request = upload
+//                    self.executeGeneric(indicator: indicator, onHttpSuccess: onHttpSuccess, onHttpFailure: onHttpFailure)
+//                }
+//            })
+        default:
+            if let uri = URL(string: url) {
+                var urlRequest = URLRequest(url: uri)
+                urlRequest.httpMethod = method.string()
+                
+                if let fields = headers {
+                    for (key, value) in fields {
+                        urlRequest.setValue(value, forHTTPHeaderField: key)
+                    }
+                }
+
+                self.task = URLSession.shared.dataTask(with: urlRequest) {(data, response, error) in
+                    if let d = data, let body = String(data: d, encoding: .utf8), let r = response as? HTTPURLResponse {
+                        self.handleResponse(body: body, response: r, indicator: indicator, onHttpSuccess: onHttpSuccess, onHttpFailure: onHttpFailure)
                     }
                     else {
-                        formData.append(String(describing: value).data(using: .utf8)!, withName: key)
+                        if let e = error {
+                            DispatchQueue.main.async {
+                                if !onHttpFailure(e) {
+                                    indicator.show(error: e.localizedDescription)
+                                }
+                            }
+                        }
                     }
                 }
-            }, usingThreshold: 0,
-               to: self.url,
-               method: HTTPMethod.post,
-               headers: self.headers,
-               encodingCompletion: { (result) in
-                switch result {
-                case .failure(let error):
-                    indicator.show(error: error.localizedDescription)
-                case .success(let upload, _, _):
-                    upload.uploadProgress { progress in
-                        // Subtract because it's potentially confusing to the user when we are at 100% for a few seconds.
-                        let fraction = progress.fractionCompleted - 0.02
-                        let percentage = (fraction * 100).rounded()
-                        GLog.t("Uploading (\(percentage)%) -- \(fraction)")
-                        indicator.show(progress: Float(fraction))
-                    }
-                    
-                    self.request = upload
-                    self.executeGeneric(indicator: indicator, onHttpSuccess: onHttpSuccess, onHttpFailure: onHttpFailure)
-                }
-            })
-        default:
-            self.request = Alamofire.request(url, method: method.alamofire(), parameters: params, headers: headers)
-            executeGeneric(indicator: indicator, onHttpSuccess: onHttpSuccess, onHttpFailure: onHttpFailure)
+                
+                indicator.show()
+                task?.resume()
+            }
         }
         return self
+    }
+    
+    private func handleResponse(body: String,
+                                response: HTTPURLResponse,
+                                indicator: ProgressIndicator,
+                                onHttpSuccess: @escaping (Response) -> Bool,
+                                onHttpFailure: @escaping (Error) -> Bool ) {
+        GLog.i(string)
+        #if DEBUG || ADHOC
+        GLog.i("Params: \(params)")
+        #endif
+        
+        indicator.hide()
+        
+        if !GHttp.instance.delegate.processResponse(response) {
+            return
+        }
+        
+        var headers = Json()
+        for field in response.allHeaderFields {
+            headers[String(describing: field.key)] = Json(field.value)
+        }
+        
+        let content = JSON(parseJSON: body)
+        
+        let statusCode = response.statusCode
+        GLog.d("[\(statusCode)]: \(content)")
+        
+        DispatchQueue.main.async {
+            if !onHttpSuccess(Response(statusCode: statusCode, content: content, headers: headers)) {
+                indicator.show(error: content["message"].string ?? content["error"].string ?? "")
+            }
+        }
+        
+//                switch response.result {
+//                case .success(let value):
+//                case .failure(let error):
+//                    if !onHttpFailure(error) {
+//                        indicator.show(error: error.localizedDescription)
+//                    }
+//                }
+//            }
+//        }
     }
     
     public func done() {

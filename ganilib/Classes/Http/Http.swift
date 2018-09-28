@@ -12,6 +12,21 @@ public enum HttpMethod {
     case delete
     case multipart
     
+    func string() -> String {
+        switch self {
+        case .get:
+            return "GET"
+        case .post:
+            return "POST"
+        case .patch:
+            return "PATCH"
+        case .delete:
+            return "DELETE"
+        case .multipart:
+            return "POST"
+        }
+    }
+    
     func alamofire() -> HTTPMethod {
         switch self {
         case .get:
