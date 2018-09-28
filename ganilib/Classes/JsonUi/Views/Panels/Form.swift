@@ -52,12 +52,12 @@ class JsonView_Panels_FormV1: JsonView {
             
             let spec = jsonView.spec
             let screen = jsonView.screen
-            _ = Rest.from(method: spec["method"].stringValue, url: spec["url"].stringValue, params: params)?.execute { result in
-                // Support generic uncustomizable framework (e.g. Devise).
-                if let error = result["error"].string {
-                    screen.launch.alert(error)
-                }
-                JsonAction.execute(spec: result["onResponse"], screen: screen, creator: self)
+            _ = Rest.from(method: spec["method"].stringValue, url: spec["url"].stringValue, params: params)?.execute { response in
+//                // Support generic uncustomizable framework (e.g. Devise).
+//                if let error = result["error"].string {
+//                    screen.launch.alert(error)
+//                }
+                JsonAction.execute(spec: response.content["onResponse"], screen: screen, creator: self)
                 return true
             }
         }

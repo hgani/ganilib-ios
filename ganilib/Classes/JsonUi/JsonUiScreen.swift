@@ -24,12 +24,26 @@ public class JsonUiScreen: GScreen {
         super.init()
     }
     
-    convenience init(path: String) {
+    convenience public init(path: String) {
         self.init(url: "\(GHttp.instance.host())/\(path)")
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("Unsupported")
+    }
+    
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        onRefresh()
+    }
+    
+    
+    public override func onRefresh() {
+        _ = Rest.get(url: url).execute { response in
+            JsonUi.parseScreen(response.content, screen: self)
+            return true
+        }
     }
 
     // NOTE: Test code for pager

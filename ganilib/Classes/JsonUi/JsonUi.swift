@@ -38,7 +38,7 @@ public class JsonUi {
         return nil
     }
     
-    public static func parseResponse(_ spec: Json, screen: GScreen) {
+    public static func parseResponse(_ spec: Json, screen: UIViewController) {
         JsonAction.execute(spec: spec["onResponse"], screen: screen, creator: nil)
     }
     
