@@ -152,6 +152,9 @@ public class Rest {
                 
                 if let fields = headers {
                     for (key, value) in fields {
+                        if key == "If-None-Match" {
+                            urlRequest.cachePolicy = .reloadIgnoringLocalCacheData
+                        }
                         urlRequest.setValue(value, forHTTPHeaderField: key)
                     }
                 }
