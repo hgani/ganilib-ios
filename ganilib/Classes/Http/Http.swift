@@ -63,8 +63,29 @@ public class HttpRequest {
     }
     
     func toUrlRequest() -> URLRequest? {
-        if let uri = URL(string: url) {
+        if var uri = URL(string: url) {
             var request = URLRequest(url: uri)
+            
+            switch method {
+            case .post, .patch, .delete:
+                request.httpBody = formData(from: params)
+                request.setValue("application/x-www-form-urlencoded;charset=utf-8", forHTTPHeaderField: "Content-Type")
+            case .get:
+                for (key, value) in params {
+                    if let str = value as? String {
+                        uri = uri.append(key, value: str)
+                    }
+                    else {
+                        GLog.w("Non-string param not supported")
+                    }
+                }
+                request = URLRequest(url: uri)
+            default:
+                if params.count > 0 {
+                    GLog.w("Params not yet supported for this HTTP method: \(method)")
+                }
+            }
+            
             request.httpMethod = method.name
             
             for (key, value) in headers {
@@ -72,26 +93,6 @@ public class HttpRequest {
                     request.cachePolicy = .reloadIgnoringLocalCacheData
                 }
                 request.setValue(value, forHTTPHeaderField: key)
-            }
-            
-            switch method {
-            case .post, .patch, .delete:
-                request.httpBody = params.reduce("", { (result, item) -> String in
-                    let key = formDataEncode(item.key)
-                    let value: Any
-                    if let str = item.value as? String {
-                        value = formDataEncode(str)
-                    }
-                    else {
-                        value = item.value ?? ""
-                    }
-                    return "\(result.isEmpty ? "" : "\(result)&")\(key)=\(value)"
-                }).data(using: .ascii)
-                request.setValue("application/x-www-form-urlencoded;charset=utf-8", forHTTPHeaderField: "Content-Type")
-            default:
-                if params.count > 0 {
-                    GLog.w("Params not yet supported for this HTTP method: \(method)")
-                }
             }
             
             return request
@@ -104,6 +105,20 @@ public class HttpRequest {
         var characters: CharacterSet = .alphanumerics
         characters.insert(charactersIn: "*-._ ")
         return string.addingPercentEncoding(withAllowedCharacters: characters)?.replacingOccurrences(of: " ", with: "+") ?? string
+    }
+    
+    private func formData(from params: GParams) -> Data? {
+        return params.reduce("", { (result, item) -> String in
+            let key = formDataEncode(item.key)
+            let value: Any
+            if let str = item.value as? String {
+                value = formDataEncode(str)
+            }
+            else {
+                value = item.value ?? ""
+            }
+            return "\(result.isEmpty ? "" : "\(result)&")\(key)=\(value)"
+        }).data(using: .ascii)
     }
 }
 

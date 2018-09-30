@@ -151,9 +151,14 @@ public class Rest {
                         }
                     }
                 }
-                
+            }
+            
+            if let t = task {
                 indicator.show()
-                task?.resume()
+                t.resume()
+            }
+            else {
+                indicator.show(error: "Failed connecting to server")
             }
         }
         return self
