@@ -109,6 +109,7 @@ open class GLabel: UILabel, IView {
         return self
     }
     
+    @discardableResult
     public func align(_ alignment : NSTextAlignment) -> Self {
         self.textAlignment = alignment
         return self
