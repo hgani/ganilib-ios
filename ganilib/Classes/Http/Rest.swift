@@ -11,29 +11,19 @@ public class Rest {
         public let content: Json
         public let headers: Json
     }
-
-    private let method: HttpMethod
-    private let url: String
-    private let params: NonNullParams
-    private let headers: HTTPHeaders?
-    private let string: String
     
+    private let request: HttpRequest
 //    private var request: DataRequest?
     private var task: URLSessionDataTask?
     private var canceled: Bool
-    
-    init(method: HttpMethod, url: String, params: NonNullParams, headers: HTTPHeaders?) {
-        self.method = method
-        self.url = url
-        self.params = params
-        self.headers = headers
-        
-        self.string = "\(method.alamofire().rawValue) \(url)"
+
+    init(request: HttpRequest) {
+        self.request = request
         self.canceled = false
     }
     
     public func cancel() {
-        GLog.i("Request canceled: \(string)")
+        GLog.i("Request canceled: \(request.string)")
         self.canceled = true
         
         // TODO
@@ -42,9 +32,9 @@ public class Rest {
 //        }
     }
     
-    private func executeGeneric(indicator: ProgressIndicator,
-                                onHttpSuccess: @escaping (Response) -> Bool,
-                                onHttpFailure: @escaping (Error) -> Bool) {
+//    private func executeGeneric(indicator: ProgressIndicator,
+//                                onHttpSuccess: @escaping (Response) -> Bool,
+//                                onHttpFailure: @escaping (Error) -> Bool) {
 //        GLog.i(string)
 //        #if DEBUG || ADHOC
 //            GLog.i("Params: \(params)")
@@ -90,7 +80,7 @@ public class Rest {
 //                }
 //            }
 //        }
-    }
+//    }
     
     public func execute(indicator: ProgressIndicatorEnum = .standard,
                         onHttpFailure: @escaping (Error) -> Bool = { _ in return false },
@@ -108,7 +98,7 @@ public class Rest {
             return self
         }
         
-        switch method {
+        switch request.method {
         case .multipart:
             GLog.t("TODO")
             
@@ -146,19 +136,7 @@ public class Rest {
 //                }
 //            })
         default:
-            if let uri = URL(string: url) {
-                var urlRequest = URLRequest(url: uri)
-                urlRequest.httpMethod = method.string()
-                
-                if let fields = headers {
-                    for (key, value) in fields {
-                        if key == "If-None-Match" {
-                            urlRequest.cachePolicy = .reloadIgnoringLocalCacheData
-                        }
-                        urlRequest.setValue(value, forHTTPHeaderField: key)
-                    }
-                }
-
+            if let urlRequest = request.toUrlRequest() {
                 self.task = URLSession.shared.dataTask(with: urlRequest) {(data, response, error) in
                     if let d = data, let body = String(data: d, encoding: .utf8), let r = response as? HTTPURLResponse {
                         self.handleResponse(body: body, response: r, indicator: indicator, onHttpSuccess: onHttpSuccess, onHttpFailure: onHttpFailure)
@@ -180,15 +158,15 @@ public class Rest {
         }
         return self
     }
-    
+
     private func handleResponse(body: String,
                                 response: HTTPURLResponse,
                                 indicator: ProgressIndicator,
                                 onHttpSuccess: @escaping (Response) -> Bool,
                                 onHttpFailure: @escaping (Error) -> Bool ) {
-        GLog.i(string)
+        GLog.i(request.string)
         #if DEBUG || ADHOC
-        GLog.i("Params: \(params)")
+        GLog.i("Params: \(request.params)")
         #endif
         
         indicator.hide()
@@ -241,10 +219,10 @@ public class Rest {
     
     private static func request(_ url: String, _ method: HttpMethod, _ params: GParams, _ headers: HttpHeaders) -> Rest {
         let augmentedParams = augmentPostParams(params, method)
-        let request = HttpRequest(method: method, url: url, params: params, headers: headers)
         
         let restParams: NonNullParams, restHeaders: HttpHeaders
         if url.starts(with: GHttp.instance.host()) {
+            let request = HttpRequest(method: method, url: url, params: params, headers: headers)
             restParams  = prepareParams(GHttp.instance.delegate.restParams(from: augmentedParams, request: request))
             restHeaders  = GHttp.instance.delegate.restHeaders(from: headers, request: request)
         }
@@ -253,7 +231,7 @@ public class Rest {
             restHeaders = headers
         }
         
-        return Rest(method: method, url: url, params: restParams, headers: restHeaders)
+        return Rest(request: HttpRequest(method: method, url: url, params: restParams, headers: restHeaders))
     }
     
     private static func prepareParams(_ params: GParams) -> NonNullParams {

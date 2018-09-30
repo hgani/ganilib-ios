@@ -12,20 +12,24 @@ public enum HttpMethod {
     case delete
     case multipart
     
-    func string() -> String {
-        switch self {
-        case .get:
-            return "GET"
-        case .post:
-            return "POST"
-        case .patch:
-            return "PATCH"
-        case .delete:
-            return "DELETE"
-        case .multipart:
-            return "POST"
-        }
+    public var name: String {
+        return String(describing: self).uppercased()
     }
+    
+//    func string() -> String {
+//        switch self {
+//        case .get:
+//            return "GET"
+//        case .post:
+//            return "POST"
+//        case .patch:
+//            return "PATCH"
+//        case .delete:
+//            return "DELETE"
+//        case .multipart:
+//            return "POST"
+//        }
+//    }
     
     func alamofire() -> HTTPMethod {
         switch self {
@@ -48,12 +52,58 @@ public class HttpRequest {
     public let url: String
     public let params: GParams
     public let headers: HttpHeaders
+    public let string: String
     
     init(method: HttpMethod, url: String, params: GParams, headers: HttpHeaders) {
         self.method = method
         self.url = url
         self.params = params
         self.headers = headers
+        self.string = "\(method.name) \(url)"
+    }
+    
+    func toUrlRequest() -> URLRequest? {
+        if let uri = URL(string: url) {
+            var request = URLRequest(url: uri)
+            request.httpMethod = method.name
+            
+            for (key, value) in headers {
+                if key == "If-None-Match" {
+                    request.cachePolicy = .reloadIgnoringLocalCacheData
+                }
+                request.setValue(value, forHTTPHeaderField: key)
+            }
+            
+            switch method {
+            case .post, .patch, .delete:
+                request.httpBody = params.reduce("", { (result, item) -> String in
+                    let key = formDataEncode(item.key)
+                    let value: Any
+                    if let str = item.value as? String {
+                        value = formDataEncode(str)
+                    }
+                    else {
+                        value = item.value ?? ""
+                    }
+                    return "\(result.isEmpty ? "" : "\(result)&")\(key)=\(value)"
+                }).data(using: .ascii)
+                request.setValue("application/x-www-form-urlencoded;charset=utf-8", forHTTPHeaderField: "Content-Type")
+            default:
+                if params.count > 0 {
+                    GLog.w("Params not yet supported for this HTTP method: \(method)")
+                }
+            }
+            
+            return request
+        }
+        
+        return nil
+    }
+    
+    private func formDataEncode(_ string: String) -> String {
+        var characters: CharacterSet = .alphanumerics
+        characters.insert(charactersIn: "*-._ ")
+        return string.addingPercentEncoding(withAllowedCharacters: characters)?.replacingOccurrences(of: " ", with: "+") ?? string
     }
 }
 
@@ -71,7 +121,7 @@ public class Http {
     }
 
     public func execute(indicator: ProgressIndicator, onHttpSuccess: @escaping (String) -> String?) {
-        GLog.i("\(actualMethod.alamofire().rawValue) \(request.request?.url?.absoluteString ?? "")")
+        GLog.i("\(actualMethod.name) \(request.request?.url?.absoluteString ?? "")")
         
         indicator.show()
         request.responseString { response in
@@ -98,7 +148,7 @@ public class Http {
         switch method {
         case .patch, .delete:
             var mutableParams = params
-            mutableParams["_method"] = method.alamofire().rawValue
+            mutableParams["_method"] = method.name
             return mutableParams
         default:  // Don't augment .post to allow caller specify their own `_method`
             return params
