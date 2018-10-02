@@ -68,7 +68,7 @@ public class HttpRequest {
             
             switch method {
             case .post, .patch, .delete:
-                request.httpBody = formData(from: params)
+                request.httpBody = formData(from: params).data(using: .ascii)
                 request.setValue("application/x-www-form-urlencoded;charset=utf-8", forHTTPHeaderField: "Content-Type")
             case .get:
                 for (key, value) in params {
@@ -101,24 +101,26 @@ public class HttpRequest {
         return nil
     }
     
-    private func formDataEncode(_ string: String) -> String {
+    private func encodeUriComponent(_ string: String) -> String {
         var characters: CharacterSet = .alphanumerics
         characters.insert(charactersIn: "*-._ ")
         return string.addingPercentEncoding(withAllowedCharacters: characters)?.replacingOccurrences(of: " ", with: "+") ?? string
     }
     
-    private func formData(from params: GParams) -> Data? {
+    private func formData(from params: GParams, prefix: String? = nil) -> String {
         return params.reduce("", { (result, item) -> String in
-            let key = formDataEncode(item.key)
-            let value: Any
-            if let str = item.value as? String {
-                value = formDataEncode(str)
+            var key = encodeUriComponent(item.key)
+            if let p = prefix {
+                key = "\(p)[\(key)]"
             }
-            else {
-                value = item.value ?? ""
+                        
+            if let sub = item.value as? GParams {
+                return formData(from: sub, prefix: key)
             }
+            
+            let value = encodeUriComponent(String(describing: item.value ?? ""))
             return "\(result.isEmpty ? "" : "\(result)&")\(key)=\(value)"
-        }).data(using: .ascii)
+        })
     }
 }
 
