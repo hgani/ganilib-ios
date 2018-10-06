@@ -8,6 +8,9 @@ open class GLabel: UILabel, IView {
     private var onClick: ((GLabel) -> Void)?
     var paddings = Paddings(t: 0, l: 0, b: 0, r: 0)
     var clickRecognizer: UITapGestureRecognizer? = nil
+    
+    private var lineSpacing: Int?
+    private var align: NSTextAlignment?
 
     public var size: CGSize {
         get {
@@ -39,10 +42,12 @@ open class GLabel: UILabel, IView {
         return self
     }
     
+    @discardableResult
     public func color(bg: UIColor) -> Self {
         return color(bg: bg, text: nil)
     }
     
+    @discardableResult
     public func color(bg: UIColor?, text: UIColor? = nil) -> Self {
         if let bgColor = bg {
             self.backgroundColor = bgColor
@@ -53,9 +58,32 @@ open class GLabel: UILabel, IView {
         return self
     }
     
+    @discardableResult
+    public func lineSpacing(_ spacing: Int) -> Self {
+        self.lineSpacing = spacing
+        return self
+    }
+    
     public func text(_ text : String) -> Self {
         self.numberOfLines = 0
-        self.text = text
+        
+        if let spacing = lineSpacing {
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = CGFloat(spacing)
+            
+            let attrString = NSMutableAttributedString(string: text)
+            attrString.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
+            
+            self.attributedText = attrString
+            
+            if let align = self.align {
+                self.align(align)
+            }
+        }
+        else {
+            self.text = text
+        }
+        
         return self
     }
     
@@ -70,6 +98,7 @@ open class GLabel: UILabel, IView {
     }
     
     // Has to be called before text()
+    @discardableResult
     public func font(_ font: UIFont?, size: Float? = nil, traits: UIFontDescriptorSymbolicTraits...) -> Self {
         var f = (font ?? self.font).withTraits(traits)
         if let s = size {
@@ -112,6 +141,7 @@ open class GLabel: UILabel, IView {
     @discardableResult
     public func align(_ alignment : NSTextAlignment) -> Self {
         self.textAlignment = alignment
+        self.align = alignment
         return self
     }
     

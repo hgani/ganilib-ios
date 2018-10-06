@@ -52,10 +52,10 @@ open class GImageView : UIImageView {
         return self
     }
 
-    public func image(_ image: UIImage) -> Self {
-        self.image = image
-        return self
-    }
+//    public func image(_ image: UIImage) -> Self {
+//        self.image = image
+//        return self
+//    }
     
     public func source(name: String) -> Self {
         return source(image: UIImage(named: name))
@@ -104,6 +104,11 @@ open class GImageView : UIImageView {
                 make.height.equalTo(height)
             }
         }
+    }
+    
+    public func contentMode(_ mode: UIViewContentMode) -> Self {
+        self.contentMode = mode
+        return self
     }
     
     public func done() {

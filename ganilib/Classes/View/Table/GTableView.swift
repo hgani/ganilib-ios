@@ -221,6 +221,7 @@ open class GTableViewCustomCell: GTableViewCell {
         }
     }
     
+    @discardableResult
     override public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
         _ = container.paddings(t: top, l: left, b: bottom, r: right)
         return self
@@ -235,6 +236,7 @@ open class GTableViewCustomCell: GTableViewCell {
         return self
     }
     
+    @discardableResult
     public func color(bg: UIColor) -> Self {
         contentView.backgroundColor = bg
         return self

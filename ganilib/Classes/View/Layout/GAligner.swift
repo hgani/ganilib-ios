@@ -29,6 +29,7 @@ open class GAligner: UIView {
         return self
     }
     
+    @discardableResult
     public func withView(_ child: UIView) -> Self {
         // The hope is this makes things more predictable
         child.translatesAutoresizingMaskIntoConstraints = false
