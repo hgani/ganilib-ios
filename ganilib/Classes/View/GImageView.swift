@@ -35,16 +35,19 @@ open class GImageView : UIImageView {
         return self
     }
     
+    @discardableResult
     public func height(_ height: Int) -> Self {
         helper.height(height)
         return self
     }
     
+    @discardableResult
     public func height(_ height: LayoutSize) -> Self {
         helper.height(height)
         return self
     }
     
+    @discardableResult
     public func color(bg : UIColor?) -> Self {
         if let bgColor = bg {
             self.backgroundColor = bgColor
@@ -52,15 +55,12 @@ open class GImageView : UIImageView {
         return self
     }
 
-//    public func image(_ image: UIImage) -> Self {
-//        self.image = image
-//        return self
-//    }
-    
+    @discardableResult
     public func source(name: String) -> Self {
         return source(image: UIImage(named: name))
     }
-    
+
+    @discardableResult
     public func source(image: UIImage?) -> Self {
         self.image = image
         return self
@@ -123,11 +123,13 @@ open class GImageView : UIImageView {
 import Kingfisher
 
 extension GImageView {
+    @discardableResult
     public func source(url: URL?, placeholder: UIImage? = nil) -> Self {
         self.kf.setImage(with: url, placeholder: placeholder)
         return self
     }
     
+    @discardableResult
     public func source(url: String, placeholder: UIImage? = nil) -> Self {
         return source(url: URL(string: url), placeholder: placeholder)
     }

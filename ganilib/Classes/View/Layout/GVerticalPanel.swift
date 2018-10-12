@@ -76,6 +76,7 @@ open class GVerticalPanel: UIView, IView {
         return self
     }
     
+    @discardableResult
     public func append(_ child : UIView, top : CGFloat? = nil) -> Self {
         addView(child, top: top)
         return self

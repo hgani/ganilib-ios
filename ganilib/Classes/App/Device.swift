@@ -9,5 +9,8 @@ public class Device {
     
     public static let region = Locale.current.regionCode
     public static let os = "ios"
+    
+    public static let screenWidth = Int(UIScreen.main.bounds.width)
+    public static let screenHeight = Int(UIScreen.main.bounds.height)
 }
 

@@ -134,6 +134,10 @@ extension GCollectionView: UICollectionViewDelegateFlowLayout {
         let currentPage = targetContentOffset.pointee.x / self.frame.width
         pager?.currentPage = Int(currentPage)
     }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
 }
 
 

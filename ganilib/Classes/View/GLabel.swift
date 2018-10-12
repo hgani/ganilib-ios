@@ -11,6 +11,7 @@ open class GLabel: UILabel, IView {
     
     private var lineSpacing: Int?
     private var align: NSTextAlignment?
+    private var maxLines: Int? = nil
 
     public var size: CGSize {
         get {
@@ -64,18 +65,28 @@ open class GLabel: UILabel, IView {
         return self
     }
     
+    @discardableResult
+    public func maxLines(_ maxLines : Int) -> Self {
+        self.numberOfLines = maxLines
+        self.maxLines = maxLines
+        return self
+    }
+    
+    @discardableResult
     public func text(_ text : String) -> Self {
-        self.numberOfLines = 0
+        if maxLines == nil {
+            self.numberOfLines = 0
+        }
         
         if let spacing = lineSpacing {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = CGFloat(spacing)
-            
+
             let attrString = NSMutableAttributedString(string: text)
             attrString.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
-            
+
             self.attributedText = attrString
-            
+
             if let align = self.align {
                 self.align(align)
             }
@@ -87,6 +98,7 @@ open class GLabel: UILabel, IView {
         return self
     }
     
+    @discardableResult
     public func icon(_ icon: String, size: CGFloat? = nil) -> Self {
         self.numberOfLines = 0
         self.text = icon

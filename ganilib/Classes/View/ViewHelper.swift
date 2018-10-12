@@ -34,6 +34,7 @@ public class ViewHelper {
                     if debug {
                         GLog.t("updateWidthConstraints() with multiplier \(multiplier)")
                     }
+
                     if multiplier == 1 {
                         widthConstraint = make.right.equalTo(superview.snp.rightMargin).constraint  // Consume remaining space
                     }
@@ -81,6 +82,7 @@ public class ViewHelper {
             widthConstraint = make.width.equalTo(width).constraint
         }
 
+        updateWidthConstraints()
     }
     
     public func width(_ width: LayoutSize) {
@@ -92,6 +94,8 @@ public class ViewHelper {
         case .wrapContent:
             nothingToDo()
         }
+        
+        updateWidthConstraints()
     }
     
     public func width(weight: Float, offset: Float = 0) {
@@ -113,6 +117,8 @@ public class ViewHelper {
         view.snp.makeConstraints { (make) -> Void in
             heightConstraint = make.height.equalTo(height).constraint
         }
+        
+        updateHeightConstraints()
     }
     
     public func height(_ height: LayoutSize) {
@@ -124,6 +130,8 @@ public class ViewHelper {
         case .wrapContent:
             nothingToDo()
         }
+        
+        updateHeightConstraints()
     }
     
     public func size(width: Int?, height: Int?) {
