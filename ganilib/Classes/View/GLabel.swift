@@ -81,15 +81,17 @@ open class GLabel: UILabel, IView {
         if let spacing = lineSpacing {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineSpacing = CGFloat(spacing)
+            paragraphStyle.lineBreakMode = self.lineBreakMode
+            paragraphStyle.alignment = self.textAlignment
 
             let attrString = NSMutableAttributedString(string: text)
             attrString.addAttribute(.paragraphStyle, value:paragraphStyle, range:NSMakeRange(0, attrString.length))
 
             self.attributedText = attrString
 
-            if let align = self.align {
-                self.align(align)
-            }
+//            if let align = self.align {
+//                self.align(align)
+//            }
         }
         else {
             self.text = text
@@ -112,7 +114,11 @@ open class GLabel: UILabel, IView {
     // Has to be called before text()
     @discardableResult
     public func font(_ font: UIFont?, size: Float? = nil, traits: UIFontDescriptorSymbolicTraits...) -> Self {
-        var f = (font ?? self.font).withTraits(traits)
+        var f = (font ?? self.font!)
+        // For safety, don't touch it if no traits is specified
+        if traits.count > 0 {
+            f = f.withTraits(traits)
+        }
         if let s = size {
             f = f.withSize(CGFloat(s))
         }
