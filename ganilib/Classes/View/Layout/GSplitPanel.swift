@@ -53,8 +53,11 @@ open class GSplitPanel : UIView, IView {
 //            make.right.lessThanOrEqualTo(right.snp.left)
         }
         center.snp.makeConstraints { make in
+            make.top.equalTo(self.snp.topMargin)
+            
             make.left.equalTo(left.snp.right)
-            make.width.equalTo(self)
+            make.right.equalTo(right.snp.left)
+//            make.width.equalTo(self)
         }
         right.snp.makeConstraints { make in
             make.top.equalTo(self.snp.topMargin)
