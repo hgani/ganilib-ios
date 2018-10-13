@@ -68,7 +68,11 @@ public class HttpRequest {
             
             switch method {
             case .post, .patch, .delete:
-                request.httpBody = formData(from: params).data(using: .ascii)
+                let formData = self.formData(from: params)
+                #if DEBUG || ADHOC
+                GLog.i("Params: \(formData)")
+                #endif
+                request.httpBody = formData.data(using: .ascii)
                 request.setValue("application/x-www-form-urlencoded;charset=utf-8", forHTTPHeaderField: "Content-Type")
             case .get:
                 for (key, value) in params {
@@ -113,13 +117,14 @@ public class HttpRequest {
             if let p = prefix {
                 key = "\(p)[\(key)]"
             }
-                        
+            
+            let prev = result.isEmpty ? "" : "\(result)&"
             if let sub = item.value as? GParams {
-                return formData(from: sub, prefix: key)
+                return "\(prev)\(formData(from: sub, prefix: key))"
             }
             
             let value = encodeUriComponent(String(describing: item.value ?? ""))
-            return "\(result.isEmpty ? "" : "\(result)&")\(key)=\(value)"
+            return "\(prev)\(key)=\(value)"
         })
     }
 }

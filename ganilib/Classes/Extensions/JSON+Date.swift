@@ -12,4 +12,10 @@ extension JSON {
             return iso8601 ?? Date()
         }
     }
+    
+    public var isNull: Bool {
+        get {
+            return type == .null
+        }
+    }
 }

@@ -170,9 +170,9 @@ public class Rest {
                                 onHttpSuccess: @escaping (Response) -> Bool,
                                 onHttpFailure: @escaping (Error) -> Bool ) {
         GLog.i(request.string)
-        #if DEBUG || ADHOC
-        GLog.i("Params: \(request.params)")
-        #endif
+//        #if DEBUG || ADHOC
+//        GLog.i("********* Params: \(request.params)")
+//        #endif
         
         indicator.hide()
         
