@@ -57,6 +57,7 @@ open class GHorizontalPanel : UIView {
         previousViewElement = child
     }
     
+    @discardableResult
     public func append(_ child : UIView, left: Float = 0) -> Self {
         addView(child, left: left)
         return self

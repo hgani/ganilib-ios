@@ -35,11 +35,27 @@ open class GSplitPanel : UIView, IView {
         helper.didMoveToSuperview()
     }
     
+    private func decreaseResistance(view: UIView) {
+        view.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        
+        for subview in view.subviews {
+            decreaseResistance(view: subview)
+        }
+    }
+    
+    public func withViews(left: UIView, right: UIView) -> Self {
+        // A label with empty string will occupy the remaining space thus ensuring the right view's
+        // width to be as small as it requires to be.
+        return withViews(left, GLabel().text(""), right)
+    }
+    
     public func withViews(_ left: UIView, _ center: UIView, _ right: UIView) -> Self {
         // The hope is this makes things more predictable
         left.translatesAutoresizingMaskIntoConstraints = false
         center.translatesAutoresizingMaskIntoConstraints = false
         right.translatesAutoresizingMaskIntoConstraints = false
+        
+        decreaseResistance(view: center)
         
         addSubview(left)
         addSubview(center)
@@ -65,12 +81,13 @@ open class GSplitPanel : UIView, IView {
         }
         
         self.snp.makeConstraints { make in
-            make.bottomMargin.equalTo(left.snp.bottom)
-            make.bottomMargin.equalTo(center.snp.bottom)
-            make.bottomMargin.equalTo(right.snp.bottom)
+//            make.bottomMargin.equalTo(left.snp.bottom)
+//            make.bottomMargin.equalTo(center.snp.bottom)
+//            make.bottomMargin.equalTo(right.snp.bottom)
             
-//            make.bottomMargin.greaterThanOrEqualTo(left.snp.bottom)
-//            make.bottomMargin.greaterThanOrEqualTo(right.snp.bottom)
+            make.bottomMargin.greaterThanOrEqualTo(left.snp.bottom)
+            make.bottomMargin.greaterThanOrEqualTo(center.snp.bottom)
+            make.bottomMargin.greaterThanOrEqualTo(right.snp.bottom)
         }
         
         return self
