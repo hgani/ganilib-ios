@@ -117,6 +117,12 @@ open class GTableView: UITableView, IContainer {
         return self
     }
     
+    public var screen: GScreen? {
+        get {
+            return helper.screen
+        }
+    }
+    
     public func done() {
         // Ends chaining
     }

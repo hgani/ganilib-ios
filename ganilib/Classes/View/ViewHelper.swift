@@ -17,6 +17,17 @@ public class ViewHelper {
         }
     }
     
+    public var screen: GScreen? {
+        var nextResponder = view.next
+        while let responder = nextResponder {
+            if let screen = responder as? GScreen {
+                return screen
+            }
+            nextResponder = responder.next
+        }
+        return nil
+    }
+    
     public init(_ view: UIView) {
         self.view = view
         view.layoutMargins = paddings.toEdgeInsets()

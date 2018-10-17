@@ -89,6 +89,7 @@ open class GButton: UIButton, GWeightable {
         return self
     }
     
+    @discardableResult
     public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
         let orig = self.contentEdgeInsets
 
@@ -110,6 +111,7 @@ open class GButton: UIButton, GWeightable {
     }
     
     // Use block instead of selector from now on. See https://stackoverflow.com/questions/24007650/selector-in-swift
+    @discardableResult
     open func onClick(_ command: @escaping (GButton) -> Void) -> Self {
         self.onClick = command
         addTarget(self, action: #selector(performClick), for: .touchUpInside)
@@ -122,6 +124,7 @@ open class GButton: UIButton, GWeightable {
         }
     }
     
+    @discardableResult
     public func font(_ font: UIFont?, size: Float? = nil, traits: UIFontDescriptorSymbolicTraits...) -> Self {
         var f = (font ?? self.titleLabel!.font).withTraits(traits)
         if let s = size {
@@ -131,6 +134,7 @@ open class GButton: UIButton, GWeightable {
         return self
     }
     
+    @discardableResult
     public func align(_ alignment : NSTextAlignment) -> Self {
         // The following works better when the button has multi-line text compared to
         // self.contentHorizontalAlignment which only aligns the label itself rather than the label's text
@@ -138,6 +142,7 @@ open class GButton: UIButton, GWeightable {
         return self
     }
     
+    @discardableResult
     public func color(bg: UIColor?, text: UIColor? = nil) -> Self {
         if let bgColor = bg {
             self.backgroundColor = bgColor
@@ -148,17 +153,20 @@ open class GButton: UIButton, GWeightable {
         return self
     }
     
+    @discardableResult
     public func border(color : UIColor?, width : Float = 1, corner : Float = 6) -> Self {
         helper.border(color: color, width: width, corner: corner)
         return self
     }
     
+    @discardableResult
     public func enabled(_ value : Bool) -> Self {
         self.isEnabled = value
         self.alpha = value ? 1.0 : 0.5
         return self
     }
     
+    @discardableResult
     public func hidden(_ hidden : Bool) -> Self {
         self.isHidden = hidden
         return self
