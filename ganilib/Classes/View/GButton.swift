@@ -103,6 +103,7 @@ open class GButton: UIButton, GWeightable {
         return self
     }
     
+    @discardableResult
     public func specs(_ specs: GButtonSpec...) -> Self {
         for spec in specs {
             spec.decorate(self)
