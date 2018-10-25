@@ -2,7 +2,9 @@ public class JsonUi {
     private static var moduleName: String?
 
     static func register(_ buildConfig: BuildConfig) {
-        moduleName = moduleName(from: type(of: buildConfig) as! AnyClass)
+        if let type = type(of: buildConfig) as? AnyClass {
+            moduleName = moduleName(from: type)
+        }
     }
 
     private static func moduleName(from type: AnyClass) -> String {

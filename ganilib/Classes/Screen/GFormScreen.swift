@@ -90,14 +90,8 @@
             let wrapped = form.values(includeHidden: true)
             var unwrapped = GParams()
 
-            for (k, v) in wrapped {
-//            if let rowValue = self.form.rowBy(tag: k)?.baseValue as? KeyValue {
-//                unwrapped[k] = rowValue.value
-//            }
-//            else {
-//                unwrapped[k] = v
-//            }
-                unwrapped[k] = v
+            for (key, value) in wrapped {
+                unwrapped[key] = values
             }
 
             return unwrapped
@@ -106,8 +100,8 @@
         public func setupHeaderFooter(height: Int? = nil, populate: @escaping (GHeaderFooterView) -> Void) -> HeaderFooterView<GHeaderFooterView> {
             var headerFooter = HeaderFooterView<GHeaderFooterView>(.class)
             headerFooter.height = {
-                if let h = height {
-                    return CGFloat(h)
+                if let value = height {
+                    return CGFloat(value)
                 }
                 return UITableViewAutomaticDimension
             }

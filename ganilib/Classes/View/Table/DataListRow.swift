@@ -34,7 +34,7 @@
     }
 
     private class DataListSelectorViewController<OptionsRow: OptionsProviderRow>: SelectorViewController<OptionsRow> where OptionsRow.OptionsProviderType.Option == String {
-        private var configurableRow: ConfigurableRow { return row as! ConfigurableRow }
+        private var configurableRow: ConfigurableRow? { return row as? ConfigurableRow }
 
         public override func viewDidLoad() {
             super.viewDidLoad()

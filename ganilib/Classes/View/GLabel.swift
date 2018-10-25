@@ -6,7 +6,7 @@ open class GLabel: UILabel, IView {
     private var helper: ViewHelper!
     private var isUnderlined = false
     private var onClick: ((GLabel) -> Void)?
-    var paddings = Paddings(t: 0, l: 0, b: 0, r: 0)
+    var paddings = Paddings(top: 0, left: 0, bottom: 0, right: 0)
     var clickRecognizer: UITapGestureRecognizer?
 
     private var lineSpacing: Int?
@@ -101,8 +101,8 @@ open class GLabel: UILabel, IView {
     public func icon(_ icon: String, size: CGFloat? = nil) -> Self {
         numberOfLines = 0
         text = icon
-        if let s = size {
-            font = font.withSize(s)
+        if let sizeValue = size {
+            font = font.withSize(sizeValue)
         }
         parseIcon()
         return self
@@ -111,15 +111,15 @@ open class GLabel: UILabel, IView {
     // Has to be called before text()
     @discardableResult
     public func font(_ font: UIFont?, size: Float? = nil, traits: UIFontDescriptorSymbolicTraits...) -> Self {
-        var f = (font ?? self.font!)
+        var newFont = (font ?? self.font!)
         // For safety, don't touch it if no traits is specified
         if traits.count > 0 {
-            f = f.withTraits(traits)
+            newFont = newFont.withTraits(traits)
         }
-        if let s = size {
-            f = f.withSize(CGFloat(s))
+        if let newSize = size {
+            newFont = newFont.withSize(CGFloat(newSize))
         }
-        self.font = f
+        self.font = newFont
         return self
     }
 
@@ -198,14 +198,16 @@ open class GLabel: UILabel, IView {
     }
 
     public func paddings(t top: Float?, l left: Float?, b bottom: Float?, r right: Float?) -> Self {
-        let orig = paddings
-
-        let top = top ?? orig.t
-        let left = left ?? orig.l
-        let bottom = bottom ?? orig.b
-        let right = right ?? orig.r
-
-        paddings = Paddings(t: top, l: left, b: bottom, r: right)
+//        let orig = paddings
+//
+//        let top = top ?? orig.top
+//        let left = left ?? orig.left
+//        let bottom = bottom ?? orig.bottom
+//        let right = right ?? orig.right
+//
+//        paddings = Paddings(top: top, left: left, bottom: bottom, right: right)
+        
+        paddings = Paddings.from(top: top, left: left, bottom: bottom, right: right, orig: paddings)
         return self
     }
 

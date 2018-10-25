@@ -138,13 +138,13 @@ public class Rest {
         default:
             if let urlRequest = request.toUrlRequest() {
                 task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-                    if let d = data, let body = String(data: d, encoding: .utf8), let r = response as? HTTPURLResponse {
-                        self.handleResponse(body: body, response: r, indicator: indicator, onHttpSuccess: onHttpSuccess, onHttpFailure: onHttpFailure)
+                    if let safeData = data, let body = String(data: safeData, encoding: .utf8), let safeResponse = response as? HTTPURLResponse {
+                        self.handleResponse(body: body, response: safeResponse, indicator: indicator, onHttpSuccess: onHttpSuccess, onHttpFailure: onHttpFailure)
                     } else {
-                        if let e = error {
+                        if let safeError = error {
                             DispatchQueue.main.async {
-                                if !onHttpFailure(e) {
-                                    indicator.show(error: e.localizedDescription)
+                                if !onHttpFailure(safeError) {
+                                    indicator.show(error: safeError.localizedDescription)
                                 }
                             }
                         }
@@ -152,9 +152,9 @@ public class Rest {
                 }
             }
 
-            if let t = task {
+            if let safeTask = task {
                 indicator.show()
-                t.resume()
+                safeTask.resume()
             } else {
                 indicator.show(error: "Failed connecting to server")
             }

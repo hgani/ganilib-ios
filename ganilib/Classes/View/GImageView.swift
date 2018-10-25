@@ -92,10 +92,10 @@ open class GImageView: UIImageView {
     }
 
     public func adjustHeight() {
-        if let i = image {
+        if let safeImage = image {
             layoutIfNeeded()
 
-            let ratio = i.size.width / i.size.height
+            let ratio = safeImage.size.width / safeImage.size.height
             let height = frame.width / ratio
 
             NSLog("Adjusting to height: \(height)")

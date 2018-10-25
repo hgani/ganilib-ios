@@ -13,8 +13,8 @@ private var handle: UInt8 = 0
 
 extension UIBarButtonItem {
     private var badgeLayer: CAShapeLayer? {
-        if let b: AnyObject = objc_getAssociatedObject(self, &handle) as AnyObject? {
-            return b as? CAShapeLayer
+        if let badge: AnyObject = objc_getAssociatedObject(self, &handle) as AnyObject? {
+            return badge as? CAShapeLayer
         } else {
             return nil
         }
@@ -49,9 +49,9 @@ extension UIBarButtonItem {
         }
 
         // x position is offset from right-hand side
-        let x = view.frame.width - width + offset.x
+        let xPos = view.frame.width - width + offset.x
 
-        let badgeFrame = CGRect(origin: CGPoint(x: x, y: offset.y), size: CGSize(width: width, height: height))
+        let badgeFrame = CGRect(origin: CGPoint(x: xPos, y: offset.y), size: CGSize(width: width, height: height))
 
         badge.drawRoundedRect(rect: badgeFrame, andColor: color, filled: filled)
         view.layer.addSublayer(badge)

@@ -23,23 +23,6 @@ open class GTextView: UITextView {
         helper.didMoveToSuperview()
     }
 
-//    public func placeholder(_ str: String) -> Self {
-//        self.placeholder = str
-//        return self
-//    }
-
-//    public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
-//        let orig = self.padding
-//
-//        let top = top ?? orig.top
-//        let left = left ?? orig.left
-//        let bottom = bottom ?? orig.bottom
-//        let right = right ?? orig.right
-//
-//        self.padding = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
-//        return self
-//    }
-
     public func color(bg: UIColor?, text: UIColor? = nil) -> Self {
         if let bgColor = bg {
             backgroundColor = bgColor

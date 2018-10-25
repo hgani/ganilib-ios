@@ -37,21 +37,6 @@ open class GTextField: UITextField, IView {
         return self
     }
 
-//    public func padding(top: CGFloat? = nil, left: CGFloat? = nil, bottom: CGFloat? = nil, right: CGFloat? = nil) -> Self {
-    ////        helper.padding(top: top, left: left, bottom: bottom, right: right)
-    ////        let padding = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5);
-//
-//        let orig = self.padding
-//
-//        let top = top ?? orig.top
-//        let left = left ?? orig.left
-//        let bottom = bottom ?? orig.bottom
-//        let right = right ?? orig.right
-//
-//        self.padding = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
-//        return self
-//    }
-
     open override func textRect(forBounds bounds: CGRect) -> CGRect {
         return UIEdgeInsetsInsetRect(bounds, padding)
     }

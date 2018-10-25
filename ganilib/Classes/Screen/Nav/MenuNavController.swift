@@ -69,7 +69,7 @@ extension MenuNavController: UITableViewDelegate, UITableViewDataSource {
         let item = self.item(at: indexPath)
         let cell = tableView.cellInstance(of: item.cellClass, style: .default)
 
-        (cell as! MenuCellType).update(item: item)
+        (cell as? MenuCellType)?.update(item: item)
 
         return cell
     }

@@ -5,6 +5,7 @@ import UIKit
 open class GButton: UIButton, GWeightable {
     private var helper: ViewHelper!
     private var onClick: ((GButton) -> Void)?
+    var paddings = Paddings(top: 0, left: 0, bottom: 0, right: 0)
 
     public var size: CGSize {
         return helper.size
@@ -88,16 +89,18 @@ open class GButton: UIButton, GWeightable {
     }
 
     @discardableResult
-    public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
-        let orig = contentEdgeInsets
+    public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
+//        let orig = contentEdgeInsets
+//
+//        let top = top ?? orig.top
+//        let left = left ?? orig.left
+//        let bottom = bottom ?? orig.bottom
+//        let right = right ?? orig.right
+//
+//        contentEdgeInsets = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
 
-        let top = top ?? orig.top
-        let left = left ?? orig.left
-        let bottom = bottom ?? orig.bottom
-        let right = right ?? orig.right
-
-        contentEdgeInsets = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
-
+        paddings = Paddings.from(top: top, left: left, bottom: bottom, right: right, orig: paddings)
+        contentEdgeInsets = paddings.toEdgeInsets()
         return self
     }
 
@@ -125,11 +128,11 @@ open class GButton: UIButton, GWeightable {
 
     @discardableResult
     public func font(_ font: UIFont?, size: Float? = nil, traits: UIFontDescriptorSymbolicTraits...) -> Self {
-        var f = (font ?? titleLabel!.font).withTraits(traits)
-        if let s = size {
-            f = f.withSize(CGFloat(s))
+        var newFont = (font ?? titleLabel!.font).withTraits(traits)
+        if let newSize = size {
+            newFont = newFont.withSize(CGFloat(newSize))
         }
-        titleLabel!.font = f
+        titleLabel!.font = newFont
         return self
     }
 

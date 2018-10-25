@@ -57,20 +57,6 @@ open class GDatePicker: UIDatePicker {
         return self
     }
 
-//    public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
-//        let orig = self.contentEdgeInsets
-//
-//        let top = top ?? orig.top
-//        let left = left ?? orig.left
-//        let bottom = bottom ?? orig.bottom
-//        let right = right ?? orig.right
-//
-//        self.contentEdgeInsets = UIEdgeInsets(top: top, left: left, bottom: bottom, right: right)
-//
-//        return self
-//    }
-//
-
     public func onSelect(_ command: @escaping (GDatePicker) -> Void) -> Self {
         _ = helper.onSelect(command)
         return self

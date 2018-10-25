@@ -146,8 +146,8 @@ public class Http {
 
         indicator.show()
         request.responseString { response in
-            if let r = response.response {
-                if !GHttp.instance.delegate.processResponse(r) {
+            if let safeResponse = response.response {
+                if !GHttp.instance.delegate.processResponse(safeResponse) {
                     indicator.hide()
                     return
                 }

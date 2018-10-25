@@ -6,7 +6,7 @@ public class ViewHelper {
     private unowned let view: UIView
     private var matchParentWidthMultiplier: Float?
     private var matchParentHeightMultiplier: Float?
-    var paddings = Paddings(t: 0, l: 0, b: 0, r: 0)
+    var paddings = Paddings(top: 0, left: 0, bottom: 0, right: 0)
 
     private var widthConstraint: Constraint?
     private var heightConstraint: Constraint?
@@ -143,17 +143,17 @@ public class ViewHelper {
     }
 
     public func size(width: Int?, height: Int?) {
-        if let w = width {
-            self.width(w)
+        if let widthValue = width {
+            self.width(widthValue)
         }
-        if let h = height {
-            self.height(h)
+        if let heightValue = height {
+            self.height(heightValue)
         }
     }
 
     public func border(color: UIColor?, width: Float, corner: Float) {
-        if let c = color {
-            view.layer.borderColor = c.cgColor
+        if let colorValue = color {
+            view.layer.borderColor = colorValue.cgColor
         }
         view.layer.borderWidth = CGFloat(width)
         view.layer.cornerRadius = CGFloat(corner)
@@ -163,14 +163,16 @@ public class ViewHelper {
     public func paddings(t top: Float?, l left: Float?, b bottom: Float?, r right: Float?) {
         // Use our own variable to store the definitive values just in case layoutMargins gets changed directly,
         // which can get confusing.
-        let orig = paddings
-
-        let top = top ?? orig.t
-        let left = left ?? orig.l
-        let bottom = bottom ?? orig.b
-        let right = right ?? orig.r
-
-        paddings = Paddings(t: top, l: left, b: bottom, r: right)
+        paddings = Paddings.from(top: top, left: left, bottom: bottom, right: right, orig: paddings)
+        
+//        let orig = paddings
+//
+//        let top = top ?? orig.top
+//        let left = left ?? orig.left
+//        let bottom = bottom ?? orig.bottom
+//        let right = right ?? orig.right
+//
+//        paddings = Paddings(top: top, left: left, bottom: bottom, right: right)
         view.layoutMargins = paddings.toEdgeInsets()
     }
 }
@@ -180,12 +182,21 @@ public enum LayoutSize {
 }
 
 public struct Paddings {
-    public let t: Float
-    public let l: Float
-    public let b: Float
-    public let r: Float
+    public let top: Float
+    public let left: Float
+    public let bottom: Float
+    public let right: Float
 
     public func toEdgeInsets() -> UIEdgeInsets {
-        return UIEdgeInsetsMake(CGFloat(t), CGFloat(l), CGFloat(b), CGFloat(r))
+        return UIEdgeInsets(top: CGFloat(top), left: CGFloat(left), bottom: CGFloat(bottom), right: CGFloat(right))
+    }
+    
+    static func from(top: Float?, left: Float?, bottom: Float?, right: Float?, orig: Paddings) -> Paddings {
+        let top = top ?? orig.top
+        let left = left ?? orig.left
+        let bottom = bottom ?? orig.bottom
+        let right = right ?? orig.right
+        
+        return Paddings(top: top, left: left, bottom: bottom, right: right)
     }
 }

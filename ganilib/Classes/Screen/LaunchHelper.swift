@@ -79,9 +79,9 @@ open class LaunchHelper {
         }
     }
 
-    public func url(_ url: String) {
-        if let u = URL(string: url) {
-            UIApplication.shared.openURL(u)
+    public func url(_ string: String) {
+        if let url = URL(string: string) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
 }

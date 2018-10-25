@@ -92,10 +92,12 @@ open class GTableView: UITableView, IContainer {
 
     public func cellInstance<T: GTableViewCell>(of type: T.Type, style: UITableViewCellStyle = .default) -> T {
         var cell: T
-        if let c = self.dequeueReusableCell(withIdentifier: type.reuseIdentifier()) as? T {
-            cell = c
+        if let safeCell = self.dequeueReusableCell(withIdentifier: type.reuseIdentifier()) as? T {
+            cell = safeCell
         }
-        cell = type.init(style: style)
+        else {
+            cell = type.init(style: style)
+        }
         cell.tableView = self
         return cell
     }

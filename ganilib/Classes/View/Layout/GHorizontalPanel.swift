@@ -132,7 +132,7 @@ open class GHorizontalPanel: UIView {
         let count = subviews.count
         GLog.i("Splitting \(count) views ...")
         let weight = 1.0 / Float(count)
-        let offset = -(totalGap + paddings.l + paddings.r) / Float(count)
+        let offset = -(totalGap + paddings.left + paddings.right) / Float(count)
         for view in subviews {
             if let weightable = view as? GWeightable {
                 _ = weightable.width(weight: weight, offset: offset)
