@@ -1,10 +1,10 @@
 // Causes "segmentation fault" during compilation on xcode 10.
-//#if INCLUDE_EUREKA
+// #if INCLUDE_EUREKA
 //
-//import UIKit
-//import Eureka
+// import UIKit
+// import Eureka
 //
-//open class _EurekaRow<Cell: CellType>: Row<Cell> where Cell: BaseCell {
+// open class _EurekaRow<Cell: CellType>: Row<Cell> where Cell: BaseCell {
 //    open var presentationMode: PresentationMode<UIViewController>?
 //
 //    public required init(tag: String?) {
@@ -24,15 +24,15 @@
 //            }
 //        }
 //    }
-//}
+// }
 //
-//public final class GEurekaRow<T: Equatable, C: GEurekaCell<T>>: _EurekaRow<C>, RowType {
+// public final class GEurekaRow<T: Equatable, C: GEurekaCell<T>>: _EurekaRow<C>, RowType {
 //    public required init(tag: String?) {
 //        super.init(tag: tag)
 //    }
-//}
+// }
 //
-//open class GEurekaCell<T: Equatable>: Cell<T>, CellType {
+// open class GEurekaCell<T: Equatable>: Cell<T>, CellType {
 //    //    private let container = GVerticalPanel().width(.matchParent).height(.matchParent).color(bg: .yellow)
 //    private let container = GVerticalPanel()
 //
@@ -76,7 +76,7 @@
 //        editingAccessoryType = accessoryType
 //        selectionStyle = row.isDisabled ? .none : .default
 //    }
-//}
+// }
 //
-//#endif
+// #endif
 //

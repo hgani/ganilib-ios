@@ -19,7 +19,7 @@ public extension UIFont {
     func italic() -> UIFont {
         return withTraits(.traitItalic)
     }
-    
+
     func boldItalic() -> UIFont {
         return withTraits(.traitBold, .traitItalic)
     }

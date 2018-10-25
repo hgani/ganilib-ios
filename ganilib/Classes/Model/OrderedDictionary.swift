@@ -1,42 +1,42 @@
 // See http://codeforcaffeine.com/programming/swift-3-ordered-dictionary/
 public struct OrderedDictionary<K: Hashable, V> {
     public var keys = [K]()
-    var dict = [K:V]()
- 
+    var dict = [K: V]()
+
     public var count: Int {
-        return self.keys.count
+        return keys.count
     }
-    
+
     public mutating func removeAll() {
         keys.removeAll()
         dict.removeAll()
     }
- 
+
     public subscript(key: K) -> V? {
         get {
-            return self.dict[key]
+            return dict[key]
         }
         set(newValue) {
             if newValue == nil {
-                self.dict.removeValue(forKey:key)
-                self.keys = self.keys.filter {$0 != key}
+                dict.removeValue(forKey: key)
+                keys = keys.filter { $0 != key }
             } else {
-                let oldValue = self.dict.updateValue(newValue!, forKey: key)
+                let oldValue = dict.updateValue(newValue!, forKey: key)
                 if oldValue == nil {
-                    self.keys.append(key)
+                    keys.append(key)
                 }
             }
         }
     }
 }
- 
+
 extension OrderedDictionary: Sequence {
     public typealias Iterator = AnyIterator<(key: K, value: V)>
-    
+
     public func makeIterator() -> Iterator {
         var counter = 0
         return AnyIterator {
-            guard counter<self.keys.count else {
+            guard counter < self.keys.count else {
                 return nil
             }
             let key = self.keys[counter]
@@ -46,17 +46,17 @@ extension OrderedDictionary: Sequence {
             return (key, value)
 //            return value
         }
-        
+
 //        let mapped = self.__source.lazy.map {
 //            ($0.key as AnyObject, abcContainer($0.value))
 //        }
 //        return AnyIterator(mapped.makeIterator())
     }
 }
- 
+
 extension OrderedDictionary: CustomStringConvertible {
     public var description: String {
-        let isString = type(of: self.keys[0]) == String.self
+        let isString = type(of: keys[0]) == String.self
         var result = "["
         for key in keys {
             result += isString ? "\"\(key)\"" : "\(key)"
@@ -67,7 +67,7 @@ extension OrderedDictionary: CustomStringConvertible {
         return result
     }
 }
- 
+
 extension OrderedDictionary: ExpressibleByDictionaryLiteral {
     public init(dictionaryLiteral elements: (K, V)...) {
         self.init()

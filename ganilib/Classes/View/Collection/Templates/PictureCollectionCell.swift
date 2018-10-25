@@ -1,9 +1,8 @@
 public class PictureCollectionCell: GCollectionViewCell {
     public let picture = GImageView()
-    
-    override public func initContent() {
-        self
-            .append(picture)
+
+    public override func initContent() {
+        append(picture)
             .done()
     }
 }

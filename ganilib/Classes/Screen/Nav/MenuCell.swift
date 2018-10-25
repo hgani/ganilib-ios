@@ -5,37 +5,36 @@ public protocol MenuCellType {
 open class MenuCell: GTableViewCustomCell, MenuCellType {
     public let icon = GLabel()
     public let title = GLabel()
-    
-    required public init(style: UITableViewCellStyle) {
+
+    public required init(style: UITableViewCellStyle) {
         super.init(style: style)
         populate()
     }
-    
-    required public init?(coder aDecoder: NSCoder) {
+
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         populate()
     }
-    
+
     open func populate() {
-        self
-            .paddings(t: 8, l: 14, b: 8, r: 14)
+        paddings(t: 8, l: 14, b: 8, r: 14)
             .append(GHorizontalPanel().paddings(t: 5, l: 10, b: 5, r: 10).append(icon).append(title, left: 5))
             .done()
     }
-    
+
     open func update(item: MenuItem) {
         if let iconText = item.icon {
-            _ = self.icon.icon(iconText)
+            _ = icon.icon(iconText)
         }
-        _ = self.title.text(item.title)
-        
-        self.isUserInteractionEnabled = item.hasAction()
-        
+        _ = title.text(item.title)
+
+        isUserInteractionEnabled = item.hasAction()
+
         setNeedsLayout()
     }
 }
 
-//class MenuCell: UITableViewCell {
+// class MenuCell: UITableViewCell {
 //    var titleLabel: UILabel!
 //    var iconLabel: UILabel!
 //
@@ -85,5 +84,4 @@ open class MenuCell: GTableViewCustomCell, MenuCellType {
 //        }
 //
 //    }
-//}
-
+// }

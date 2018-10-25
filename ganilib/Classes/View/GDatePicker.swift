@@ -5,60 +5,58 @@ open class GDatePicker: UIDatePicker {
     private var helper: ControlHelper<GDatePicker>!
 //    private var helper: ViewHelper!
 //    private var onSelect: ((GDatePicker) -> Void)?
-    
+
     public var size: CGSize {
-        get {
-            return helper!.size
-        }
+        return helper!.size
     }
-    
+
     public init() {
         super.init(frame: .zero)
         initialize()
     }
-    
-    required public init?(coder: NSCoder) {
+
+    public required init?(coder: NSCoder) {
         super.init(coder: coder)
         initialize()
     }
-    
+
     private func initialize() {
-        self.helper = ControlHelper(self)
-        
+        helper = ControlHelper(self)
+
         // Make sure that contentEdgeInsets' values is always initialized properly (i.e. non-zero)
 //        _ = self.paddings(t: 10, l: 20, b: 10, r: 20)
     }
-    
+
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
         helper.didMoveToSuperview()
     }
-    
+
     public func width(_ width: Int) -> Self {
         helper.width(width)
         return self
     }
-    
+
     public func width(_ width: LayoutSize) -> Self {
         helper.width(width)
         return self
     }
-    
+
     public func width(weight: Float, offset: Float = 0) -> Self {
         helper.width(weight: weight, offset: offset)
         return self
     }
-    
+
     public func height(_ height: Int) -> Self {
         helper.height(height)
         return self
     }
-    
+
     public func height(_ height: LayoutSize) -> Self {
         helper.height(height)
         return self
     }
-    
+
 //    public func paddings(t top: CGFloat? = nil, l left: CGFloat? = nil, b bottom: CGFloat? = nil, r right: CGFloat? = nil) -> Self {
 //        let orig = self.contentEdgeInsets
 //
@@ -72,31 +70,31 @@ open class GDatePicker: UIDatePicker {
 //        return self
 //    }
 //
-    
+
     public func onSelect(_ command: @escaping (GDatePicker) -> Void) -> Self {
         _ = helper.onSelect(command)
         return self
     }
-    
+
     public func color(bg: UIColor) -> Self {
         return color(bg: bg, text: nil)
     }
-    
+
     public func color(bg: UIColor?, text: UIColor? = nil) -> Self {
         if let bgColor = bg {
-            self.backgroundColor = bgColor
+            backgroundColor = bgColor
         }
         if let textColor = text {
             setValue(textColor, forKeyPath: "textColor")
         }
         return self
     }
-    
+
     public func mode(_ mode: UIDatePickerMode) -> Self {
-        self.datePickerMode = mode
+        datePickerMode = mode
         return self
     }
-    
+
 //
 //    public func border(color : UIColor?, width : Float = 1, corner : Float = 6) -> Self {
 //        helper.border(color: color, width: width, corner: corner)
@@ -108,13 +106,13 @@ open class GDatePicker: UIDatePicker {
 //        self.alpha = value ? 1.0 : 0.5
 //        return self
 //    }
-    
+
     public func done() {
         // End chaining
     }
 }
 
-//extension GDatePicker: UIPickerViewDelegate {
+// extension GDatePicker: UIPickerViewDelegate {
 //
 //    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 //
@@ -153,5 +151,4 @@ open class GDatePicker: UIDatePicker {
 //
 //        self.updateTotalHours()
 //    }
-//}
-
+// }
