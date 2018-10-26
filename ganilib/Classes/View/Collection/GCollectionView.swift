@@ -175,7 +175,7 @@ open class GCollectionViewCell: UICollectionViewCell {
     }
 
     public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
-        _ = container.paddings(t: top, l: left, b: bottom, r: right)
+        _ = container.paddings(top: top, left: left, bottom: bottom, right: right)
         return self
     }
 

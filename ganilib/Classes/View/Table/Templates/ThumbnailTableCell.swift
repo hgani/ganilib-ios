@@ -6,9 +6,9 @@ open class ThumbnailTableCell: GTableViewCustomCell {
     open override func initContent() {
         let content = GHorizontalPanel()
             .append(picture.width(80).height(80))
-            .append(GVerticalPanel().paddings(t: 10, l: 10, b: 10, r: 10).append(title).append(subtitle))
+            .append(GVerticalPanel().paddings(top: 10, left: 10, bottom: 10, right: 10).append(title).append(subtitle))
 
-        paddings(t: 8, l: 14, b: 8, r: 14)
+        paddings(top: 8, left: 14, bottom: 8, right: 14)
             .append(content)
             .done()
     }

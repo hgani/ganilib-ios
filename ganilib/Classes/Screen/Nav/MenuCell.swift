@@ -17,7 +17,7 @@ open class MenuCell: GTableViewCustomCell, MenuCellType {
     }
 
     open func populate() {
-        paddings(t: 8, l: 14, b: 8, r: 14)
+        paddings(top: 8, left: 14, bottom: 8, right: 14)
             .append(GHorizontalPanel().paddings(t: 5, l: 10, b: 5, r: 10).append(icon).append(title, left: 5))
             .done()
     }

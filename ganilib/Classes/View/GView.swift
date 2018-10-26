@@ -12,7 +12,7 @@ public protocol IView {
     func height(_ height: Int) -> Self
     func height(_ height: LayoutSize) -> Self
 
-    func paddings(t: Float?, l: Float?, b: Float?, r: Float?) -> Self
+    func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self
 }
 
 open class GView: UIView {

@@ -5,7 +5,7 @@ open class FeaturedTableCell: GTableViewCustomCell {
 
     open override func initContent() {
         append(picture.height(210))
-            .append(GVerticalPanel().paddings(t: 5, l: 10, b: 10, r: 10).append(title).append(subtitle))
+            .append(GVerticalPanel().paddings(top: 5, left: 10, bottom: 10, right: 10).append(title).append(subtitle))
             .done()
     }
 }

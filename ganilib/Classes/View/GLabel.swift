@@ -197,7 +197,7 @@ open class GLabel: UILabel, IView {
         return self
     }
 
-    public func paddings(t top: Float?, l left: Float?, b bottom: Float?, r right: Float?) -> Self {
+    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
 //        let orig = paddings
 //
 //        let top = top ?? orig.top

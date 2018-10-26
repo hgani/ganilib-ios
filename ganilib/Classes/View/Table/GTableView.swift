@@ -94,15 +94,14 @@ open class GTableView: UITableView, IContainer {
         var cell: T
         if let safeCell = self.dequeueReusableCell(withIdentifier: type.reuseIdentifier()) as? T {
             cell = safeCell
-        }
-        else {
+        } else {
             cell = type.init(style: style)
         }
         cell.tableView = self
         return cell
     }
 
-    public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
+    public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
         helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
@@ -150,7 +149,7 @@ open class GTableViewCell: UITableViewCell {
         helper = ViewHelper(contentView)
     }
 
-    public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
+    public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
         helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
@@ -226,8 +225,8 @@ open class GTableViewCustomCell: GTableViewCell {
     }
 
     @discardableResult
-    public override func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
-        _ = container.paddings(t: top, l: left, b: bottom, r: right)
+    public override func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
+        _ = container.paddings(top: top, left: left, bottom: bottom, right: right)
         return self
     }
 
@@ -294,8 +293,8 @@ open class GHeaderFooterView: UIView {
         return self
     }
 
-    public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
-        _ = container.paddings(t: top, l: left, b: bottom, r: right)
+    public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
+        _ = container.paddings(top: top, left: left, bottom: bottom, right: right)
         return self
     }
 

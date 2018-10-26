@@ -46,7 +46,7 @@ open class JsonView {
 
     private func initPadding(_ view: IView) {
         let padding = spec["padding"]
-        _ = view.paddings(t: padding["top"].float, l: padding["left"].float, b: padding["bottom"].float, r: padding["right"].float)
+        _ = view.paddings(top: padding["top"].float, left: padding["left"].float, bottom: padding["bottom"].float, right: padding["right"].float)
     }
 
     open func initView() -> UIView {

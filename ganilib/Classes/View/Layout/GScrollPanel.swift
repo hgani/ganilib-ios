@@ -75,8 +75,8 @@ open class GScrollPanel: UIScrollView, IContainer {
         return self
     }
 
-    public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
-        _ = contentView.paddings(t: top, l: left, b: bottom, r: right)
+    public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
+        _ = contentView.paddings(top: top, left: left, bottom: bottom, right: right)
         return self
     }
 

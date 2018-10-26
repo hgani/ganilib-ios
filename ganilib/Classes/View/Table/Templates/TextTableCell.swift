@@ -3,7 +3,7 @@ open class TextTableCell: GTableViewCustomCell {
     public let subtitle = GLabel().specs(.libCellSubtitle)
 
     open override func initContent() {
-        paddings(t: 8, l: 14, b: 8, r: 14)
+        paddings(top: 8, left: 14, bottom: 8, right: 14)
             .append(title)
             .append(subtitle)
             .done()

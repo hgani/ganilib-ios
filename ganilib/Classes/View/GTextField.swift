@@ -32,7 +32,7 @@ open class GTextField: UITextField, IView {
         return self
     }
 
-    public func paddings(t top: Float?, l left: Float?, b bottom: Float?, r right: Float?) -> Self {
+    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
         helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
