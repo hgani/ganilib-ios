@@ -3,6 +3,7 @@ import UIKit
 open class GAligner: UIView {
     private var horizontalAlign: GAlignerHorizontalGravity = .center
     private var helper: ViewHelper!
+    private var event: EventHelper<GAligner>!
 
     public init() {
         super.init(frame: .zero)
@@ -16,6 +17,7 @@ open class GAligner: UIView {
 
     private func initialize() {
         helper = ViewHelper(self)
+        event = EventHelper(self)
     }
 
     open override func didMoveToSuperview() {
@@ -81,6 +83,11 @@ open class GAligner: UIView {
 
     public func border(color: UIColor?, width: Float = 1, corner: Float = 6) -> Self {
         helper.border(color: color, width: width, corner: corner)
+        return self
+    }
+
+    public func onClick(_ command: @escaping (GAligner) -> Void) -> Self {
+        event.onClick(command)
         return self
     }
 

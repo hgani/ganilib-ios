@@ -2,7 +2,7 @@ import UIKit
 
 open class GImageView: UIImageView {
     private var helper: ViewHelper!
-    private var onClick: ((GImageView) -> Void)?
+    private var event: EventHelper<GImageView>!
 
     public init() {
         super.init(frame: .zero)
@@ -16,6 +16,7 @@ open class GImageView: UIImageView {
 
     private func initialize() {
         helper = ViewHelper(self)
+        event = EventHelper(self)
     }
 
     // Needed for helper.width() and helper.height()
@@ -76,18 +77,8 @@ open class GImageView: UIImageView {
     }
 
     open func onClick(_ command: @escaping (GImageView) -> Void) -> Self {
-        onClick = command
-
-        let singleTap = UITapGestureRecognizer(target: self, action: #selector(performClick))
-        isUserInteractionEnabled = true
-        addGestureRecognizer(singleTap)
+        event.onClick(command)
         return self
-    }
-
-    @objc open func performClick() {
-        if let callback = self.onClick {
-            callback(self)
-        }
     }
 
     public func adjustHeight() {

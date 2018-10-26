@@ -4,6 +4,7 @@ open class GVerticalPanel: UIView, IView {
     private var helper: ViewHelper!
     private var previousViewElement: UIView!
     private var previousConstraint: NSLayoutConstraint!
+    private var event: EventHelper<GVerticalPanel>!
 
     public var size: CGSize {
         return helper.size
@@ -21,6 +22,7 @@ open class GVerticalPanel: UIView, IView {
 
     private func initialize() {
         helper = ViewHelper(self)
+        event = EventHelper(self)
 
         _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
 
@@ -160,6 +162,11 @@ open class GVerticalPanel: UIView, IView {
 
     public func hidden(_ hidden: Bool) -> Self {
         isHidden = hidden
+        return self
+    }
+
+    public func onClick(_ command: @escaping (GVerticalPanel) -> Void) -> Self {
+        event.onClick(command)
         return self
     }
 
