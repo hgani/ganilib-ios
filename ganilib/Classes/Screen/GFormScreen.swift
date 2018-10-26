@@ -91,7 +91,7 @@
             var unwrapped = GParams()
 
             for (key, value) in wrapped {
-                unwrapped[key] = values
+                unwrapped[key] = value
             }
 
             return unwrapped

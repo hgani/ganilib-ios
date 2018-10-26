@@ -45,7 +45,7 @@
         fileprivate func updateContent() {
             // Can be nil because this method may get called before the view controller is shown.
             if let section = form.allSections.first {
-                if let intro = configurableRow.intro {
+                if let intro = configurableRow?.intro {
                     section.header?.title = intro
                 }
                 tableView.reloadData()

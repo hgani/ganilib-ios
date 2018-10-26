@@ -113,8 +113,8 @@ public class HttpRequest {
     private func formData(from params: GParams, prefix: String? = nil) -> String {
         return params.reduce("", { (result, item) -> String in
             var key = encodeUriComponent(item.key)
-            if let p = prefix {
-                key = "\(p)[\(key)]"
+            if let prefixValue = prefix {
+                key = "\(prefixValue)[\(key)]"
             }
 
             let prev = result.isEmpty ? "" : "\(result)&"
