@@ -12,10 +12,10 @@ public class ProgressIndicatorEnum {
     public static let null = ProgressIndicatorEnum(NullProgressIndicator.shared)
     public static let standard = ProgressIndicatorEnum(StandardProgressIndicator.shared)
 
-    public let delegate: ProgressIndicator
+    public let backend: ProgressIndicator
 
-    init(_ delegate: ProgressIndicator) {
-        self.delegate = delegate
+    init(_ backend: ProgressIndicator) {
+        self.backend = backend
     }
 }
 

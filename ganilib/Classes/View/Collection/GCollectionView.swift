@@ -1,19 +1,9 @@
-
 import UIKit
 
 open class GCollectionView: UICollectionView {
     private var helper: ViewHelper!
 
     fileprivate var pager: UIPageControl?
-
-    //    private let pageControl: UIPageControl = {
-    //        let pc = UIPageControl()
-    //        pc.currentPage = 0
-    //        pc.numberOfPages = 3
-    //        pc.currentPageIndicatorTintColor = .darkGray
-    //        pc.pageIndicatorTintColor = .lightGray
-    //        return pc
-    //    }()
 
     public init() {
         super.init(frame: .zero, collectionViewLayout: GCollectionViewFlowLayout())
@@ -138,11 +128,6 @@ extension GCollectionView: UICollectionViewDelegateFlowLayout {
 
 open class GCollectionViewCell: UICollectionViewCell {
     private let container = GVerticalPanel()
-
-//    public required init() {
-//        super.init(frame: .zero)
-//        initialize()
-//    }
 
     public override init(frame: CGRect) {
         super.init(frame: frame)

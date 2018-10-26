@@ -150,7 +150,7 @@ extension GMapView: MKMapViewDelegate {
                 for route in unwrappedResponse.routes {
                     self.add(route.polyline)
                     self.setVisibleMapRect(route.polyline.boundingMapRect,
-                                           edgePadding: UIEdgeInsetsMake(20, 20, 20, 20),
+                                           edgePadding: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20),
                                            animated: true)
                 }
             })

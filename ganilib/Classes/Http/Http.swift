@@ -138,7 +138,7 @@ public class Http {
     }
 
     public func execute(indicator: ProgressIndicatorEnum = .standard, onHttpSuccess: @escaping (String) -> String?) {
-        execute(indicator: indicator.delegate, onHttpSuccess: onHttpSuccess)
+        execute(indicator: indicator.backend, onHttpSuccess: onHttpSuccess)
     }
 
     public func execute(indicator: ProgressIndicator, onHttpSuccess: @escaping (String) -> String?) {
@@ -147,7 +147,7 @@ public class Http {
         indicator.show()
         request.responseString { response in
             if let safeResponse = response.response {
-                if !GHttp.instance.delegate.processResponse(safeResponse) {
+                if !GHttp.instance.listener.processResponse(safeResponse) {
                     indicator.hide()
                     return
                 }

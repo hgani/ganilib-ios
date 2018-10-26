@@ -1,11 +1,10 @@
-
 import UIKit
 
 open class GTableView: UITableView, IContainer {
     private var helper: ViewHelper!
 
     // Useful for making sure an unattached delegate object sticks around.
-    private var retainedDelegate: UITableViewDelegate?
+    private var retainedRef: UITableViewDelegate?
 
     public var size: CGSize {
         return helper.size
@@ -38,7 +37,7 @@ open class GTableView: UITableView, IContainer {
     public func delegate(_ delegate: UITableViewDelegate, retain: Bool = false) -> Self {
         self.delegate = delegate
         if retain {
-            retainedDelegate = delegate
+            retainedRef = delegate
         }
         return self
     }

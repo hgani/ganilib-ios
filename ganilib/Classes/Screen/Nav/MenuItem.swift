@@ -1,4 +1,3 @@
-
 public class MenuItem {
     public private(set) var title: String
     public private(set) var icon: String?

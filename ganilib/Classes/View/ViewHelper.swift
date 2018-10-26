@@ -1,4 +1,3 @@
-
 import SnapKit
 import UIKit
 
@@ -58,7 +57,9 @@ public class ViewHelper {
         if let superview = view.superview {
             if let multiplier = matchParentHeightMultiplier {
                 view.snp.makeConstraints { make in
-                    heightConstraint = make.bottom.equalTo(superview.snp.bottomMargin).constraint
+                    if multiplier == 1 {
+                        heightConstraint = make.bottom.equalTo(superview.snp.bottomMargin).constraint
+                    }
                 }
             }
         }
@@ -164,7 +165,7 @@ public class ViewHelper {
         // Use our own variable to store the definitive values just in case layoutMargins gets changed directly,
         // which can get confusing.
         paddings = Paddings.from(top: top, left: left, bottom: bottom, right: right, orig: paddings)
-        
+
 //        let orig = paddings
 //
 //        let top = top ?? orig.top
@@ -190,13 +191,13 @@ public struct Paddings {
     public func toEdgeInsets() -> UIEdgeInsets {
         return UIEdgeInsets(top: CGFloat(top), left: CGFloat(left), bottom: CGFloat(bottom), right: CGFloat(right))
     }
-    
+
     static func from(top: Float?, left: Float?, bottom: Float?, right: Float?, orig: Paddings) -> Paddings {
         let top = top ?? orig.top
         let left = left ?? orig.left
         let bottom = bottom ?? orig.bottom
         let right = right ?? orig.right
-        
+
         return Paddings(top: top, left: left, bottom: bottom, right: right)
     }
 }

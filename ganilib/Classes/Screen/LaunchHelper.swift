@@ -1,4 +1,3 @@
-
 import MessageUI
 import UIKit
 
@@ -37,24 +36,20 @@ open class LaunchHelper {
                 alert("This device doesn't support phone calls")
             }
         } else {
-            // TODO: Throw exception
+            // Do nothing
         }
     }
 
-    public func mail(_ to: String, subject: String, message: String, delegate: MFMailComposeViewControllerDelegate) {
+    public func mail(_ recipient: String, subject: String, message: String, delegate: MFMailComposeViewControllerDelegate) {
         if MFMailComposeViewController.canSendMail() {
             let composeViewController = MFMailComposeViewController()
             composeViewController.mailComposeDelegate = delegate
-            composeViewController.setToRecipients([to])
+            composeViewController.setToRecipients([recipient])
             composeViewController.setSubject(subject)
             composeViewController.setMessageBody(message, isHTML: false)
             screen.present(composeViewController, animated: true, completion: nil)
         } else {
-            if #available(iOS 10.0, *) {
-                UIApplication.shared.open(URL(string: "mailto:\(to)")!)
-            } else {
-                // Fallback on earlier versions
-            }
+            UIApplication.shared.open(URL(string: "mailto:\(recipient)")!)
         }
     }
 
@@ -75,7 +70,7 @@ open class LaunchHelper {
                 alert("This device does not have Maps app")
             }
         } else {
-            // TODO: Throw exception
+            // Do nothing
         }
     }
 

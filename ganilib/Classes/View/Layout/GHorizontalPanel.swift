@@ -1,4 +1,3 @@
-
 import UIKit
 
 open class GHorizontalPanel: UIView {

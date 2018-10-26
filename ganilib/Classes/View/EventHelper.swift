@@ -1,4 +1,3 @@
-
 import UIKit
 
 public class EventHelper<T: UIView> {

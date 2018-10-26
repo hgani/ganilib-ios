@@ -1,4 +1,3 @@
-
 import UIKit
 
 public class ControlHelper<T: UIControl>: ViewHelper {
@@ -11,10 +10,9 @@ public class ControlHelper<T: UIControl>: ViewHelper {
         super.init(view)
     }
 
-    open func onClick(_ command: @escaping (T) -> Void) -> Self {
+    open func onClick(_ command: @escaping (T) -> Void) {
         onClick = command
         view.addTarget(self, action: #selector(performClick), for: .touchUpInside)
-        return self
     }
 
     @objc open func performClick() {

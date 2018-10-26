@@ -1,4 +1,3 @@
-
 public protocol BuildConfig {
     func host() -> String
     func isDebugMode() -> Bool

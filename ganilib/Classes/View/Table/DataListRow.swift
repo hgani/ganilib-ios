@@ -1,8 +1,7 @@
 #if INCLUDE_EUREKA
-
     import Eureka
 
-    fileprivate protocol ConfigurableRow {
+    private protocol ConfigurableRow {
         var intro: String? { get }
     }
 
@@ -58,10 +57,8 @@
             let row = TextRow { row in
                 row.title = "Other (Please specify)"
             }.cellSetup { _, row in
-                for option in self.optionsProviderRow.optionsProvider?.optionsArray ?? [] {
-                    if self.row.value == option {
-                        return
-                    }
+                for option in self.optionsProviderRow.optionsProvider?.optionsArray ?? [] where option == self.row.value {
+                    return
                 }
                 // Only initialize the text field when no option is selected
                 row.value = self.row.value

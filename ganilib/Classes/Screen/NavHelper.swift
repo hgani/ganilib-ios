@@ -1,15 +1,12 @@
-
 import MessageUI
 import UIKit
 
 open class NavHelper {
-//    private weak var screen: ScreenProtocol?
     private let navController: UINavigationController!
     private var showBar = true
 
     public convenience init(_ screen: ScreenProtocol) {
         self.init(navController: screen.navigationController!)
-//        self.screen = screen
     }
 
     init(navController: UINavigationController) {
@@ -19,11 +16,6 @@ open class NavHelper {
     public func hideBar() {
         showBar = false
     }
-
-//    public func title(_ title: String) -> Self {
-//        screen?.controller.title = title
-//        return self
-//    }
 
     public func color(bg: UIColor, text: UIColor) {
         navController.navigationBar.barTintColor = bg

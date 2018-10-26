@@ -1,4 +1,3 @@
-
 import SwiftIconFont
 import UIKit
 
@@ -83,7 +82,7 @@ open class GLabel: UILabel, IView {
             paragraphStyle.alignment = textAlignment
 
             let attrString = NSMutableAttributedString(string: text)
-            attrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSMakeRange(0, attrString.length))
+            attrString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attrString.length))
 
             attributedText = attrString
 
@@ -206,7 +205,7 @@ open class GLabel: UILabel, IView {
 //        let right = right ?? orig.right
 //
 //        paddings = Paddings(top: top, left: left, bottom: bottom, right: right)
-        
+
         paddings = Paddings.from(top: top, left: left, bottom: bottom, right: right, orig: paddings)
         return self
     }

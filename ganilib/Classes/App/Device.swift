@@ -1,4 +1,3 @@
-
 public class Device {
     public static let id = UIDevice.current.identifierForVendor!.uuidString
 

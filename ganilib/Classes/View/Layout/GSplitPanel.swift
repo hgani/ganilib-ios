@@ -1,11 +1,8 @@
-
 import UIKit
 
 open class GSplitPanel: UIView, IView {
     private var helper: ViewHelper!
     private var event: EventHelper<GSplitPanel>!
-//    private var previousViewElement : UIView!
-//    private var previousConstraint : NSLayoutConstraint!
 
     public var size: CGSize {
         return helper!.size

@@ -26,7 +26,6 @@ public class Rest {
         GLog.i("Request canceled: \(request.string)")
         canceled = true
 
-        // TODO:
 //        if let r = self.request {
 //            r.cancel()
 //        }
@@ -85,7 +84,7 @@ public class Rest {
     public func execute(indicator: ProgressIndicatorEnum = .standard,
                         onHttpFailure: @escaping (Error) -> Bool = { _ in false },
                         onHttpSuccess: @escaping (Response) -> Bool) -> Self {
-        return execute(indicator: indicator.delegate, onHttpFailure: onHttpFailure, onHttpSuccess: onHttpSuccess)
+        return execute(indicator: indicator.backend, onHttpFailure: onHttpFailure, onHttpSuccess: onHttpSuccess)
     }
 
     // (16 Nov 2017) We've tested using CFGetRetainCount() and deinit() to make sure that onHttpSuccess doesn't linger
@@ -174,7 +173,7 @@ public class Rest {
 
         indicator.hide()
 
-        if !GHttp.instance.delegate.processResponse(response) {
+        if !GHttp.instance.listener.processResponse(response) {
             return
         }
 
@@ -226,8 +225,8 @@ public class Rest {
         let restParams: NonNullParams, restHeaders: HttpHeaders
         if url.starts(with: GHttp.instance.host()) {
             let request = HttpRequest(method: method, url: url, params: params, headers: headers)
-            restParams = prepareParams(GHttp.instance.delegate.restParams(from: augmentedParams, request: request))
-            restHeaders = GHttp.instance.delegate.restHeaders(from: headers, request: request)
+            restParams = prepareParams(GHttp.instance.listener.restParams(from: augmentedParams, request: request))
+            restHeaders = GHttp.instance.listener.restHeaders(from: headers, request: request)
         } else {
             restParams = prepareParams(augmentedParams)
             restHeaders = headers

@@ -25,16 +25,16 @@
         }
 
         public func set(_ object: Json, forKey key: String) {
-            if let str = object.rawString(), let db = realm {
+            if let str = object.rawString(), let database = realm {
                 do {
-                    try db.write {
+                    try database.write {
                         if let row = row(key: key) {
                             row.value = str
                         } else {
                             let row = DbJsonEntry()
                             row.key = key
                             row.value = str
-                            db.add(row)
+                            database.add(row)
                         }
                     }
                 } catch {
@@ -59,10 +59,10 @@
 
         public func removeObject(forKey key: String) {
             do {
-                if let db = realm {
-                    try db.write {
+                if let database = realm {
+                    try database.write {
                         if let row = row(key: key) {
-                            db.delete(row)
+                            database.delete(row)
                         }
                     }
                 }

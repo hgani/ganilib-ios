@@ -1,7 +1,6 @@
-
 import Alamofire
 
-public protocol GHttpDelegate {
+public protocol GHttpListener {
     // Parameters is a Dictionary which is a struct so the delegate can safely modify it.
     func restParams(from params: GParams, request: HttpRequest) -> GParams
     func restHeaders(from headers: HttpHeaders, request: HttpRequest) -> HttpHeaders
@@ -10,7 +9,7 @@ public protocol GHttpDelegate {
     func processHttpStatus(code: Int) -> Bool
 }
 
-extension GHttpDelegate {
+extension GHttpListener {
     public func processResponse(_ response: HTTPURLResponse) -> Bool {
         GHttp.saveCookies(response: response)
         return processHttpStatus(code: response.statusCode)
@@ -35,11 +34,11 @@ public class GHttp {
     public static let instance = GHttp()
 
     private var buildConfig: BuildConfig!
-    public private(set) var delegate: GHttpDelegate!
+    public private(set) var listener: GHttpListener!
 
-    public func initialize(buildConfig: BuildConfig, delegate: GHttpDelegate) {
+    public func initialize(buildConfig: BuildConfig, listener: GHttpListener) {
         self.buildConfig = buildConfig
-        self.delegate = delegate
+        self.listener = listener
 
         GHttp.loadCookies()
         JsonUi.register(buildConfig)
