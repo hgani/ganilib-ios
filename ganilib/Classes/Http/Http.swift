@@ -52,6 +52,7 @@ public class HttpRequest {
     public let url: String
     public let params: GParams
     public let headers: HttpHeaders
+    public let urlRequest: URLRequest?
     public let string: String
 
     init(method: HttpMethod, url: String, params: GParams, headers: HttpHeaders) {
@@ -59,10 +60,11 @@ public class HttpRequest {
         self.url = url
         self.params = params
         self.headers = headers
-        string = "\(method.name) \(url)"
+        self.urlRequest = HttpRequest.toUrlRequest(method: method, url: url, params: params, headers: headers)
+        self.string = "\(method.name) \(urlRequest?.description ?? "invalid_url")"
     }
 
-    func toUrlRequest() -> URLRequest? {
+    private static func toUrlRequest(method: HttpMethod, url: String, params: GParams, headers: HttpHeaders) -> URLRequest? {
         if var uri = URL(string: url) {
             var request = URLRequest(url: uri)
 
@@ -104,13 +106,13 @@ public class HttpRequest {
         return nil
     }
 
-    private func encodeUriComponent(_ string: String) -> String {
+    private static func encodeUriComponent(_ string: String) -> String {
         var characters: CharacterSet = .alphanumerics
         characters.insert(charactersIn: "*-._ ")
         return string.addingPercentEncoding(withAllowedCharacters: characters)?.replacingOccurrences(of: " ", with: "+") ?? string
     }
 
-    private func formData(from params: GParams, prefix: String? = nil) -> String {
+    private static func formData(from params: GParams, prefix: String? = nil) -> String {
         return params.reduce("", { (result, item) -> String in
             var key = encodeUriComponent(item.key)
             if let prefixValue = prefix {

@@ -135,7 +135,7 @@ public class Rest {
         //                }
         //            })
         default:
-            if let urlRequest = request.toUrlRequest() {
+            if let urlRequest = request.urlRequest {
                 task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
                     if let safeData = data, let body = String(data: safeData, encoding: .utf8), let safeResponse = response as? HTTPURLResponse {
                         self.handleResponse(body: body, response: safeResponse, indicator: indicator, onHttpSuccess: onHttpSuccess, onHttpFailure: onHttpFailure)

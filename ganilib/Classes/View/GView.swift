@@ -37,31 +37,37 @@ open class GView: UIView {
         helper.didMoveToSuperview()
     }
 
+    @discardableResult
     public func width(_ width: Int) -> Self {
         helper.width(width)
         return self
     }
 
+    @discardableResult
     public func width(_ width: LayoutSize) -> Self {
         helper.width(width)
         return self
     }
 
+    @discardableResult
     public func width(weight: Float) -> Self {
         helper.width(weight: weight)
         return self
     }
 
+    @discardableResult
     public func height(_ height: Int) -> Self {
         helper.height(height)
         return self
     }
 
+    @discardableResult
     public func height(_ height: LayoutSize) -> Self {
         helper.height(height)
         return self
     }
 
+    @discardableResult
     public func color(bg: UIColor?) -> Self {
         if let bgColor = bg {
             backgroundColor = bgColor
@@ -69,6 +75,7 @@ open class GView: UIView {
         return self
     }
 
+    @discardableResult
     public func border(color: UIColor?, width: Float = 1, corner: Float = 6) -> Self {
         helper.border(color: color, width: width, corner: corner)
         return self
