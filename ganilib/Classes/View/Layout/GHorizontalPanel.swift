@@ -1,9 +1,14 @@
+import SnapKit
 import UIKit
 
 open class GHorizontalPanel: UIView {
     private var helper: ViewHelper!
-    private var previousViewElement: UIView!
-    private var previousConstraint: NSLayoutConstraint!
+//    private var previousViewElement: UIView!
+//    private var previousConstraint: NSLayoutConstraint!
+
+    private var previousView: UIView?
+    private var previousLayoutPriority: UILayoutPriority?
+    private var rightConstraint: Constraint?
 
     private var totalGap = Float(0.0)
 
@@ -33,8 +38,8 @@ open class GHorizontalPanel: UIView {
     }
 
     public func clearViews() {
-        previousViewElement = nil
-        previousConstraint = nil
+        previousView = nil
+        rightConstraint = nil
 
         for view in subviews {
             view.removeFromSuperview()
@@ -51,7 +56,7 @@ open class GHorizontalPanel: UIView {
         initChildConstraints(child: child, left: left)
         adjustParentBottomConstraint(child: child)
 
-        previousViewElement = child
+        previousView = child
     }
 
     @discardableResult
@@ -65,10 +70,10 @@ open class GHorizontalPanel: UIView {
         child.snp.makeConstraints { make in
             make.top.equalTo(self.snp.topMargin)
 
-            if previousViewElement == nil {
-                make.left.equalTo(self.snp.leftMargin).offset(left)
+            if let view = previousView {
+                make.left.equalTo(view.snp.right).offset(left)
             } else {
-                make.left.equalTo(previousViewElement.snp.right).offset(left)
+                make.left.equalTo(self.snp.leftMargin).offset(left)
             }
         }
     }
@@ -81,19 +86,26 @@ open class GHorizontalPanel: UIView {
             make.bottomMargin.greaterThanOrEqualTo(child.snp.bottom)
         }
 
-        if !helper.shouldWidthMatchParent() {
-            if previousConstraint != nil {
-                removeConstraint(previousConstraint)
+        if helper.shouldWidthMatchParent() {
+            rightConstraint?.deactivate()
+
+            child.snp.makeConstraints { make in
+                rightConstraint = make.right.lessThanOrEqualTo(self.snp.rightMargin).constraint
             }
 
-            previousConstraint = NSLayoutConstraint(item: child,
-                                                    attribute: .right,
-                                                    relatedBy: .equal,
-                                                    toItem: self,
-                                                    attribute: .rightMargin,
-                                                    multiplier: 1.0,
-                                                    constant: 0.0)
-            addConstraint(previousConstraint)
+            // Decrease resistance of the last view to avoid squashing the previous views which
+            // would happen if the last view is longer than the available space.
+            if let view = previousView, let priority = previousLayoutPriority {
+                ViewHelper.setResistance(view: view, axis: .horizontal, priority: priority)
+            }
+            previousLayoutPriority = ViewHelper.decreaseResistance(view: child, axis: .horizontal)
+
+        } else {
+            rightConstraint?.deactivate()
+
+            child.snp.makeConstraints { make in
+                rightConstraint = make.right.equalTo(self.snp.rightMargin).constraint
+            }
         }
     }
 
