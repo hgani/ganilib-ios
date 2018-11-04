@@ -39,9 +39,16 @@ open class GSplitPanel: UIView, IView {
     }
 
     public func withViews(left: UIView, right: UIView) -> Self {
-        // A label with empty string will occupy the remaining space thus ensuring the right view's
-        // width to be as small as it requires to be.
-        return withViews(left, GLabel().text(""), right)
+        // The hope is this makes things more predictable
+        left.translatesAutoresizingMaskIntoConstraints = false
+        right.translatesAutoresizingMaskIntoConstraints = false
+
+        addSubview(left)
+        addSubview(right)
+
+        initConstraints(left: left, center: nil, right: right)
+
+        return self
     }
 
     public func withViews(_ left: UIView, _ center: UIView, _ right: UIView) -> Self {
@@ -50,25 +57,32 @@ open class GSplitPanel: UIView, IView {
         center.translatesAutoresizingMaskIntoConstraints = false
         right.translatesAutoresizingMaskIntoConstraints = false
 
+        // Avoid squashing the right view
         decreaseResistance(view: center)
 
         addSubview(left)
         addSubview(center)
         addSubview(right)
 
+        initConstraints(left: left, center: center, right: right)
+
+        return self
+    }
+
+    private func initConstraints(left: UIView, center: UIView?, right: UIView) {
         left.snp.makeConstraints { make in
             make.top.equalTo(self.snp.topMargin)
             make.left.equalTo(self.snp.leftMargin)
 
-//            make.right.greaterThanOrEqualTo(right.snp.left)
-//            make.right.lessThanOrEqualTo(right.snp.left)
+            //            make.right.greaterThanOrEqualTo(right.snp.left)
+            //            make.right.lessThanOrEqualTo(right.snp.left)
         }
-        center.snp.makeConstraints { make in
+        center?.snp.makeConstraints { make in
             make.top.equalTo(self.snp.topMargin)
 
             make.left.equalTo(left.snp.right)
             make.right.equalTo(right.snp.left)
-//            make.width.equalTo(self)
+            //            make.width.equalTo(self)
         }
         right.snp.makeConstraints { make in
             make.top.equalTo(self.snp.topMargin)
@@ -76,16 +90,16 @@ open class GSplitPanel: UIView, IView {
         }
 
         snp.makeConstraints { make in
-//            make.bottomMargin.equalTo(left.snp.bottom)
-//            make.bottomMargin.equalTo(center.snp.bottom)
-//            make.bottomMargin.equalTo(right.snp.bottom)
+            //            make.bottomMargin.equalTo(left.snp.bottom)
+            //            make.bottomMargin.equalTo(center.snp.bottom)
+            //            make.bottomMargin.equalTo(right.snp.bottom)
 
             make.bottomMargin.greaterThanOrEqualTo(left.snp.bottom)
-            make.bottomMargin.greaterThanOrEqualTo(center.snp.bottom)
+            if let centerView = center {
+                make.bottomMargin.greaterThanOrEqualTo(centerView.snp.bottom)
+            }
             make.bottomMargin.greaterThanOrEqualTo(right.snp.bottom)
         }
-
-        return self
     }
 
     public func width(_ width: Int) -> Self {
