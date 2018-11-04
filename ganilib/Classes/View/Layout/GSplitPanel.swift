@@ -30,14 +30,6 @@ open class GSplitPanel: UIView, IView {
         helper.didMoveToSuperview()
     }
 
-    private func decreaseResistance(view: UIView) {
-        view.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-
-        for subview in view.subviews {
-            decreaseResistance(view: subview)
-        }
-    }
-
     public func withViews(left: UIView, right: UIView) -> Self {
         // The hope is this makes things more predictable
         left.translatesAutoresizingMaskIntoConstraints = false
@@ -58,7 +50,7 @@ open class GSplitPanel: UIView, IView {
         right.translatesAutoresizingMaskIntoConstraints = false
 
         // Avoid squashing the right view
-        decreaseResistance(view: center)
+        ViewHelper.decreaseResistance(view: center, axis: .horizontal)
 
         addSubview(left)
         addSubview(center)

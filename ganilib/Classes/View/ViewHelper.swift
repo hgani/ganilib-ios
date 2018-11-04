@@ -176,6 +176,20 @@ public class ViewHelper {
 //        paddings = Paddings(top: top, left: left, bottom: bottom, right: right)
         view.layoutMargins = paddings.toEdgeInsets()
     }
+
+    public static func setResistance(view: UIView, axis: NSLayoutConstraint.Axis, priority: UILayoutPriority) {
+        view.setContentCompressionResistancePriority(priority, for: axis)
+
+        for subview in view.subviews {
+            setResistance(view: subview, axis: axis, priority: priority)
+        }
+    }
+
+    public static func decreaseResistance(view: UIView, axis: NSLayoutConstraint.Axis) -> UILayoutPriority {
+        let previousResistance = view.contentCompressionResistancePriority(for: axis)
+        setResistance(view: view, axis: axis, priority: .defaultLow)
+        return previousResistance
+    }
 }
 
 public enum LayoutSize {
