@@ -4,7 +4,7 @@ import UIKit
 open class GMapView: MKMapView {
     private var helper: ViewHelper!
     private let locationManager = CLLocationManager()
-    private var onUserLocationUpdate: ((GMapView) -> Void)?
+    private var onUserLocationUpdate: ((GMapView, MKUserLocation) -> Void)?
 
     fileprivate var previousLocation = CLLocation(latitude: 0, longitude: 0)
     fileprivate var calloutPin = false
@@ -62,7 +62,7 @@ open class GMapView: MKMapView {
         return self
     }
 
-    open func onUserLocationUpdate(_ command: @escaping (GMapView) -> Void) -> Self {
+    open func onUserLocationUpdate(_ command: @escaping (GMapView, MKUserLocation) -> Void) -> Self {
         onUserLocationUpdate = command
         return self
     }
@@ -105,7 +105,7 @@ extension GMapView: MKMapViewDelegate {
         // the device is rotated.
         if distance > 10 { // 10 meters
             GLog.i("User location updated: \(userLocation.coordinate)")
-            onUserLocationUpdate?(self)
+            onUserLocationUpdate?(self, userLocation)
         }
 
         previousLocation = currentLocation

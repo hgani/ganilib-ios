@@ -68,18 +68,27 @@ open class GScreen: UIViewController {
         nav.viewWillAppear()
     }
 
+    @discardableResult
     public func leftMenu(controller: UIViewController) -> Self {
         helper.leftMenu(controller: controller)
         return self
     }
 
+    @discardableResult
     public func leftBarButton(item: UIBarButtonItem) -> Self {
         navigationItem.leftBarButtonItem = item
         return self
     }
 
+    @discardableResult
     public func rightBarButton(item: UIBarButtonItem) -> Self {
         navigationItem.rightBarButtonItem = item
+        return self
+    }
+
+    @discardableResult
+    public func rightBarButtons(items: [UIBarButtonItem]) -> Self {
+        navigationItem.rightBarButtonItems = items
         return self
     }
 
