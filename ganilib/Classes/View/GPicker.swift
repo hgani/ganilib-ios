@@ -1,6 +1,6 @@
 import UIKit
 
-open class GPicker: UIPickerView {
+open class GPicker: UIPickerView, IView {
     private var helper: ViewHelper!
     private var data = [String]()
     private var onSelect: ((GDatePicker) -> Void)?
@@ -77,6 +77,11 @@ open class GPicker: UIPickerView {
 
     public func color(bg: UIColor) -> Self {
         backgroundColor = bg
+        return self
+    }
+
+    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
 

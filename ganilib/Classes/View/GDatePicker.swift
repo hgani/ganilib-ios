@@ -1,6 +1,6 @@
 import UIKit
 
-open class GDatePicker: UIDatePicker {
+open class GDatePicker: UIDatePicker, IView {
     private var helper: ControlHelper<GDatePicker>!
 //    private var helper: ViewHelper!
 //    private var onSelect: ((GDatePicker) -> Void)?
@@ -77,6 +77,11 @@ open class GDatePicker: UIDatePicker {
 
     public func mode(_ mode: UIDatePickerMode) -> Self {
         datePickerMode = mode
+        return self
+    }
+
+    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
 
