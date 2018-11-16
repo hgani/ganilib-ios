@@ -24,7 +24,7 @@ open class ScreenHelper {
         // Use customView to ensure UIBarButtonItem.view exists at all times or else the badge won't appear as we navigate
         // to other screens. See http://stackoverflow.com/questions/43641698/getting-frame-of-uibarbuttonitem-returns-nil
         navItem = GBarButtonItem()
-            .icon(from: .fontAwesome, code: "bars")
+            .icon(GIcon(font: .fontAwesome, code: "bars"))
             .onClick({
                 self.leftMenuButtonPressed()
             })

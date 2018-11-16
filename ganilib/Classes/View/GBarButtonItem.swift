@@ -17,8 +17,8 @@ open class GBarButtonItem: UIBarButtonItem {
         }
     }
 
-    public func icon(from font: Fonts, code: String) -> Self {
-        super.icon(from: font, code: code, ofSize: 20)
+    public func icon(_ icon: GIcon) -> Self {
+        super.icon(from: icon.font, code: icon.code, ofSize: 20)
         return self
     }
 

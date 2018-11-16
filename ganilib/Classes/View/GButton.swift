@@ -32,25 +32,6 @@ open class GButton: UIButton, GWeightable {
         helper.didMoveToSuperview()
     }
 
-//    public func title(_ title : String, icon: Ionicons? = nil) -> GButton {
-//        let callButtonString = NSMutableAttributedString()
-//
-//        if icon != nil {
-//            let callIcon = String.ionicon(with: icon!)
-//            let callIconAttributed = NSMutableAttributedString(string: callIcon, attributes: [NSFontAttributeName: UIFont.ionicon(of: 20)])
-//            callButtonString.append(callIconAttributed)
-//        }
-//
-//        //let callStringAttributed = NSMutableAttributedString(string: title, attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)])
-//        let callStringAttributed = NSMutableAttributedString(string: title)
-//
-//        callButtonString.append(callStringAttributed)
-//
-//        self.setAttributedTitle(callButtonString, for: .normal)
-//
-//        return self
-//    }
-
     public func title(_ title: String) -> Self {
         titleLabel!.numberOfLines = 0
         setTitle(title, for: .normal)

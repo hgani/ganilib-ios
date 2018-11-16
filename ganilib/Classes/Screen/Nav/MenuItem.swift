@@ -1,24 +1,29 @@
 public class MenuItem {
     public private(set) var title: String
-    public private(set) var icon: String?
+    public private(set) var icon: GIcon?
     private(set) var controller: UIViewController?
     private(set) var onClick: (() -> Void)?
 
     private(set) var isRoot = false
     private(set) var cellClass: GTableViewCustomCell.Type = MenuCell.self
 
-    public init(title: String, icon: String, root: Bool) {
-        self.title = title
-        self.icon = icon
-        isRoot = root
-    }
+//    public init(title: String, icon: String, root: Bool) {
+//        self.title = title
+//        self.icon = icon
+//        isRoot = root
+//    }
 
     public init(title: String) {
         self.title = title
     }
 
-    public func icon(_ icon: String) -> Self {
+    public func icon(_ icon: GIcon) -> Self {
         self.icon = icon
+        return self
+    }
+
+    public func root(_ root: Bool) -> Self {
+        self.isRoot = root
         return self
     }
 

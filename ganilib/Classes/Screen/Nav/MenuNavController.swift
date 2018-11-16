@@ -4,10 +4,6 @@ import UIKit
 open class MenuNavController: GScreen {
     fileprivate let tableView = GTableView().width(.matchParent)
 
-//    open override func screenContent() -> UIView {
-//        return tableView
-//    }
-
     private let menu = Menu()
 
     open override func viewDidLoad() {

@@ -4,7 +4,7 @@ open class GPicker: UIPickerView, IView {
     private var helper: ViewHelper!
     private var data = [String]()
     private var onSelect: ((GDatePicker) -> Void)?
-    public let header = GHorizontalPanel()
+    public let header = GVerticalPanel()
 
     public var size: CGSize {
         return helper.size

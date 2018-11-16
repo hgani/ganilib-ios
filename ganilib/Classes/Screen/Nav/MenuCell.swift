@@ -3,8 +3,8 @@ public protocol MenuCellType {
 }
 
 open class MenuCell: GTableViewCustomCell, MenuCellType {
-    public let icon = GLabel()
-    public let title = GLabel()
+    public let iconLabel = GLabel()
+    public let titleLabel = GLabel()
 
     public required init(style: UITableViewCellStyle) {
         super.init(style: style)
@@ -18,15 +18,15 @@ open class MenuCell: GTableViewCustomCell, MenuCellType {
 
     open func populate() {
         paddings(top: 8, left: 14, bottom: 8, right: 14)
-            .append(GHorizontalPanel().paddings(t: 5, l: 10, b: 5, r: 10).append(icon).append(title, left: 5))
+            .append(GHorizontalPanel().paddings(t: 5, l: 10, b: 5, r: 10).append(iconLabel).append(titleLabel, left: 5))
             .done()
     }
 
     open func update(item: MenuItem) {
-        if let iconText = item.icon {
-            _ = icon.icon(iconText)
+        if let icon = item.icon {
+            iconLabel.icon(icon.string)
         }
-        _ = title.text(item.title)
+        titleLabel.text(item.title)
 
         isUserInteractionEnabled = item.hasAction()
 
