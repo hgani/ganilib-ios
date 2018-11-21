@@ -128,6 +128,28 @@ public class HttpRequest {
             return "\(prev)\(key)=\(value)"
         })
     }
+
+    // TODO: Use this instead of formData(), e.g.
+    //        var newUrl = url
+    //        if var urlComponent = URLComponents(string: url.absoluteString) {
+    //            urlComponent.queryItems = itemsFrom(params: params)
+    //            newUrl = urlComponent.url ?? url
+    //        }
+    private static func itemsFrom(params: [String: Any?], prefix: String? = nil) -> [URLQueryItem] {
+        return params.reduce([URLQueryItem](), { (result, item) -> [URLQueryItem] in
+            var key = item.key
+            if let prefixValue = prefix {
+                key = "\(prefixValue)[\(key)]"
+            }
+
+            if let sub = item.value as? [String: Any?] {
+                return result + itemsFrom(params: sub, prefix: key)
+            }
+
+            let value = String(describing: item.value ?? "")
+            return result + [URLQueryItem(name: key, value: value)]
+        })
+    }
 }
 
 public class Http {
