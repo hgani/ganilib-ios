@@ -190,6 +190,26 @@ public class ViewHelper {
         setResistance(view: view, axis: axis, priority: .defaultLow)
         return previousResistance
     }
+
+    public static func setHugging(view: UIView, axis: NSLayoutConstraint.Axis, priority: UILayoutPriority) {
+        view.setContentHuggingPriority(priority, for: axis)
+
+        for subview in view.subviews {
+            setHugging(view: subview, axis: axis, priority: priority)
+        }
+    }
+
+    public static func increaseHugging(view: UIView, axis: NSLayoutConstraint.Axis) -> UILayoutPriority {
+        let previousHugging = view.contentHuggingPriority(for: axis)
+        setHugging(view: view, axis: axis, priority: .defaultHigh)
+        return previousHugging
+    }
+
+    public static func decreaseHugging(view: UIView, axis: NSLayoutConstraint.Axis) -> UILayoutPriority {
+        let previousHugging = view.contentHuggingPriority(for: axis)
+        setHugging(view: view, axis: axis, priority: UILayoutPriority(rawValue: 1))
+        return previousHugging
+    }
 }
 
 public enum LayoutSize {

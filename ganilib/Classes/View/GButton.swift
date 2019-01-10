@@ -1,7 +1,7 @@
 import SwiftIconFont
 import UIKit
 
-open class GButton: UIButton, GWeightable {
+open class GButton: UIButton, GWeightable, IView {
     private var helper: ViewHelper!
     private var onClick: ((GButton) -> Void)?
     var paddings = Paddings(top: 0, left: 0, bottom: 0, right: 0)
@@ -24,7 +24,7 @@ open class GButton: UIButton, GWeightable {
         helper = ViewHelper(self)
 
         // Make sure that contentEdgeInsets' values is always initialized properly (i.e. non-zero)
-        _ = paddings(t: 10, l: 20, b: 10, r: 20)
+        _ = paddings(top: 10, left: 20, bottom: 10, right: 20)
     }
 
     open override func didMoveToSuperview() {
@@ -69,7 +69,9 @@ open class GButton: UIButton, GWeightable {
     }
 
     @discardableResult
-    public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
+    public func paddings(top: Float?, left: Float?, bottom: Float?, right: Float?) -> Self {
+
+//    public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
 //        let orig = contentEdgeInsets
 //
 //        let top = top ?? orig.top
@@ -133,6 +135,11 @@ open class GButton: UIButton, GWeightable {
             setTitleColor(textColor, for: .normal)
         }
         return self
+    }
+
+    @discardableResult
+    public func color(bg: UIColor) -> Self {
+        return color(bg: bg, text: nil)
     }
 
     @discardableResult
