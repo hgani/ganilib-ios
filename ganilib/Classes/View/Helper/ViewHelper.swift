@@ -207,6 +207,12 @@ public class ViewHelper {
 
     public static func decreaseHugging(view: UIView, axis: NSLayoutConstraint.Axis) -> UILayoutPriority {
         let previousHugging = view.contentHuggingPriority(for: axis)
+        setHugging(view: view, axis: axis, priority: .defaultLow)
+        return previousHugging
+    }
+
+    public static func minimalHugging(view: UIView, axis: NSLayoutConstraint.Axis) -> UILayoutPriority {
+        let previousHugging = view.contentHuggingPriority(for: axis)
         setHugging(view: view, axis: axis, priority: UILayoutPriority(rawValue: 1))
         return previousHugging
     }

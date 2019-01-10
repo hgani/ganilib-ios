@@ -52,6 +52,9 @@ open class GSplitPanel: UIView, IView {
         // Avoid squashing the right view
         ViewHelper.decreaseResistance(view: center, axis: .horizontal)
 
+        // Stretch the center view
+        ViewHelper.minimalHugging(view: center, axis: .horizontal)
+
         addSubview(left)
         addSubview(center)
         addSubview(right)
