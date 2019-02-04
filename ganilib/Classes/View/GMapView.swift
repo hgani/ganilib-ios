@@ -114,6 +114,7 @@ extension GMapView: MKMapViewDelegate {
     // MARK: Directions
 
     public func mapView(_: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        // Render routing
         if let polylineOverlay = overlay as? MKPolyline {
             let renderer = MKPolylineRenderer(polyline: polylineOverlay)
             renderer.strokeColor = UIColor.blue
@@ -136,7 +137,14 @@ extension GMapView: MKMapViewDelegate {
             return
         }
 
-        if view.isKind(of: MKPinAnnotationView.self) {
+        let defaultPin: Bool
+        if #available(iOS 11.0, *) {
+            defaultPin = view.isKind(of: MKMarkerAnnotationView.self)
+        } else {
+            defaultPin = false
+        }
+
+        if defaultPin || view.isKind(of: MKPinAnnotationView.self) {
             mapView.removeOverlays(mapView.overlays)
 
             let request = MKDirectionsRequest()
@@ -201,7 +209,6 @@ extension GMapView: MKMapViewDelegate {
 
 public class GPointAnnotation: MKPointAnnotation {
     private var onClick: ((GPointAnnotation) -> Void)?
-//    var object: Any?
 
     public func coordinate(_ coordinate: CLLocationCoordinate2D) -> Self {
         self.coordinate = coordinate
@@ -217,11 +224,6 @@ public class GPointAnnotation: MKPointAnnotation {
         self.subtitle = subtitle
         return self
     }
-
-//    public func object(_ object: Any?) -> Self {
-//        self.object = object
-//        return self
-//    }
 
     public func onClick(_ command: @escaping (GPointAnnotation) -> Void) -> Self {
         onClick = command
