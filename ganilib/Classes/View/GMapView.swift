@@ -7,7 +7,7 @@ open class GMapView: MKMapView {
     private var onUserLocationUpdate: ((GMapView, MKUserLocation) -> Void)?
 
     fileprivate var previousLocation = CLLocation(latitude: 0, longitude: 0)
-    fileprivate var calloutPin = false
+    fileprivate var callout = false
     fileprivate var direction = false
 
     public init() {
@@ -59,6 +59,16 @@ open class GMapView: MKMapView {
 
     public func height(_ height: LayoutSize) -> Self {
         helper.height(height)
+        return self
+    }
+
+    public func direction(_ direction: Bool) -> Self {
+        self.direction = direction
+        return self
+    }
+
+    public func callout(_ callout: Bool) -> Self {
+        self.callout = callout
         return self
     }
 
@@ -125,7 +135,7 @@ extension GMapView: MKMapViewDelegate {
     }
 
     public func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if let annotation = view.annotation as? GPointAnnotation {
+        if !callout, let annotation = view.annotation as? GPointAnnotation {
             annotation.performClick()
         }
 
@@ -168,7 +178,7 @@ extension GMapView: MKMapViewDelegate {
     // MARK: Callout Pin
 
     public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if !calloutPin {
+        if !callout {
             return nil
         }
 
@@ -180,29 +190,34 @@ extension GMapView: MKMapViewDelegate {
         let view: MKPinAnnotationView
         if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
             view = annotationView
-
-            view.canShowCallout = true
-            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-
-            let subtitle = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
-            subtitle.text = annotation.subtitle ?? ""
-            subtitle.numberOfLines = 0
-            view.detailCalloutAccessoryView = subtitle
         } else {
             view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
         }
+
+        view.canShowCallout = true
+        view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+
+        let subtitle = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
+        subtitle.text = annotation.subtitle ?? ""
+        subtitle.numberOfLines = 0
+        view.detailCalloutAccessoryView = subtitle
+
         return view
     }
 
     public func mapView(_: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped _: UIControl) {
-        let annotation = view.annotation
-        if let coordinate = annotation?.coordinate {
-            let placemark = MKPlacemark(coordinate: coordinate)
-            let mapItem = MKMapItem(placemark: placemark)
-            if let title = annotation?.title {
-                mapItem.name = title
+        if let annotation = view.annotation as? GPointAnnotation {
+            annotation.performClick()
+        } else {
+            let annotation = view.annotation
+            if let coordinate = annotation?.coordinate {
+                let placemark = MKPlacemark(coordinate: coordinate)
+                let mapItem = MKMapItem(placemark: placemark)
+                if let title = annotation?.title {
+                    mapItem.name = title
+                }
+                mapItem.openInMaps(launchOptions: nil)
             }
-            mapItem.openInMaps(launchOptions: nil)
         }
     }
 }
