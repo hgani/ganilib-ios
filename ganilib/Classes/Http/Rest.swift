@@ -13,7 +13,6 @@ public class Rest {
     }
 
     private let request: HttpRequest
-//    private var request: DataRequest?
     private var task: URLSessionDataTask?
     private var canceled: Bool
 
@@ -26,9 +25,9 @@ public class Rest {
         GLog.i("Request canceled: \(request.string)")
         canceled = true
 
-//        if let r = self.request {
-//            r.cancel()
-//        }
+        if let task = self.task {
+            task.cancel()
+        }
     }
 
 //    private func executeGeneric(indicator: ProgressIndicator,
@@ -82,15 +81,21 @@ public class Rest {
 //    }
 
     public func execute(indicator: ProgressIndicatorEnum = .standard,
+                        localCache: Bool = false,
+                        ignoreCache: Bool = false,
                         onHttpFailure: @escaping (Error) -> Bool = { _ in false },
                         onHttpSuccess: @escaping (Response) -> Bool) -> Self {
-        return execute(indicator: indicator.backend, onHttpFailure: onHttpFailure, onHttpSuccess: onHttpSuccess)
+        return execute(indicator: indicator.backend,
+                       localCache: localCache,
+                       onHttpFailure: onHttpFailure,
+                       onHttpSuccess: onHttpSuccess)
     }
 
     // (16 Nov 2017) We've tested using CFGetRetainCount() and deinit() to make sure that onHttpSuccess doesn't linger
     // after the request finishes. This is true even in the case where the request object (i.e. Rest) is assigned to an
     // instance variable, so it is safe to pass a closure that accesses `self` without `unowned`.
     public func execute(indicator: ProgressIndicator,
+                        localCache: Bool = false,
                         onHttpFailure: @escaping (Error) -> Bool = { _ in false },
                         onHttpSuccess: @escaping (Response) -> Bool) -> Self {
         if canceled {
@@ -135,10 +140,45 @@ public class Rest {
         //                }
         //            })
         default:
-            if let urlRequest = request.urlRequest {
-                task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-                    if let safeData = data, let body = String(data: safeData, encoding: .utf8), let safeResponse = response as? HTTPURLResponse {
-                        self.handleResponse(body: body, response: safeResponse, indicator: indicator, onHttpSuccess: onHttpSuccess, onHttpFailure: onHttpFailure)
+            if var urlRequest = request.urlRequest {
+                let session = URLSession.shared
+                var localEtag: String?
+
+                GLog.t("CACHE1")
+                if localCache,
+                    let cache = session.configuration.urlCache,
+                    let response = cache.cachedResponse(for: urlRequest),
+                    let httpResponse = response as? HTTPURLResponse {
+
+                    GLog.t("CACHE2")
+                    let content = JSON(response.data)
+                    localEtag = httpResponse.allHeaderFields["Etag"] as? String
+                    onHttpSuccess(Response(statusCode: -1, content: content, headers: Json()))
+                }
+
+                GLog.t("TEST1")
+
+//                task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+                task = session.dataTask(with: urlRequest) { data, response, error in
+                    GLog.t("TEST2")
+//                    if let safeData = data, let body = String(data: safeData, encoding: .utf8), let safeResponse = response as? HTTPURLResponse {
+                    if let httpResponse = response as? HTTPURLResponse {
+                        GLog.t("TEST3")
+
+                        // URLSession masks 304 as 200 so we need to compare etags manually
+                        if localCache, let etag = localEtag, !etag.isEmpty {
+                            GLog.t("TEST4")
+
+                            if etag == httpResponse.allHeaderFields["Etag"] as? String {
+                                GLog.t("TEST5")
+
+                                return
+                            }
+                        }
+
+                        GLog.t("TEST6")
+
+                        self.handleResponse(content: Json(data), response: httpResponse, indicator: indicator, onHttpSuccess: onHttpSuccess)
                     } else {
                         if let safeError = error {
                             DispatchQueue.main.async {
@@ -161,15 +201,11 @@ public class Rest {
         return self
     }
 
-    private func handleResponse(body: String,
+    private func handleResponse(content: Json,
                                 response: HTTPURLResponse,
                                 indicator: ProgressIndicator,
-                                onHttpSuccess: @escaping (Response) -> Bool,
-                                onHttpFailure _: @escaping (Error) -> Bool) {
+                                onHttpSuccess: @escaping (Response) -> Bool) {
         GLog.i(request.string)
-//        #if DEBUG || ADHOC
-//        GLog.i("********* Params: \(request.params)")
-//        #endif
 
         indicator.hide()
 
@@ -182,7 +218,7 @@ public class Rest {
             headers[String(describing: field.key)] = Json(field.value)
         }
 
-        let content = JSON(parseJSON: body)
+//        let content = JSON(parseJSON: body)
 
         let statusCode = response.statusCode
         GLog.d("[\(statusCode)]: \(content)")
@@ -192,16 +228,6 @@ public class Rest {
                 indicator.show(error: content["message"].string ?? content["error"].string ?? "")
             }
         }
-
-//                switch response.result {
-//                case .success(let value):
-//                case .failure(let error):
-//                    if !onHttpFailure(error) {
-//                        indicator.show(error: error.localizedDescription)
-//                    }
-//                }
-//            }
-//        }
     }
 
     public func done() {
