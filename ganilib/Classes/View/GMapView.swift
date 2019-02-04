@@ -178,23 +178,27 @@ extension GMapView: MKMapViewDelegate {
     // MARK: Callout Pin
 
     public func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if !callout {
-            return nil
-        }
-
         if annotation.isKind(of: MKUserLocation.self) {
             return nil
         }
 
         let identifier = "MyPin"
-        let view: MKPinAnnotationView
-        if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
-            view = annotationView
+        let view: MKAnnotationView
+        if #available(iOS 11.0, *) {
+            if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView {
+                view = annotationView
+            } else {
+                view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            }
         } else {
-            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
+                view = annotationView
+            } else {
+                view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            }
         }
 
-        view.canShowCallout = true
+        view.canShowCallout = callout
         view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
 
         let subtitle = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
