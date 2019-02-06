@@ -190,6 +190,9 @@ extension GMapView: MKMapViewDelegate {
             } else {
                 view = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             }
+
+            // Disable marker clustering. https://stackoverflow.com/questions/48473227/is-it-possible-to-force-mapkit-to-show-all-annotations-without-clustering
+            view.displayPriority = .required
         } else {
             if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKPinAnnotationView {
                 view = annotationView

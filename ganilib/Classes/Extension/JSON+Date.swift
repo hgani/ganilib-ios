@@ -12,4 +12,12 @@ extension JSON {
     public var isNull: Bool {
         return type == .null
     }
+
+    public var presence: JSON? {
+        // Not sure why ternary operator doesn't work in this case
+        if isNull {
+            return nil
+        }
+        return self
+    }
 }
