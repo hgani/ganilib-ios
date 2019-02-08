@@ -28,7 +28,7 @@ public class JsonUiScreen: GScreen {
 
     public override func onRefresh() {
         _ = Rest.get(url: url).execute { response in
-            JsonUi.parseScreen(response.content, screen: self)
+            JsonUi.parseEntireScreen(response.content, screen: self)
             return true
         }
     }

@@ -18,10 +18,14 @@ open class GLog {
     }
 
     public static func d(_ str: String) {
-        os_log("[DEBUG] %@", str)
+        #if DEBUG || ADHOC
+            os_log("[DEBUG] %@", str)
+        #endif
     }
 
     public static func t(_ str: String) {
-        d("***** \(str)")
+        #if DEBUG || ADHOC
+            d("***** \(str)")
+        #endif
     }
 }

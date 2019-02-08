@@ -63,6 +63,13 @@ open class GStackView: UIStackView {
         return self
     }
 
+    public func withViews(_ views: [UIView]) -> Self {
+        for view in views {
+            addArrangedSubview(view)
+        }
+        return self
+    }
+
     public func axis(_ axis: UILayoutConstraintAxis) -> Self {
         self.axis = axis
         return self

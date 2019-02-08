@@ -44,14 +44,34 @@ public class JsonUi {
         JsonAction.execute(spec: spec["onResponse"], screen: screen, creator: nil)
     }
 
-    public static func parseScreen(_ spec: Json, screen: GScreen) {
+    public static func parseScreenContent(_ spec: Json, screen: GScreen) {
         initVerticalPanel(screen.container.header, spec: spec["header"], screen: screen)
         initVerticalPanel(screen.container.content, spec: spec["content"], screen: screen)
         initVerticalPanel(screen.container.footer, spec: spec["footer"], screen: screen)
         JsonAction.execute(spec: spec["onLoad"], screen: screen, creator: nil)
     }
 
+    public static func parseEntireScreen(_ spec: Json, screen: GScreen) {
+        parseScreenContent(spec, screen: screen)
+        initNavBar(spec: spec, screen: screen)
+    }
+
     private static func initVerticalPanel(_ panel: GVerticalPanel, spec: Json, screen: GScreen) {
         _ = JsonView_Panels_VerticalV1(panel, spec, screen).createView()
+    }
+
+    private static func initNavBar(spec: Json, screen: GScreen) {
+        let buttons = spec["rightNavButtons"].arrayValue.map { json -> GBarButtonItem in
+            let item = GBarButtonItem()
+                .onClick({
+                    JsonAction.execute(spec: json["onClick"], screen: screen, creator: nil)
+                })
+            if let iconName = json["icon"]["materialName"].string {
+                item.icon(GIcon(font: .materialIcon, code: iconName))
+            }
+            return item
+        }
+
+        screen.rightBarButtons(items: buttons)
     }
 }

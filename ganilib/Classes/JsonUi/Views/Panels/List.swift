@@ -2,7 +2,7 @@ open class JsonView_Panels_ListV1: JsonView {
     private let tableView = GTableView().width(.matchParent).height(.matchParent)
 
     open override func initView() -> UIView {
-        let delegate = Delegate(listView: self)
+        let delegate = Delegate(view: self)
 
         tableView
             //            .withRefresher(screen.refresher)
@@ -18,11 +18,23 @@ open class JsonView_Panels_ListV1: JsonView {
         private let listView: JsonView_Panels_ListV1
         private var sections: [Json]
         private var nextUrl: String?
+        private var autoLoad = false
 
-        init(listView: JsonView_Panels_ListV1) {
-            self.listView = listView
+        init(view: JsonView_Panels_ListV1) {
+            listView = view
             sections = listView.spec["sections"].arrayValue
-            nextUrl = listView.spec["nextUrl"].string
+            super.init()
+
+            initNextPage(spec: listView.spec)
+        }
+
+        private func initNextPage(spec: Json) {
+            if let nextPage = spec["nextPage"].presence {
+                nextUrl = nextPage["url"].string
+                autoLoad = nextPage["autoLoad"].boolValue
+            } else {
+                autoLoad = false
+            }
         }
 
         public func numberOfSections(in _: UITableView) -> Int {
@@ -53,11 +65,11 @@ open class JsonView_Panels_ListV1: JsonView {
         func tableView(_ tableView: UITableView, willDisplay _: UITableViewCell, forRowAt indexPath: IndexPath) {
             let items = rows(at: indexPath.section)
 
-            if indexPath.section == sections.count - 1, indexPath.row == items.count - 1, let url = self.nextUrl {
+            if autoLoad, indexPath.section == sections.count - 1, indexPath.row == items.count - 1, let url = self.nextUrl {
                 _ = Rest.get(url: url).execute { response in
                     let result = response.content
 
-                    self.nextUrl = result["nextUrl"].string
+                    self.initNextPage(spec: result)
 
                     for section in result["sections"].arrayValue {
                         self.sections.append(section)
