@@ -14,12 +14,12 @@ class JsonView_Panels_HorizontalV1: JsonView {
             for view in subviews {
                 panel.addView(view)
             }
-            panel.width(.matchParent).color(bg: .red).split()
+            panel.width(.matchParent).split()
         case "spaceEqually":
             for view in subviews {
-                panel.addView(GAligner().color(bg: .blue).withView(view))
+                panel.addView(GAligner().align(.top).withView(view))
             }
-            panel.width(.matchParent).color(bg: .red).split()
+            panel.width(.matchParent).split()
         default:
             for view in subviews {
                 panel.addView(view)

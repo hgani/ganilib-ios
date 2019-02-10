@@ -1,8 +1,9 @@
 import UIKit
 
 open class GAligner: UIView {
-    private var horizontalAlign: GAlignerHorizontalGravity = .center
     fileprivate var helper: ViewHelper!
+    private var horizontalAlign: GAlignerHorizontalGravity = .center
+    private var verticalAlign: GAlignerVerticalGravity = .middle
     private var event: EventHelper<GAligner>!
 
     public init() {
@@ -30,6 +31,11 @@ open class GAligner: UIView {
         return self
     }
 
+    public func align(_ align: GAlignerVerticalGravity) -> Self {
+        verticalAlign = align
+        return self
+    }
+
     @discardableResult
     public func withView(_ child: UIView) -> Self {
         // The hope is this makes things more predictable
@@ -44,8 +50,11 @@ open class GAligner: UIView {
             case .left: make.leftMargin.equalTo(child.snp.left)
             }
 
-//            make.centerX.equalTo(child)
-            make.centerY.equalTo(child)
+            switch verticalAlign {
+            case .middle: make.centerY.equalTo(child)
+            case .top: make.topMargin.equalTo(child.snp.top)
+            case .bottom: make.bottomMargin.equalTo(child.snp.bottom)
+            }
 
             // So that it is at least the size of the child
             make.width.greaterThanOrEqualTo(child)
@@ -95,10 +104,12 @@ open class GAligner: UIView {
         case center
         case left
         case right
-//        case centerVertical
-//        case centerHorizontal
-//        case left
-//        case right
+    }
+
+    public enum GAlignerVerticalGravity {
+        case middle
+        case top
+        case bottom
     }
 }
 
