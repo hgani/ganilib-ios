@@ -9,7 +9,7 @@ class JsonView_Panels_HorizontalV1: JsonView {
             return nil
         }
 
-        switch spec["distribution"] {
+        switch spec["distribution"].stringValue {
         case "fillEqually":
             for view in subviews {
                 panel.addView(view)
