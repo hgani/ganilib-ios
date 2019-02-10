@@ -191,6 +191,12 @@ public class ViewHelper {
         return previousResistance
     }
 
+    public static func minimalResistance(view: UIView, axis: NSLayoutConstraint.Axis) -> UILayoutPriority {
+        let previousResistance = view.contentCompressionResistancePriority(for: axis)
+        setResistance(view: view, axis: axis, priority: UILayoutPriority(rawValue: 1))
+        return previousResistance
+    }
+
     public static func setHugging(view: UIView, axis: NSLayoutConstraint.Axis, priority: UILayoutPriority) {
         view.setContentHuggingPriority(priority, for: axis)
 

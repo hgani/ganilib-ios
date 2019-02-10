@@ -3,20 +3,31 @@ class JsonView_Panels_SplitV1: JsonView {
 
     override func initView() -> UIView {
         let content = spec["content"]
-        return panel.withViews(
-            createSubview(content["left"], stretch: false),
-            createSubview(content["center"], stretch: true),
-            createSubview(content["right"], stretch: false)
-        )
+        if let center = content["center"].presence {
+            return panel.withViews(
+                createSubview(content["left"], center: false),
+                createSubview(center, center: true),
+                createSubview(content["right"], center: false)
+            )
+        } else {
+            return panel.withViews(
+                left: createSubview(content["left"], center: false),
+                right: createSubview(content["right"], center: false)
+            )
+        }
     }
 
-    private func createSubview(_ subviewSpec: Json, stretch: Bool) -> UIView {
-        if subviewSpec.null != nil {
-            if stretch {
-                return GView()
-            }
+    private func createSubview(_ subviewSpec: Json, center: Bool) -> UIView {
+        if subviewSpec.isNull {
             return GView().width(0)
         }
-        return JsonView.create(spec: subviewSpec, screen: screen)?.createView() ?? UIView()
+
+        let view = JsonView.create(spec: subviewSpec, screen: screen)?.createView() ?? UIView()
+        if center, let iview = view as? IView {
+            // Make sure the center view doesn't stretch up until the right of the container.
+            // Let the split view stretch it only up until the left of the right component.
+            iview.width(.wrapContent)
+        }
+        return view
     }
 }

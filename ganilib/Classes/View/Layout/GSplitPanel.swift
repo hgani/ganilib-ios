@@ -5,7 +5,7 @@ open class GSplitPanel: UIView, IView {
     private var event: EventHelper<GSplitPanel>!
 
     public var size: CGSize {
-        return helper!.size
+        return helper.size
     }
 
     public init() {

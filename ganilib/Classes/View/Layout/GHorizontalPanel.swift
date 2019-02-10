@@ -2,7 +2,7 @@ import SnapKit
 import UIKit
 
 open class GHorizontalPanel: UIView {
-    private var helper: ViewHelper!
+    fileprivate var helper: ViewHelper!
 //    private var previousViewElement: UIView!
 //    private var previousConstraint: NSLayoutConstraint!
 
@@ -29,7 +29,7 @@ open class GHorizontalPanel: UIView {
     private func initialize() {
         helper = ViewHelper(self)
 
-        _ = paddings(t: 0, l: 0, b: 0, r: 0)
+        _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
     }
 
     open override func didMoveToSuperview() {
@@ -109,36 +109,6 @@ open class GHorizontalPanel: UIView {
         }
     }
 
-    public func width(_ width: Int) -> Self {
-        helper.width(width)
-        return self
-    }
-
-    public func width(_ width: LayoutSize) -> Self {
-        helper.width(width)
-        return self
-    }
-
-    public func height(_ height: Int) -> Self {
-        helper.height(height)
-        return self
-    }
-
-    public func height(_ height: LayoutSize) -> Self {
-        helper.height(height)
-        return self
-    }
-
-    public func paddings(t top: Float? = nil, l left: Float? = nil, b bottom: Float? = nil, r right: Float? = nil) -> Self {
-        helper.paddings(t: top, l: left, b: bottom, r: right)
-        return self
-    }
-
-    public func color(bg: UIColor) -> Self {
-        backgroundColor = bg
-        return self
-    }
-
     open func split() -> Self {
         let count = subviews.count
         GLog.i("Splitting \(count) views ...")
@@ -161,5 +131,41 @@ open class GHorizontalPanel: UIView {
 
     public func done() {
         // Ends chaining
+    }
+}
+
+extension GHorizontalPanel: IView {
+    public var size: CGSize {
+        return helper.size
+    }
+
+    public func color(bg: UIColor) -> Self {
+        backgroundColor = bg
+        return self
+    }
+
+    public func width(_ width: Int) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    public func width(_ width: LayoutSize) -> Self {
+        helper.width(width)
+        return self
+    }
+
+    public func height(_ height: Int) -> Self {
+        helper.height(height)
+        return self
+    }
+
+    public func height(_ height: LayoutSize) -> Self {
+        helper.height(height)
+        return self
+    }
+
+    public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
+        helper.paddings(t: top, l: left, b: bottom, r: right)
+        return self
     }
 }
