@@ -2,7 +2,7 @@ import UIKit
 
 open class GAligner: UIView {
     private var horizontalAlign: GAlignerHorizontalGravity = .center
-    private var helper: ViewHelper!
+    fileprivate var helper: ViewHelper!
     private var event: EventHelper<GAligner>!
 
     public init() {
@@ -99,5 +99,12 @@ open class GAligner: UIView {
 //        case centerHorizontal
 //        case left
 //        case right
+    }
+}
+
+extension GAligner: GWeightable {
+    public func width(weight: Float, offset: Float = 0) -> Self {
+        helper.width(weight: weight, offset: offset)
+        return self
     }
 }

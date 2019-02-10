@@ -1,8 +1,8 @@
 import SwiftIconFont
 import UIKit
 
-open class GButton: UIButton, GWeightable, IView {
-    private var helper: ViewHelper!
+open class GButton: UIButton, IView {
+    fileprivate var helper: ViewHelper!
     private var onClick: ((GButton) -> Void)?
     var paddings = Paddings(top: 0, left: 0, bottom: 0, right: 0)
 
@@ -50,11 +50,6 @@ open class GButton: UIButton, GWeightable, IView {
 
     public func width(_ width: LayoutSize) -> Self {
         helper.width(width)
-        return self
-    }
-
-    public func width(weight: Float, offset: Float = 0) -> Self {
-        helper.width(weight: weight, offset: offset)
         return self
     }
 
@@ -163,6 +158,13 @@ open class GButton: UIButton, GWeightable, IView {
 
     public func done() {
         // End chaining
+    }
+}
+
+extension GButton: GWeightable {
+    public func width(weight: Float, offset: Float = 0) -> Self {
+        helper.width(weight: weight, offset: offset)
+        return self
     }
 }
 
