@@ -25,10 +25,10 @@ open class JsonView_Panels_ListV1: JsonView {
             sections = listView.spec["sections"].arrayValue
             super.init()
 
-            initNextPage(spec: listView.spec)
+            initNextPageInstructions(spec: listView.spec)
         }
 
-        private func initNextPage(spec: Json) {
+        private func initNextPageInstructions(spec: Json) {
             if let nextPage = spec["nextPage"].presence {
                 nextUrl = nextPage["url"].string
                 autoLoad = nextPage["autoLoad"].boolValue
@@ -69,7 +69,7 @@ open class JsonView_Panels_ListV1: JsonView {
                 _ = Rest.get(url: url).execute { response in
                     let result = response.content
 
-                    self.initNextPage(spec: result)
+                    self.initNextPageInstructions(spec: result)
 
                     for section in result["sections"].arrayValue {
                         self.sections.append(section)
