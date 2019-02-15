@@ -7,11 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		212BE8D7C0D3BAA07F58BB86 /* Pods_ganilib_Examples.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F94172A440AFC34AEE609851 /* Pods_ganilib_Examples.framework */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		B0D1C35CCE7B3E0BDB13173E /* Pods_ganilib_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF696BA3A4090BC9C2160A4 /* Pods_ganilib_Tests.framework */; };
+		C14FF9462216506D00AC4479 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14FF9452216506D00AC4479 /* AppDelegate.swift */; };
+		C14FF9482216506D00AC4479 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14FF9472216506D00AC4479 /* ViewController.swift */; };
+		C14FF94B2216506D00AC4479 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C14FF9492216506D00AC4479 /* Main.storyboard */; };
+		C14FF94D2216507000AC4479 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C14FF94C2216507000AC4479 /* Assets.xcassets */; };
+		C14FF9502216507000AC4479 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C14FF94E2216507000AC4479 /* LaunchScreen.storyboard */; };
+		C14FF9562216511600AC4479 /* AnimationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14FF9552216511600AC4479 /* AnimationScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0ADD781C74A0698534376149 /* Pods-ganilib_Examples.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ganilib_Examples.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ganilib_Examples/Pods-ganilib_Examples.debug.xcconfig"; sourceTree = "<group>"; };
+		39522F445CF1335F808E7585 /* Pods-ganilib_Examples.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ganilib_Examples.release.xcconfig"; path = "Pods/Target Support Files/Pods-ganilib_Examples/Pods-ganilib_Examples.release.xcconfig"; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* ganilib_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ganilib_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
@@ -19,8 +28,17 @@
 		8CF696BA3A4090BC9C2160A4 /* Pods_ganilib_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ganilib_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AE460AFCA4AE8339D851B8C /* Pods-ganilib_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ganilib_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ganilib_Tests/Pods-ganilib_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		BF57F3001A287B1BDEE63ED3 /* Pods-ganilib_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ganilib_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ganilib_Tests/Pods-ganilib_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		C14FF9432216506D00AC4479 /* ganilib_Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ganilib_Examples.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C14FF9452216506D00AC4479 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C14FF9472216506D00AC4479 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C14FF94A2216506D00AC4479 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C14FF94C2216507000AC4479 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C14FF94F2216507000AC4479 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C14FF9512216507000AC4479 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C14FF9552216511600AC4479 /* AnimationScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationScreen.swift; sourceTree = "<group>"; };
 		C7202FDF9BB66C9A20C0C13C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		CF68A31AF0E7C22F80EE09EA /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		F94172A440AFC34AEE609851 /* Pods_ganilib_Examples.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ganilib_Examples.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +50,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C14FF9402216506D00AC4479 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				212BE8D7C0D3BAA07F58BB86 /* Pods_ganilib_Examples.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -40,6 +66,8 @@
 			children = (
 				BF57F3001A287B1BDEE63ED3 /* Pods-ganilib_Tests.debug.xcconfig */,
 				9AE460AFCA4AE8339D851B8C /* Pods-ganilib_Tests.release.xcconfig */,
+				0ADD781C74A0698534376149 /* Pods-ganilib_Examples.debug.xcconfig */,
+				39522F445CF1335F808E7585 /* Pods-ganilib_Examples.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -48,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				8CF696BA3A4090BC9C2160A4 /* Pods_ganilib_Tests.framework */,
+				F94172A440AFC34AEE609851 /* Pods_ganilib_Examples.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -57,6 +86,7 @@
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACE81AFB9204008FA782 /* Tests */,
+				C14FF9442216506D00AC4479 /* Examples */,
 				607FACD11AFB9204008FA782 /* Products */,
 				3ED8F54ECDEC11A55978C18B /* Pods */,
 				439ABF003EFDDB0894D4C440 /* Frameworks */,
@@ -67,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				607FACE51AFB9204008FA782 /* ganilib_Tests.xctest */,
+				C14FF9432216506D00AC4479 /* ganilib_Examples.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -98,6 +129,20 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		C14FF9442216506D00AC4479 /* Examples */ = {
+			isa = PBXGroup;
+			children = (
+				C14FF9452216506D00AC4479 /* AppDelegate.swift */,
+				C14FF9472216506D00AC4479 /* ViewController.swift */,
+				C14FF9552216511600AC4479 /* AnimationScreen.swift */,
+				C14FF9492216506D00AC4479 /* Main.storyboard */,
+				C14FF94C2216507000AC4479 /* Assets.xcassets */,
+				C14FF94E2216507000AC4479 /* LaunchScreen.storyboard */,
+				C14FF9512216507000AC4479 /* Info.plist */,
+			);
+			path = Examples;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -120,13 +165,32 @@
 			productReference = 607FACE51AFB9204008FA782 /* ganilib_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		C14FF9422216506D00AC4479 /* ganilib_Examples */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C14FF9542216507000AC4479 /* Build configuration list for PBXNativeTarget "ganilib_Examples" */;
+			buildPhases = (
+				577EF69E3B9519C20C8DE6B7 /* [CP] Check Pods Manifest.lock */,
+				C14FF93F2216506D00AC4479 /* Sources */,
+				C14FF9402216506D00AC4479 /* Frameworks */,
+				C14FF9412216506D00AC4479 /* Resources */,
+				ADA97579D4A284D70981CA36 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ganilib_Examples;
+			productName = Examples;
+			productReference = C14FF9432216506D00AC4479 /* ganilib_Examples.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
@@ -134,6 +198,10 @@
 						CreatedOnToolsVersion = 6.3.1;
 						LastSwiftMigration = 0820;
 						TestTargetID = 607FACCF1AFB9204008FA782;
+					};
+					C14FF9422216506D00AC4479 = {
+						CreatedOnToolsVersion = 10.1;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -151,6 +219,7 @@
 			projectRoot = "";
 			targets = (
 				607FACE41AFB9204008FA782 /* ganilib_Tests */,
+				C14FF9422216506D00AC4479 /* ganilib_Examples */,
 			);
 		};
 /* End PBXProject section */
@@ -160,6 +229,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C14FF9412216506D00AC4479 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C14FF9502216507000AC4479 /* LaunchScreen.storyboard in Resources */,
+				C14FF94D2216507000AC4479 /* Assets.xcassets in Resources */,
+				C14FF94B2216506D00AC4479 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,14 +252,14 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ganilib_Tests/Pods-ganilib_Tests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/GaniLib/GaniLib.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
-				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftIconFont/SwiftIconFont.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire-iOS12.0/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/GaniLib-iOS12.0/GaniLib.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher-iOS12.0/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD-iOS12.0/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SideMenu-iOS12.0/SideMenu.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit-iOS12.0/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftIconFont-iOS12.0/SwiftIconFont.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON-iOS12.0/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -196,6 +275,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ganilib_Tests/Pods-ganilib_Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		577EF69E3B9519C20C8DE6B7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ganilib_Examples-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9E41B96A3B7EDBBFF6B38871 /* [CP] Check Pods Manifest.lock */ = {
@@ -216,6 +317,42 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		ADA97579D4A284D70981CA36 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-ganilib_Examples/Pods-ganilib_Examples-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire-iOS12.1/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/GaniLib-iOS12.1/GaniLib.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher-iOS12.1/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD-iOS12.1/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SideMenu-iOS12.1/SideMenu.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit-iOS12.1/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftIconFont-iOS12.1/SwiftIconFont.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON-iOS12.1/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GaniLib.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftIconFont.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ganilib_Examples/Pods-ganilib_Examples-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -227,7 +364,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C14FF93F2216506D00AC4479 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C14FF9482216506D00AC4479 /* ViewController.swift in Sources */,
+				C14FF9562216511600AC4479 /* AnimationScreen.swift in Sources */,
+				C14FF9462216506D00AC4479 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C14FF9492216506D00AC4479 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C14FF94A2216506D00AC4479 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C14FF94E2216507000AC4479 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C14FF94F2216507000AC4479 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		607FACED1AFB9204008FA782 /* Debug */ = {
@@ -355,6 +521,75 @@
 			};
 			name = Release;
 		};
+		C14FF9522216507000AC4479 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0ADD781C74A0698534376149 /* Pods-ganilib_Examples.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = Examples/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gani.Examples;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C14FF9532216507000AC4479 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 39522F445CF1335F808E7585 /* Pods-ganilib_Examples.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = Examples/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gani.Examples;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -372,6 +607,15 @@
 			buildConfigurations = (
 				607FACF31AFB9204008FA782 /* Debug */,
 				607FACF41AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C14FF9542216507000AC4479 /* Build configuration list for PBXNativeTarget "ganilib_Examples" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C14FF9522216507000AC4479 /* Debug */,
+				C14FF9532216507000AC4479 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

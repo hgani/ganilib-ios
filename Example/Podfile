@@ -2,4 +2,7 @@ use_frameworks!
 target 'ganilib_Tests' do
   pod 'GaniLib', :path => '../'
 end
+target 'ganilib_Examples' do
+  pod 'GaniLib', :path => '../'
+end
 	

@@ -1,0 +1,10 @@
+*.swp
+creds
+/Pods/
+Build.swift
+/dist/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcworkspace/contents.xcworkspacedata
+.DS_Store
+
