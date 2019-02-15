@@ -1,4 +1,4 @@
-import ganilib
+import GaniLib
 import UIKit
 import XCTest
 

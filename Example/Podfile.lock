@@ -1,31 +1,55 @@
 PODS:
-  - Eureka (2.0.1)
-  - ganilib (0.1.0):
-    - Eureka
-    - IoniconsKit
-    - SideMenu
-    - SnapKit
-    - SwiftIconFont
-  - IoniconsKit (0.1.1)
-  - SideMenu (2.3.0)
-  - SnapKit (3.2.0)
-  - SwiftIconFont (2.6.0)
+  - Alamofire (4.8.0)
+  - GaniLib (0.8.1):
+    - Alamofire (~> 4.7)
+    - GaniLib/Core (= 0.8.1)
+    - SideMenu (~> 3.0)
+    - SnapKit (~> 4.0)
+    - SVProgressHUD (~> 2.2)
+    - SwiftIconFont (= 2.8.0)
+    - SwiftyJSON (~> 4.1)
+  - GaniLib/Core (0.8.1):
+    - Alamofire (~> 4.7)
+    - Kingfisher (~> 4.0)
+    - SideMenu (~> 3.0)
+    - SnapKit (~> 4.0)
+    - SVProgressHUD (~> 2.2)
+    - SwiftIconFont (= 2.8.0)
+    - SwiftyJSON (~> 4.1)
+  - Kingfisher (4.10.1)
+  - SideMenu (3.1.7)
+  - SnapKit (4.2.0)
+  - SVProgressHUD (2.2.5)
+  - SwiftIconFont (2.8.0)
+  - SwiftyJSON (4.2.0)
 
 DEPENDENCIES:
-  - ganilib (from `../`)
+  - GaniLib (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - Kingfisher
+    - SideMenu
+    - SnapKit
+    - SVProgressHUD
+    - SwiftIconFont
+    - SwiftyJSON
 
 EXTERNAL SOURCES:
-  ganilib:
+  GaniLib:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Eureka: ae837bb1dfae0c07bc1bda7aeef87876eeb537c2
-  ganilib: b00f359e027791ee1a8007002edf2cacabfa78e7
-  IoniconsKit: da4e3826b706e59adfb7ef5633e44764dd0acd90
-  SideMenu: 43d092cf615cf472f105c5b9867a21beff9fc269
-  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
-  SwiftIconFont: bbe1f32e1e16bac87dad8566afc80132cb8d072c
+  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  GaniLib: 9e354ae822b6e3169c66eeabbb605b751d06bb22
+  Kingfisher: c148cd7b47ebde9989f6bc7c27dcaa79d81279a0
+  SideMenu: 93aefac046e861875abe260d8ae3578acdd75427
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
+  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  SwiftIconFont: ddaccaa3bb90fc21ebc528cfdf793342618a5cc2
+  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: 66645d4dea386cceb4756c8597cce5e96ea8dae0
+PODFILE CHECKSUM: 0fe558fd4fe3afabe86e7616c306632e79441bb5
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.5.2
