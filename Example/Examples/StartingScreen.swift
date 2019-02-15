@@ -1,6 +1,6 @@
 import GaniLib
 
-class ViewController: GScreen {
+class StartingScreen: GScreen {
     override func viewDidLoad() {
         super.viewDidLoad()
 

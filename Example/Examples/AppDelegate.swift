@@ -7,7 +7,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 //        GHttp.instance.initialize(buildConfig: Build.instance, listener: MyHttpListener())
 
-        let app = GApp.instance.withNav(GNavigationController(rootViewController: ViewController()))
+        let app = GApp.instance.withNav(GNavigationController(rootViewController: StartingScreen()))
         window = app.window
 
         // Override point for customization after application launch.

@@ -11,7 +11,7 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		B0D1C35CCE7B3E0BDB13173E /* Pods_ganilib_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF696BA3A4090BC9C2160A4 /* Pods_ganilib_Tests.framework */; };
 		C14FF9462216506D00AC4479 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14FF9452216506D00AC4479 /* AppDelegate.swift */; };
-		C14FF9482216506D00AC4479 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14FF9472216506D00AC4479 /* ViewController.swift */; };
+		C14FF9482216506D00AC4479 /* StartingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14FF9472216506D00AC4479 /* StartingScreen.swift */; };
 		C14FF94B2216506D00AC4479 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C14FF9492216506D00AC4479 /* Main.storyboard */; };
 		C14FF94D2216507000AC4479 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C14FF94C2216507000AC4479 /* Assets.xcassets */; };
 		C14FF9502216507000AC4479 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C14FF94E2216507000AC4479 /* LaunchScreen.storyboard */; };
@@ -30,7 +30,7 @@
 		BF57F3001A287B1BDEE63ED3 /* Pods-ganilib_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ganilib_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ganilib_Tests/Pods-ganilib_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		C14FF9432216506D00AC4479 /* ganilib_Examples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ganilib_Examples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C14FF9452216506D00AC4479 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C14FF9472216506D00AC4479 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C14FF9472216506D00AC4479 /* StartingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartingScreen.swift; sourceTree = "<group>"; };
 		C14FF94A2216506D00AC4479 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C14FF94C2216507000AC4479 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C14FF94F2216507000AC4479 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -133,7 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				C14FF9452216506D00AC4479 /* AppDelegate.swift */,
-				C14FF9472216506D00AC4479 /* ViewController.swift */,
+				C14FF9472216506D00AC4479 /* StartingScreen.swift */,
 				C14FF9552216511600AC4479 /* AnimationScreen.swift */,
 				C14FF9492216506D00AC4479 /* Main.storyboard */,
 				C14FF94C2216507000AC4479 /* Assets.xcassets */,
@@ -368,7 +368,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C14FF9482216506D00AC4479 /* ViewController.swift in Sources */,
+				C14FF9482216506D00AC4479 /* StartingScreen.swift in Sources */,
 				C14FF9562216511600AC4479 /* AnimationScreen.swift in Sources */,
 				C14FF9462216506D00AC4479 /* AppDelegate.swift in Sources */,
 			);
