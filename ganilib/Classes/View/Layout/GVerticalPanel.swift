@@ -170,6 +170,20 @@ open class GVerticalPanel: UIView, IView {
         return self
     }
 
+    public func tap(_ command: (GVerticalPanel) -> Void) -> Self {
+        command(self)
+        return self
+    }
+
+    public func bg(image: UIImage?) -> Self {
+        if let img = image {
+            self.backgroundColor = UIColor(patternImage: img)
+        } else {
+            self.backgroundColor = nil
+        }
+        return self
+    }
+
     public func done() {
         // Ends chaining
     }

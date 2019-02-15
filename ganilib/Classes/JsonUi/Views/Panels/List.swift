@@ -19,6 +19,7 @@ open class JsonView_Panels_ListV1: JsonView {
         private var sections: [Json]
         private var nextUrl: String?
         private var autoLoad = false
+        private var request: Rest? = nil
 
         init(view: JsonView_Panels_ListV1) {
             listView = view
@@ -66,7 +67,14 @@ open class JsonView_Panels_ListV1: JsonView {
             let items = rows(at: indexPath.section)
 
             if autoLoad, indexPath.section == sections.count - 1, indexPath.row == items.count - 1, let url = self.nextUrl {
-                _ = Rest.get(url: url).execute { response in
+                if let req = request {
+                    req.cancel()
+                    request = nil
+                }
+
+                request = Rest.get(url: url).execute { response in
+                    self.request = nil
+
                     let result = response.content
 
                     self.initNextPageInstructions(spec: result)
