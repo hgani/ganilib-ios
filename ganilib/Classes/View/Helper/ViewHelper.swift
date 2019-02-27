@@ -247,6 +247,10 @@ public class ViewHelper {
             }
         } else {
             let imageView = GImageView().source(image: image)
+
+            ViewHelper.minimumResistance(view: imageView, axis: .vertical)
+            ViewHelper.minimumHugging(view: imageView, axis: .vertical)
+
             view.insertSubview(imageView, at: 0)
             imageView.snp.makeConstraints { make in
                 make.left.equalTo(view.snp.left)
