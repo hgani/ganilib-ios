@@ -100,6 +100,11 @@ open class GAligner: UIView {
         return self
     }
 
+    public func bg(image: UIImage?, repeatTexture: Bool) -> Self {
+        helper.bg(image: image, repeatTexture: repeatTexture)
+        return self
+    }
+
     public enum GAlignerHorizontalGravity {
         case center
         case left

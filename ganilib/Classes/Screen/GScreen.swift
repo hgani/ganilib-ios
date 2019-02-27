@@ -149,10 +149,8 @@ public class GScreenContainer: GHamburgerPanel {
         _ = withViews(
             header,
             content,
-            footer
+            footer,
+            includeNotch: true
         )
-//        content.snp.makeConstraints { make in
-//            make.right.equalTo(self.snp.rightMargin)
-//        }
     }
 }

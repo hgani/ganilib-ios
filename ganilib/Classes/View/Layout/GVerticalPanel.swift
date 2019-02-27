@@ -90,7 +90,13 @@ open class GVerticalPanel: UIView, IView {
                 make.top.equalTo(previousViewElement.snp.bottom).offset(top)
             }
 
-            make.left.equalTo(self.snp.leftMargin)
+//            make.left.equalTo(self.snp.leftMargin)
+
+            switch horizontalAlign {
+            case .center: make.centerX.equalTo(self)
+            case .right: make.right.equalTo(self.snp.rightMargin)
+            case .left: make.left.equalTo(self.snp.leftMargin)
+            }
         }
     }
 
@@ -175,12 +181,22 @@ open class GVerticalPanel: UIView, IView {
         return self
     }
 
-    public func bg(image: UIImage?) -> Self {
-        if let img = image {
-            self.backgroundColor = UIColor(patternImage: img)
-        } else {
-            self.backgroundColor = nil
-        }
+    public func bg(image: UIImage?, repeatTexture: Bool) -> Self {
+//        if let img = image {
+//            self.backgroundColor = UIColor(patternImage: img)
+//        } else {
+//            self.backgroundColor = nil
+//        }
+        helper.bg(image: image, repeatTexture: repeatTexture)
+        return self
+    }
+
+    // MARK: - Alignment
+
+    private var horizontalAlign: GAligner.GAlignerHorizontalGravity = .left
+
+    public func align(_ align: GAligner.GAlignerHorizontalGravity) -> Self {
+        horizontalAlign = align
         return self
     }
 

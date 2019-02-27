@@ -10,6 +10,8 @@ public class ViewHelper {
     private var widthConstraint: Constraint?
     private var heightConstraint: Constraint?
 
+    private var backgroundView: GImageView?
+
     public var size: CGSize {
         return view.bounds.size
     }
@@ -191,9 +193,15 @@ public class ViewHelper {
         return previousResistance
     }
 
-    public static func minimalResistance(view: UIView, axis: NSLayoutConstraint.Axis) -> UILayoutPriority {
+    public static func minimumResistance(view: UIView, axis: NSLayoutConstraint.Axis) -> UILayoutPriority {
         let previousResistance = view.contentCompressionResistancePriority(for: axis)
         setResistance(view: view, axis: axis, priority: UILayoutPriority(rawValue: 1))
+        return previousResistance
+    }
+
+    public static func maximumResistance(view: UIView, axis: NSLayoutConstraint.Axis) -> UILayoutPriority {
+        let previousResistance = view.contentCompressionResistancePriority(for: axis)
+        setResistance(view: view, axis: axis, priority: UILayoutPriority(rawValue: 1000))
         return previousResistance
     }
 
@@ -217,10 +225,37 @@ public class ViewHelper {
         return previousHugging
     }
 
-    public static func minimalHugging(view: UIView, axis: NSLayoutConstraint.Axis) -> UILayoutPriority {
+    public static func minimumHugging(view: UIView, axis: NSLayoutConstraint.Axis) -> UILayoutPriority {
         let previousHugging = view.contentHuggingPriority(for: axis)
         setHugging(view: view, axis: axis, priority: UILayoutPriority(rawValue: 1))
         return previousHugging
+    }
+
+    public static func maximumHugging(view: UIView, axis: NSLayoutConstraint.Axis) -> UILayoutPriority {
+        let previousHugging = view.contentHuggingPriority(for: axis)
+        setHugging(view: view, axis: axis, priority: UILayoutPriority(rawValue: 1000))
+        return previousHugging
+    }
+
+    public func bg(image: UIImage?, repeatTexture: Bool) {
+        view.backgroundColor = nil
+        backgroundView?.removeFromSuperview()
+
+        if repeatTexture {
+            if let img = image {
+                view.backgroundColor = UIColor(patternImage: img)
+            }
+        } else {
+            let imageView = GImageView().source(image: image)
+            view.insertSubview(imageView, at: 0)
+            imageView.snp.makeConstraints { make in
+                make.left.equalTo(view.snp.left)
+                make.right.equalTo(view.snp.right)
+                make.top.equalTo(view.snp.top)
+                make.bottom.equalTo(view.snp.bottom)
+            }
+            backgroundView = imageView
+        }
     }
 }
 

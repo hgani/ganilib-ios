@@ -11,4 +11,12 @@ public class Device {
 
     public static let screenWidth = Int(UIScreen.main.bounds.width)
     public static let screenHeight = Int(UIScreen.main.bounds.height)
+
+    public static func notchHeight() -> Float {
+        if #available(iOS 11.0, *) {
+            let window = UIApplication.shared.keyWindow
+            return Float(window?.safeAreaInsets.bottom ?? 0)
+        }
+        return 0
+    }
 }

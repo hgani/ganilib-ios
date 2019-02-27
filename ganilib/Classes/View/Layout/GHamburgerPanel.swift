@@ -23,56 +23,7 @@ open class GHamburgerPanel: UIView, IContainer {
         _ = paddings(top: 0, left: 0, bottom: 0, right: 0)
     }
 
-//    public init() {
-//        super.init(frame: .zero)
-//
-//        self.helper = ViewHelper(self)
-//
-//        self.translatesAutoresizingMaskIntoConstraints = false
-//
-    ////
-    ////        addSubview(headerView)
-    ////        addSubview(contentView)
-    ////        addSubview(footerView)
-    ////
-    ////                headerView.snp.makeConstraints { make in
-    ////                    make.centerX.equalTo(self)
-    ////                    make.width.equalTo(self)
-    ////
-    ////                    make.top.equalTo(self)
-    //////                    make.bottom.equalTo(self)
-    ////                }
-    ////
-    ////        headerView.snp.makeConstraints { make in
-    ////            make.centerX.equalTo(self)
-    ////            make.width.equalTo(self)
-    ////
-    ////            make.top.equalTo(self)
-    ////            //                    make.bottom.equalTo(self)
-    ////        }
-//
-    ////        // See https://github.com/zaxonus/AutoLayScroll
-    ////        self.translatesAutoresizingMaskIntoConstraints = false
-    ////        contentView.translatesAutoresizingMaskIntoConstraints = false
-    ////
-    ////        self.backgroundColor = .green
-    ////        contentView.backgroundColor = .red
-    ////
-    ////        self.addSubview(contentView)
-    ////        contentView.snp.makeConstraints { make in
-    ////            make.centerX.equalTo(self)
-    ////            make.width.equalTo(self)
-    ////
-    ////            make.top.equalTo(self)
-    ////            make.bottom.equalTo(self)
-    ////        }
-//    }
-//
-//    public required init?(coder aDecoder: NSCoder) {
-//        fatalError("Not supported")
-//    }
-
-    public func withViews(_ top: UIView, _ middle: UIView, _ bottom: UIView) -> Self {
+    public func withViews(_ top: UIView, _ middle: UIView, _ bottom: UIView, includeNotch: Bool) -> Self {
         // The hope is this makes things more predictable
         top.translatesAutoresizingMaskIntoConstraints = false
         middle.translatesAutoresizingMaskIntoConstraints = false
@@ -85,13 +36,7 @@ open class GHamburgerPanel: UIView, IContainer {
         top.snp.makeConstraints { make in
             make.left.equalTo(self.snp.leftMargin)
             make.top.equalTo(self.snp.topMargin)
-//                .offset(paddings.top)
-//                .offset(paddings.left)
-
-//            make.height.greaterThanOrEqualTo(0)
         }
-
-//        middle.snp.contentHuggingVerticalPriority = 1000
 
         middle.snp.makeConstraints { make in
             make.left.equalTo(self.snp.leftMargin)
@@ -101,17 +46,18 @@ open class GHamburgerPanel: UIView, IContainer {
         }
         bottom.snp.makeConstraints { make in
             make.left.equalTo(self.snp.leftMargin)
-            make.bottom.equalTo(self.snp.bottomMargin)
-//                .offset(paddings.top)
+
+            if includeNotch {
+                make.bottom.equalTo(self.snp.bottom)
+            } else {
+                make.bottom.equalTo(self.snp.bottomMargin)
+            }
         }
 
-        //        DispatchQueue.main.async {
         snp.makeConstraints { make in
             make.rightMargin.greaterThanOrEqualTo(top.snp.right)
-//                .offset(self.paddings.bottom)
             make.rightMargin.greaterThanOrEqualTo(middle.snp.right)
             make.rightMargin.greaterThanOrEqualTo(bottom.snp.right)
-//                .offset(self.paddings.bottom)
         }
         return self
     }
@@ -148,6 +94,12 @@ open class GHamburgerPanel: UIView, IContainer {
 
     public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
         helper.paddings(t: top, l: left, b: bottom, r: right)
+        return self
+    }
+
+    @discardableResult
+    public func bg(image: UIImage?, repeatTexture: Bool) -> Self {
+        helper.bg(image: image, repeatTexture: repeatTexture)
         return self
     }
 }
