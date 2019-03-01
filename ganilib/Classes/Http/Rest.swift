@@ -82,7 +82,6 @@ public class Rest {
 
     public func execute(indicator: ProgressIndicatorEnum = .standard,
                         localCache: Bool = false,
-                        ignoreCache: Bool = false,
                         onHttpFailure: @escaping (Error) -> Bool = { _ in false },
                         onHttpSuccess: @escaping (Response) -> Bool) -> Self {
         return execute(indicator: indicator.backend,
@@ -144,39 +143,23 @@ public class Rest {
                 let session = URLSession.shared
                 var localEtag: String?
 
-                GLog.t("CACHE1")
                 if localCache,
                     let cache = session.configuration.urlCache,
                     let response = cache.cachedResponse(for: urlRequest),
                     let httpResponse = response as? HTTPURLResponse {
-
-                    GLog.t("CACHE2")
                     let content = JSON(response.data)
                     localEtag = httpResponse.allHeaderFields["Etag"] as? String
                     onHttpSuccess(Response(statusCode: -1, content: content, headers: Json()))
                 }
 
-                GLog.t("TEST1")
-
-//                task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
                 task = session.dataTask(with: urlRequest) { data, response, error in
-                    GLog.t("TEST2")
-//                    if let safeData = data, let body = String(data: safeData, encoding: .utf8), let safeResponse = response as? HTTPURLResponse {
                     if let httpResponse = response as? HTTPURLResponse {
-                        GLog.t("TEST3")
-
                         // URLSession masks 304 as 200 so we need to compare etags manually
                         if localCache, let etag = localEtag, !etag.isEmpty {
-                            GLog.t("TEST4")
-
                             if etag == httpResponse.allHeaderFields["Etag"] as? String {
-                                GLog.t("TEST5")
-
                                 return
                             }
                         }
-
-                        GLog.t("TEST6")
 
                         self.handleResponse(content: Json(data), response: httpResponse, indicator: indicator, onHttpSuccess: onHttpSuccess)
                     } else {
@@ -217,8 +200,6 @@ public class Rest {
         for field in response.allHeaderFields {
             headers[String(describing: field.key)] = Json(field.value)
         }
-
-//        let content = JSON(parseJSON: body)
 
         let statusCode = response.statusCode
         GLog.d("[\(statusCode)]: \(content)")

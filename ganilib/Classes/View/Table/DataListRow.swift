@@ -64,7 +64,7 @@
                 row.value = self.row.value
             }.cellUpdate { _, row in
                 let changed = self.row.value != (row.value ?? "")
-                if row.value != nil && changed {
+                if row.value != nil, changed {
                     self.row.value = row.value
                     self.row.reload() // Reflect the change in UI
                     self.onDismissCallback?(self)

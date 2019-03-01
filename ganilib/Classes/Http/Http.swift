@@ -60,8 +60,8 @@ public class HttpRequest {
         self.url = url
         self.params = params
         self.headers = headers
-        self.urlRequest = HttpRequest.toUrlRequest(method: method, url: url, params: params, headers: headers)
-        self.string = "\(method.name) \(urlRequest?.description ?? "invalid_url")"
+        urlRequest = HttpRequest.toUrlRequest(method: method, url: url, params: params, headers: headers)
+        string = "\(method.name) \(urlRequest?.description ?? "invalid_url")"
     }
 
     private static func toUrlRequest(method: HttpMethod, url: String, params: GParams, headers: HttpHeaders) -> URLRequest? {

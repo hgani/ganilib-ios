@@ -23,7 +23,7 @@ public class MenuItem {
     }
 
     public func root(_ root: Bool) -> Self {
-        self.isRoot = root
+        isRoot = root
         return self
     }
 
