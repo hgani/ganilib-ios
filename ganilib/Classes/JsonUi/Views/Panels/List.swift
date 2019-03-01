@@ -19,7 +19,7 @@ open class JsonView_Panels_ListV1: JsonView {
         private var sections: [Json]
         private var nextUrl: String?
         private var autoLoad = false
-        private var request: Rest? = nil
+        private var request: Rest?
 
         init(view: JsonView_Panels_ListV1) {
             listView = view

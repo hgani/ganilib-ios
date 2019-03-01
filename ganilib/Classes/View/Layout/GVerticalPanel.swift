@@ -122,36 +122,43 @@ open class GVerticalPanel: UIView, IView {
         }
     }
 
+    @discardableResult
     public func width(_ width: Int) -> Self {
         helper.width(width)
         return self
     }
 
+    @discardableResult
     public func width(_ width: LayoutSize) -> Self {
         helper.width(width)
         return self
     }
 
+    @discardableResult
     public func width(weight: Float) -> Self {
         helper.width(weight: weight)
         return self
     }
 
+    @discardableResult
     public func height(_ height: Int) -> Self {
         helper.height(height)
         return self
     }
 
+    @discardableResult
     public func height(_ height: LayoutSize) -> Self {
         helper.height(height)
         return self
     }
 
+    @discardableResult
     public func paddings(top: Float? = nil, left: Float? = nil, bottom: Float? = nil, right: Float? = nil) -> Self {
         helper.paddings(t: top, l: left, b: bottom, r: right)
         return self
     }
 
+    @discardableResult
     public func color(bg: UIColor) -> Self {
         backgroundColor = bg
         return self
@@ -181,12 +188,8 @@ open class GVerticalPanel: UIView, IView {
         return self
     }
 
+    @discardableResult
     public func bg(image: UIImage?, repeatTexture: Bool) -> Self {
-//        if let img = image {
-//            self.backgroundColor = UIColor(patternImage: img)
-//        } else {
-//            self.backgroundColor = nil
-//        }
         helper.bg(image: image, repeatTexture: repeatTexture)
         return self
     }
