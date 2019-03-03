@@ -12,6 +12,7 @@ open class JsonView {
         if let view = backend as? IView {
             initBackgroundColor(view)
             initWidth(view)
+            initHeight(view)
             initPadding(view)
         }
     }
@@ -32,14 +33,35 @@ open class JsonView {
     }
 
     private func initWidth(_ view: IView) {
-        if let str = spec["width"].string {
-            switch str {
-            case "wrapContent":
-                _ = view.width(.wrapContent)
-            case "matchParent":
-                _ = view.width(.matchParent)
-            default:
-                _ = view.width(spec["width"].intValue)
+        if let width = spec["width"].presence {
+            if let val = width.string {
+                switch val {
+                case "wrapContent":
+                    _ = view.width(.wrapContent)
+                case "matchParent":
+                    _ = view.width(.matchParent)
+                default:
+                    _ = view.width(width.intValue)
+                }
+            } else if let val = width.int {
+                _ = view.width(width.intValue)
+            }
+        }
+    }
+
+    private func initHeight(_ view: IView) {
+        if let height = spec["height"].presence {
+            if let val = height.string {
+                switch val {
+                case "wrapContent":
+                    _ = view.height(.wrapContent)
+                case "matchParent":
+                    _ = view.height(.matchParent)
+                default:
+                    _ = view.height(height.intValue)
+                }
+            } else if let val = height.int {
+                _ = view.height(height.intValue)
             }
         }
     }
