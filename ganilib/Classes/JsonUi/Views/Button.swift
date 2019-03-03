@@ -1,8 +1,12 @@
 class JsonView_ButtonV1: JsonView {
-    private let view = GButton()
-        .color(bg: nil, text: .darkGray)
-        .border(color: .darkGray)
-        .font(nil, size: 12)
+    #if INCLUDE_UILIBS
+        private let view = MButton()
+    #else
+        private let view = GButton()
+            .color(bg: nil, text: .darkGray)
+            .border(color: .darkGray)
+            .font(nil, size: 12)
+    #endif
 
     override func initView() -> UIView {
         if let text = spec["text"].string {

@@ -1,6 +1,6 @@
 import UIKit
 
-open class GTextField: UITextField, IView {
+open class GTextField: UITextField, ITextField {
     private var helper: ViewHelper!
     private var padding = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
 
@@ -126,4 +126,9 @@ public class GTextFieldSpec {
     func decorate(_ view: GTextField) {
         decorator(view)
     }
+}
+
+protocol ITextField : IView {
+    func secure(_ secure: Bool) -> Self
+    func keyboardType(_ type: UIKeyboardType) -> Self
 }

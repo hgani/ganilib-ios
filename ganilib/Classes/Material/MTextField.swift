@@ -1,6 +1,6 @@
 import MaterialComponents.MaterialTextFields
 
-open class MTextField: MDCTextField, IView {
+open class MTextField: MDCTextField, ITextField {
     private var helper: ViewHelper!
     private var padding = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
     // TODO: Make sure this doesn't generate cyclic references
