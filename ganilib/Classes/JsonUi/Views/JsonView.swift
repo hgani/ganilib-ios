@@ -9,7 +9,7 @@ open class JsonView {
     }
 
     private func initGenericAttributes(backend: UIView) {
-        if let view = backend as? IView {
+        if let view = backend as? UIView & IView {
             initBackgroundColor(view)
             initWidth(view)
             initHeight(view)
@@ -28,7 +28,7 @@ open class JsonView {
 
     private func initBackgroundColor(_ view: IView) {
         if let str = spec["backgroundColor"].string {
-            _ = view.color(bg: color(from: str))
+            view.color(bg: color(from: str))
         }
     }
 
@@ -37,38 +37,41 @@ open class JsonView {
             if let val = width.string {
                 switch val {
                 case "wrapContent":
-                    _ = view.width(.wrapContent)
+                    view.width(.wrapContent)
                 case "matchParent":
-                    _ = view.width(.matchParent)
+                    view.width(.matchParent)
                 default:
-                    _ = view.width(width.intValue)
+                    view.width(width.intValue)
                 }
             } else if let val = width.int {
-                _ = view.width(width.intValue)
+                view.width(width.intValue)
             }
         }
     }
 
-    private func initHeight(_ view: IView) {
+    private func initHeight(_ view: UIView & IView) {
         if let height = spec["height"].presence {
             if let val = height.string {
                 switch val {
                 case "wrapContent":
-                    _ = view.height(.wrapContent)
+                    view.height(.wrapContent)
                 case "matchParent":
-                    _ = view.height(.matchParent)
+                    view.height(.matchParent)
+                    // Needed for high hugging views (e.g. UILabel, UIButton) in a stretchable panel, e.g.
+                    // the middle part of a hamburger panel.
+                    ViewHelper.minimumHugging(view: view, axis: .vertical)
                 default:
-                    _ = view.height(height.intValue)
+                    view.height(height.intValue)
                 }
             } else if let val = height.int {
-                _ = view.height(height.intValue)
+                view.height(height.intValue)
             }
         }
     }
 
     private func initPadding(_ view: IView) {
         let padding = spec["padding"]
-        _ = view.paddings(top: padding["top"].float, left: padding["left"].float, bottom: padding["bottom"].float, right: padding["right"].float)
+        view.paddings(top: padding["top"].float, left: padding["left"].float, bottom: padding["bottom"].float, right: padding["right"].float)
     }
 
     open func initView() -> UIView {
