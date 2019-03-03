@@ -3,6 +3,7 @@ import MaterialComponents.MaterialTextFields
 open class MTextField: MDCTextField, IView {
     private var helper: ViewHelper!
     private var padding = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+    // TODO: Make sure this doesn't generate cyclic references
     private var controller: MDCTextInputController!
 
     public var size: CGSize {
@@ -22,8 +23,6 @@ open class MTextField: MDCTextField, IView {
     private func initialize() {
         helper = ViewHelper(self)
         controller = MDCTextInputControllerFilled(textInput: self)
-//        controller.placeholderText = "Name"
-//        controller.helperText = "First and Last"
     }
 
     open override func didMoveToSuperview() {
@@ -32,13 +31,11 @@ open class MTextField: MDCTextField, IView {
     }
 
     public func placeholder(_ str: String) -> Self {
-//        placeholder = str
         controller.placeholderText = str
         return self
     }
 
     public func hint(_ str: String) -> Self {
-        //        placeholder = str
         controller.helperText = str
         return self
     }
@@ -74,11 +71,6 @@ open class MTextField: MDCTextField, IView {
         return self
     }
 
-    //    public func border(style: UITextBorderStyle) -> Self {
-    //        self.borderStyle = style
-    //        return self
-    //    }
-
     public func border(color: UIColor?, width: Float = 1, corner: Float = 6) -> Self {
         helper.border(color: color, width: width, corner: corner)
         return self
@@ -104,12 +96,12 @@ open class MTextField: MDCTextField, IView {
         return self
     }
 
-//    public func specs(_ specs: GTextFieldSpec...) -> Self {
-//        for spec in specs {
-//            spec.decorate(self)
-//        }
-//        return self
-//    }
+    public func specs(_ specs: MTextFieldSpec...) -> Self {
+        for spec in specs {
+            spec.decorate(self)
+        }
+        return self
+    }
 
     public func secure(_ secure: Bool) -> Self {
         isSecureTextEntry = secure
@@ -127,14 +119,14 @@ open class MTextField: MDCTextField, IView {
     }
 }
 
-//public class GTextFieldSpec {
-//    private var decorator: ((GTextField) -> Void)
-//
-//    public init(_ decorator: @escaping ((GTextField) -> Void)) {
-//        self.decorator = decorator
-//    }
-//
-//    func decorate(_ view: GTextField) {
-//        decorator(view)
-//    }
-//}
+public class MTextFieldSpec {
+    private var decorator: ((MTextField) -> Void)
+
+    public init(_ decorator: @escaping ((MTextField) -> Void)) {
+        self.decorator = decorator
+    }
+
+    func decorate(_ view: MTextField) {
+        decorator(view)
+    }
+}

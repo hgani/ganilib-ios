@@ -69,13 +69,13 @@ open class MButton: MDCButton, IView {
         return self
     }
 
-//    @discardableResult
-//    public func specs(_ specs: GButtonSpec...) -> Self {
-//        for spec in specs {
-//            spec.decorate(self)
-//        }
-//        return self
-//    }
+    @discardableResult
+    public func specs(_ specs: MButtonSpec...) -> Self {
+        for spec in specs {
+            spec.decorate(self)
+        }
+        return self
+    }
 
     @discardableResult
     open func onClick(_ command: @escaping (MButton) -> Void) -> Self {
@@ -144,26 +144,26 @@ open class MButton: MDCButton, IView {
     }
 }
 
-//extension GButton: GWeightable {
-//    public func width(weight: Float, offset: Float = 0) -> Self {
-//        helper.width(weight: weight, offset: offset)
-//        return self
-//    }
-//
-//    public func height(weight: Float, offset: Float = 0) -> Self {
-//        helper.height(weight: weight, offset: offset)
-//        return self
-//    }
-//}
-//
-//public class GButtonSpec {
-//    private var decorator: ((GButton) -> Void)
-//
-//    public init(_ decorator: @escaping ((GButton) -> Void)) {
-//        self.decorator = decorator
-//    }
-//
-//    func decorate(_ view: GButton) {
-//        decorator(view)
-//    }
-//}
+extension MButton: GWeightable {
+    public func width(weight: Float, offset: Float = 0) -> Self {
+        helper.width(weight: weight, offset: offset)
+        return self
+    }
+
+    public func height(weight: Float, offset: Float = 0) -> Self {
+        helper.height(weight: weight, offset: offset)
+        return self
+    }
+}
+
+public class MButtonSpec {
+    private var decorator: ((MButton) -> Void)
+
+    public init(_ decorator: @escaping ((MButton) -> Void)) {
+        self.decorator = decorator
+    }
+
+    func decorate(_ view: MButton) {
+        decorator(view)
+    }
+}
