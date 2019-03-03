@@ -68,5 +68,8 @@ TODO: Add long description of the pod here.
     sub.xcconfig = { 'OTHER_SWIFT_FLAGS' => '-DINCLUDE_UILIBS' }
     sub.dependency 'XLPagerTabStrip', '~> 8.0'
     sub.dependency 'TTTAttributedLabel'  
+
+    sub.dependency 'MaterialComponents/Buttons'  
+    sub.dependency 'MaterialComponents/TextFields'  
   end
 end
