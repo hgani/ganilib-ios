@@ -229,11 +229,11 @@ open class GTableViewCustomCell: GTableViewCell {
         return self
     }
 
-    public func addView(_ view: UIView, top: CGFloat? = nil) {
+    public func addView(_ view: UIView, top: Float = 0) {
         container.addView(view, top: top)
     }
 
-    public func append(_ view: UIView, top: CGFloat? = nil) -> Self {
+    public func append(_ view: UIView, top: Float = 0) -> Self {
         container.addView(view, top: top)
         return self
     }
@@ -278,7 +278,7 @@ open class GHeaderFooterView: UIView {
         container.clearViews()
     }
 
-    public func addView(_ view: UIView, top: CGFloat? = nil) {
+    public func addView(_ view: UIView, top: Float = 0) {
         container.addView(view, top: top)
     }
 
@@ -287,7 +287,7 @@ open class GHeaderFooterView: UIView {
         return self
     }
 
-    public func append(_ view: UIView, top: CGFloat? = nil) -> Self {
+    public func append(_ view: UIView, top: Float = 0) -> Self {
         addView(view, top: top)
         return self
     }

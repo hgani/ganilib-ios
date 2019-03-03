@@ -3,8 +3,6 @@ import UIKit
 
 open class GHorizontalPanel: UIView {
     fileprivate var helper: ViewHelper!
-//    private var previousViewElement: UIView!
-//    private var previousConstraint: NSLayoutConstraint!
 
     private var previousView: UIView?
     private var previousLayoutPriority: UILayoutPriority?
@@ -109,7 +107,7 @@ open class GHorizontalPanel: UIView {
         }
     }
 
-    open func split() -> Self {
+    public func split() -> Self {
         let count = subviews.count
         GLog.i("Splitting \(count) views ...")
         let weight = 1.0 / Float(count)

@@ -165,6 +165,11 @@ extension GButton: GWeightable {
         helper.width(weight: weight, offset: offset)
         return self
     }
+
+    public func height(weight: Float, offset: Float = 0) -> Self {
+        helper.height(weight: weight, offset: offset)
+        return self
+    }
 }
 
 public class GButtonSpec {

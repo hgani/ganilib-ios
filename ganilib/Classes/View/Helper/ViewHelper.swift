@@ -55,12 +55,18 @@ public class ViewHelper {
         }
     }
 
-    private func updateHeightConstraints() {
+    private func updateHeightConstraints(offset: Float = 0, debug: Bool = false) {
         if let superview = view.superview {
             if let multiplier = matchParentHeightMultiplier {
                 view.snp.makeConstraints { make in
+                    if debug {
+                        GLog.t("updateHeightConstraints() with multiplier \(multiplier)")
+                    }
+
                     if multiplier == 1 {
                         heightConstraint = make.bottom.equalTo(superview.snp.bottomMargin).constraint
+                    } else {
+                        heightConstraint = make.height.equalTo(superview).multipliedBy(multiplier).offset(offset).constraint
                     }
                 }
             }
@@ -143,6 +149,13 @@ public class ViewHelper {
         }
 
         updateHeightConstraints()
+    }
+
+    public func height(weight: Float, offset: Float = 0) {
+        resetHeight()
+
+        matchParentHeightMultiplier = weight
+        updateHeightConstraints(offset: offset)
     }
 
     public func size(width: Int?, height: Int?) {
