@@ -7,7 +7,7 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'GaniLib'
+  s.name             = 'GLib'
   s.version          = '0.8.1'
   s.summary          = 'Simplify iOS development'
 
