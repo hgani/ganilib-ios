@@ -38,8 +38,8 @@ TODO: Add long description of the pod here.
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'SwiftIconFont', '2.8.0'
-  s.dependency 'SideMenu', '~> 3.0'
+  s.dependency 'SwiftIconFont', '~> 3.0'
+  s.dependency 'SideMenu', '~> 5.0'
 	s.dependency 'SnapKit', '~> 4.0'
 
   #s.dependency 'Alamofire', '~> 4.7'
