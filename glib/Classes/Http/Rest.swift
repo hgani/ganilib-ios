@@ -1,4 +1,4 @@
-import Alamofire
+//import Alamofire
 import SVProgressHUD
 import SwiftyJSON
 
@@ -219,7 +219,7 @@ public class Rest {
         switch method {
         case .patch, .delete:
             var mutableParams = params
-            mutableParams["_method"] = method.alamofire().rawValue
+            mutableParams["_method"] = method.name
             return mutableParams
         default: // Don't augment .post to allow caller specify their own `_method`
             return params

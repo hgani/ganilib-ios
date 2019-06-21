@@ -1,5 +1,5 @@
 #
-# Be sure to run `pod lib lint ganilib.podspec' to ensure this is a
+# Be sure to run `pod lib lint glib.podspec' to ensure this is a
 # valid spec before submitting.
 #
 # Any lines starting with a # are optional, but their use is encouraged
@@ -30,10 +30,10 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '10.0'
 
-  s.source_files = 'ganilib/Classes/**/*'
+  s.source_files = 'glib/Classes/**/*'
   
   # s.resource_bundles = {
-  #   'ganilib' => ['ganilib/Assets/*.png']
+  #   'glib' => ['glib/Assets/*.png']
   # }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
@@ -42,7 +42,7 @@ TODO: Add long description of the pod here.
   s.dependency 'SideMenu', '~> 3.0'
 	s.dependency 'SnapKit', '~> 4.0'
 
-  s.dependency 'Alamofire', '~> 4.7'
+  #s.dependency 'Alamofire', '~> 4.7'
   s.dependency 'SwiftyJSON', '~> 4.1'
   s.dependency 'SVProgressHUD', '~> 2.2'
 

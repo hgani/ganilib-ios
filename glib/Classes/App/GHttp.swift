@@ -1,4 +1,4 @@
-import Alamofire
+//import Alamofire
 
 public protocol GHttpListener {
     // Parameters is a Dictionary which is a struct so the delegate can safely modify it.

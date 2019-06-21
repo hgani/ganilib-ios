@@ -1,4 +1,4 @@
-import Alamofire
+//import Alamofire
 import SVProgressHUD
 import SwiftyJSON
 
@@ -31,20 +31,20 @@ public enum HttpMethod {
 //        }
 //    }
 
-    func alamofire() -> HTTPMethod {
-        switch self {
-        case .get:
-            return HTTPMethod.get
-        case .post:
-            return HTTPMethod.post
-        case .patch:
-            return HTTPMethod.patch
-        case .delete:
-            return HTTPMethod.delete
-        case .multipart:
-            return HTTPMethod.post
-        }
-    }
+//    func alamofire() -> HTTPMethod {
+//        switch self {
+//        case .get:
+//            return HTTPMethod.get
+//        case .post:
+//            return HTTPMethod.post
+//        case .patch:
+//            return HTTPMethod.patch
+//        case .delete:
+//            return HTTPMethod.delete
+//        case .multipart:
+//            return HTTPMethod.post
+//        }
+//    }
 }
 
 public class HttpRequest {
@@ -153,11 +153,16 @@ public class HttpRequest {
 }
 
 public class Http {
-    private let request: DataRequest
-    private let actualMethod: HttpMethod
+//    private let request: DataRequest
+    private let request: HttpRequest
+//    private let actualMethod: HttpMethod
+//
+//    init(method: HttpMethod, request: HttpRequest) {
+//        actualMethod = method
+//        self.request = request
+//    }
 
-    init(method: HttpMethod, request: DataRequest) {
-        actualMethod = method
+    init(request: HttpRequest) {
         self.request = request
     }
 
@@ -166,27 +171,29 @@ public class Http {
     }
 
     public func execute(indicator: ProgressIndicator, onHttpSuccess: @escaping (String) -> String?) {
-        GLog.i("\(actualMethod.name) \(request.request?.url?.absoluteString ?? "")")
+        // TODO
 
-        indicator.show()
-        request.responseString { response in
-            if let safeResponse = response.response {
-                if !GHttp.instance.listener.processResponse(safeResponse) {
-                    indicator.hide()
-                    return
-                }
-            }
-
-            switch response.result {
-            case let .success(value):
-                indicator.hide()
-                if let message = onHttpSuccess(value) {
-                    indicator.show(error: message)
-                }
-            case let .failure(error):
-                indicator.show(error: error.localizedDescription)
-            }
-        }
+//        GLog.i("\(actualMethod.name) \(request.request?.url?.absoluteString ?? "")")
+//
+//        indicator.show()
+//        request.responseString { response in
+//            if let safeResponse = response.response {
+//                if !GHttp.instance.listener.processResponse(safeResponse) {
+//                    indicator.hide()
+//                    return
+//                }
+//            }
+//
+//            switch response.result {
+//            case let .success(value):
+//                indicator.hide()
+//                if let message = onHttpSuccess(value) {
+//                    indicator.show(error: message)
+//                }
+//            case let .failure(error):
+//                indicator.show(error: error.localizedDescription)
+//            }
+//        }
     }
 
     private static func augmentPostParams(_ params: GParams, _ method: HttpMethod) -> GParams {
@@ -200,13 +207,25 @@ public class Http {
         }
     }
 
-    private static func request(_ url: String, _ method: HttpMethod, _ params: GParams, _ headers: HTTPHeaders?) -> Http {
+    private static func request(_ url: String, _ method: HttpMethod, _ params: GParams, _ headers: HttpHeaders) -> Http {
         let augmentedParams = augmentPostParams(params, method)
 
-        return Http(method: method, request: Alamofire.request(url,
-                                                               method: method.alamofire(),
-                                                               parameters: prepareParams(augmentedParams),
-                                                               headers: headers))
+        let restParams: NonNullParams, restHeaders: HttpHeaders
+        if url.starts(with: GHttp.instance.host()) {
+            let request = HttpRequest(method: method, url: url, params: params, headers: headers)
+            restParams = prepareParams(GHttp.instance.listener.restParams(from: augmentedParams, request: request))
+            restHeaders = GHttp.instance.listener.restHeaders(from: headers, request: request)
+        } else {
+            restParams = prepareParams(augmentedParams)
+            restHeaders = headers
+        }
+
+//        return Http(method: method, request: Alamofire.request(url,
+//                                                               method: method.alamofire(),
+//                                                               parameters: prepareParams(augmentedParams),
+//                                                               headers: headers))
+
+        return Http(request: HttpRequest(method: method, url: url, params: restParams, headers: restHeaders))
     }
 
     private static func prepareParams(_ params: GParams) -> [String: Any] {
@@ -223,19 +242,19 @@ public class Http {
 
     // MARK: URL-based
 
-    public static func post(url: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Http {
+    public static func post(url: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Http {
         return request(url, .post, params, headers)
     }
 
-    public static func patch(url: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Http {
+    public static func patch(url: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Http {
         return request(url, .patch, params, headers)
     }
 
-    public static func delete(url: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Http {
+    public static func delete(url: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Http {
         return request(url, .delete, params, headers)
     }
 
-    public static func get(url: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Http {
+    public static func get(url: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Http {
         return request(url, .get, params, headers)
     }
 
@@ -245,19 +264,19 @@ public class Http {
         return "\(GHttp.instance.host())\(path)"
     }
 
-    public static func post(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Http {
+    public static func post(path: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Http {
         return post(url: url(from: path), params: params, headers: headers)
     }
 
-    public static func patch(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Http {
+    public static func patch(path: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Http {
         return patch(url: url(from: path), params: params, headers: headers)
     }
 
-    public static func delete(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Http {
+    public static func delete(path: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Http {
         return delete(url: url(from: path), params: params, headers: headers)
     }
 
-    public static func get(path: String, params: GParams = GParams(), headers: HTTPHeaders? = nil) -> Http {
+    public static func get(path: String, params: GParams = GParams(), headers: HttpHeaders = HttpHeaders()) -> Http {
         return get(url: url(from: path), params: params, headers: headers)
     }
 }
