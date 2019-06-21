@@ -103,7 +103,7 @@ open class GButton: UIButton, IView {
     }
 
     @discardableResult
-    public func font(_ font: UIFont?, size: Float? = nil, traits: UIFontDescriptorSymbolicTraits...) -> Self {
+    public func font(_ font: UIFont?, size: Float? = nil, traits: UIFontDescriptor.SymbolicTraits...) -> Self {
         var newFont = (font ?? titleLabel!.font).withTraits(traits)
         if let newSize = size {
             newFont = newFont.withSize(CGFloat(newSize))

@@ -38,15 +38,20 @@ open class GTextField: UITextField, ITextField {
     }
 
     open override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return UIEdgeInsetsInsetRect(bounds, padding)
+        return bounds.inset(by:padding)
+//        return UIEdgeInsetsInsetRect(bounds, padding)
     }
 
     open override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return UIEdgeInsetsInsetRect(bounds, padding)
+        return bounds.inset(by:padding)
+
+//        return UIEdgeInsetsInsetRect(bounds, padding)
     }
 
     open override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return UIEdgeInsetsInsetRect(bounds, padding)
+        return bounds.inset(by:padding)
+
+//        return UIEdgeInsetsInsetRect(bounds, padding)
     }
 
     public func color(bg: UIColor) -> Self {

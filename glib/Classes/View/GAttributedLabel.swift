@@ -66,7 +66,7 @@
             return self
         }
 
-        public func font(size: Float? = nil, traits: UIFontDescriptorSymbolicTraits...) -> Self {
+        public func font(size: Float? = nil, traits: UIFontDescriptor.SymbolicTraits...) -> Self {
             var newFont = font.withTraits(traits)
             if let newSize = size {
                 newFont = newFont.withSize(CGFloat(newSize))

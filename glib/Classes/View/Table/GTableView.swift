@@ -10,7 +10,7 @@ open class GTableView: UITableView, IContainer {
         return helper.size
     }
 
-    public override init(frame: CGRect, style: UITableViewStyle) {
+    public override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         initialize()
     }
@@ -78,18 +78,18 @@ open class GTableView: UITableView, IContainer {
     }
 
     public func autoRowHeight(estimate: Float) -> Self {
-        rowHeight = UITableViewAutomaticDimension
+        rowHeight = UITableView.automaticDimension
         estimatedRowHeight = CGFloat(estimate)
         return self
     }
 
     public func autoHeaderHeight(estimate: Float) -> Self {
-        sectionHeaderHeight = UITableViewAutomaticDimension
+        sectionHeaderHeight = UITableView.automaticDimension
         estimatedSectionHeaderHeight = CGFloat(estimate)
         return self
     }
 
-    public func cellInstance<T: GTableViewCell>(of type: T.Type, style: UITableViewCellStyle = .default) -> T {
+    public func cellInstance<T: GTableViewCell>(of type: T.Type, style: UITableViewCell.CellStyle = .default) -> T {
         var cell: T
         if let safeCell = self.dequeueReusableCell(withIdentifier: type.reuseIdentifier()) as? T {
             cell = safeCell
@@ -105,7 +105,7 @@ open class GTableView: UITableView, IContainer {
         return self
     }
 
-    public func separator(_ style: UITableViewCellSeparatorStyle) -> Self {
+    public func separator(_ style: UITableViewCell.SeparatorStyle) -> Self {
         separatorStyle = style
         return self
     }
@@ -132,7 +132,7 @@ open class GTableViewCell: UITableViewCell {
         self.init(style: .default)
     }
 
-    public required init(style: UITableViewCellStyle) {
+    public required init(style: UITableViewCell.CellStyle) {
         super.init(style: style, reuseIdentifier: type(of: self).nibName())
 
         initialize()
@@ -176,7 +176,7 @@ open class GTableViewCell: UITableViewCell {
         return self
     }
 
-    public func selectionStyle(_ value: UITableViewCellSelectionStyle) -> Self {
+    public func selectionStyle(_ value: UITableViewCell.SelectionStyle) -> Self {
         selectionStyle = value
         return self
     }
@@ -189,7 +189,7 @@ open class GTableViewCustomCell: GTableViewCell {
 //        self.init(style: .default)
 //    }
 
-    public required init(style: UITableViewCellStyle) {
+    public required init(style: UITableViewCell.CellStyle) {
         super.init(style: style)
         initialize()
     }

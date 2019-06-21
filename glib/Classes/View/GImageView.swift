@@ -96,7 +96,7 @@ open class GImageView: UIImageView {
         }
     }
 
-    public func contentMode(_ mode: UIViewContentMode) -> Self {
+    public func contentMode(_ mode: UIView.ContentMode) -> Self {
         contentMode = mode
         return self
     }

@@ -70,7 +70,7 @@ open class GStackView: UIStackView {
         return self
     }
 
-    public func axis(_ axis: UILayoutConstraintAxis) -> Self {
+    public func axis(_ axis: NSLayoutConstraint.Axis) -> Self {
         self.axis = axis
         return self
     }
@@ -80,7 +80,7 @@ open class GStackView: UIStackView {
         return self
     }
 
-    public func distribution(_ distribution: UIStackViewDistribution) -> Self {
+    public func distribution(_ distribution: UIStackView.Distribution) -> Self {
         self.distribution = distribution
         return self
     }

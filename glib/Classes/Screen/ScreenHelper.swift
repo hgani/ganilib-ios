@@ -12,7 +12,7 @@ open class ScreenHelper {
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(applicationDidBecomeActiveNotification(_:)),
-                                               name: .UIApplicationWillEnterForeground,
+                                               name: UIApplication.willEnterForegroundNotification,
                                                object: nil)
     }
 

@@ -157,7 +157,7 @@ extension GMapView: MKMapViewDelegate {
         if defaultPin || view.isKind(of: MKPinAnnotationView.self) {
             mapView.removeOverlays(mapView.overlays)
 
-            let request = MKDirectionsRequest()
+            let request = MKDirections.Request()
             request.source = MKMapItem(placemark: MKPlacemark(coordinate: mapView.userLocation.coordinate))
             request.destination = MKMapItem(placemark: MKPlacemark(coordinate: view.annotation!.coordinate))
 
@@ -166,7 +166,7 @@ extension GMapView: MKMapViewDelegate {
                 guard let unwrappedResponse = response else { return }
 
                 for route in unwrappedResponse.routes {
-                    self.add(route.polyline)
+                    self.addOverlay(route.polyline)
                     self.setVisibleMapRect(route.polyline.boundingMapRect,
                                            edgePadding: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20),
                                            animated: true)

@@ -6,7 +6,7 @@ open class MenuCell: GTableViewCustomCell, MenuCellType {
     public let iconLabel = GLabel()
     public let titleLabel = GLabel()
 
-    public required init(style: UITableViewCellStyle) {
+    public required init(style: UITableViewCell.CellStyle) {
         super.init(style: style)
         populate()
     }

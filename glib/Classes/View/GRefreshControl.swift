@@ -10,7 +10,7 @@ open class GRefreshControl: UIRefreshControl, ProgressIndicator {
 
         helper = ViewHelper(self)
 
-        addTarget(self, action: #selector(performValueChanged), for: UIControlEvents.valueChanged)
+        addTarget(self, action: #selector(performValueChanged), for: .valueChanged)
     }
 
     public required init?(coder: NSCoder) {

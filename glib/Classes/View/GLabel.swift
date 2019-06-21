@@ -109,7 +109,7 @@ open class GLabel: UILabel, IView {
 
     // Has to be called before text()
     @discardableResult
-    public func font(_ font: UIFont?, size: Float? = nil, traits: UIFontDescriptorSymbolicTraits...) -> Self {
+    public func font(_ font: UIFont?, size: Float? = nil, traits: UIFontDescriptor.SymbolicTraits...) -> Self {
         var newFont = (font ?? self.font!)
         // For safety, don't touch it if no traits is specified
         if traits.count > 0 {
@@ -224,17 +224,20 @@ open class GLabel: UILabel, IView {
     // From https://stackoverflow.com/questions/21167226/resizing-a-uilabel-to-accommodate-insets/21267507#21267507
     open override func textRect(forBounds bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
         let textInsets = paddings.toEdgeInsets()
-        let insetRect = UIEdgeInsetsInsetRect(bounds, textInsets)
+//        let insetRect = UIEdgeInsetsInsetRect(bounds, textInsets)
+        let insetRect = bounds.inset(by: textInsets)
         let textRect = super.textRect(forBounds: insetRect, limitedToNumberOfLines: numberOfLines)
         let invertedInsets = UIEdgeInsets(top: -textInsets.top,
                                           left: -textInsets.left,
                                           bottom: -textInsets.bottom,
                                           right: -textInsets.right)
-        return UIEdgeInsetsInsetRect(textRect, invertedInsets)
+        return textRect.inset(by: invertedInsets)
+//        return UIEdgeInsetsInsetRect(textRect, invertedInsets)
     }
 
     open override func draw(_ rect: CGRect) {
-        super.drawText(in: UIEdgeInsetsInsetRect(rect, paddings.toEdgeInsets()))
+//        super.drawText(in: UIEdgeInsetsInsetRect(rect, paddings.toEdgeInsets()))
+        super.drawText(in: rect.inset(by: paddings.toEdgeInsets()))
 
         if isUnderlined {
             let startingPoint = CGPoint(x: rect.minX, y: rect.maxY - 2)

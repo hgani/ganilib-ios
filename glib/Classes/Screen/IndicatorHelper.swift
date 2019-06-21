@@ -4,7 +4,7 @@ import UIKit
 
 open class IndicatorHelper {
     private unowned let screen: UIViewController
-    lazy var indicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    lazy var indicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .gray)
 
     public init(_ screen: UIViewController) {
         self.screen = screen

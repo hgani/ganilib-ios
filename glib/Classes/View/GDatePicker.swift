@@ -75,7 +75,7 @@ open class GDatePicker: UIDatePicker, IView {
         return self
     }
 
-    public func mode(_ mode: UIDatePickerMode) -> Self {
+    public func mode(_ mode: UIDatePicker.Mode) -> Self {
         datePickerMode = mode
         return self
     }
