@@ -8,10 +8,16 @@ open class LaunchHelper {
         self.screen = screen
     }
 
+    private func navController() -> UIViewController {
+        // Needed for nav menu which will fail to present because it will be closed/closing when clicked,
+        // so use global nav controller instead.
+        return screen.viewIfLoaded?.window == nil ? GApp.instance.navigationController : screen
+    }
+
     public func alert(_ message: String, title: String? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        screen.present(alert, animated: true, completion: nil)
+        navController().present(alert, animated: true, completion: nil)
     }
 
     public func confirm(_ message: String, title: String? = nil, handler: @escaping (() -> Void)) {
@@ -20,7 +26,7 @@ open class LaunchHelper {
             handler()
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        screen.present(alert, animated: true, completion: nil)
+        navController().present(alert, animated: true, completion: nil)
     }
 
     public func call(_ number: String) {

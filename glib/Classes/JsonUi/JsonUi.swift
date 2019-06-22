@@ -88,7 +88,9 @@ public class JsonUi {
 class JsonUiMenuNavController: MenuNavController {
     override func initMenu(_ menu: Menu) {
         // TODO: display based on json data
-        menu.add(MenuItem(title: "TODO"))
+        menu.add(MenuItem(title: "TODO").icon(GIcon(font: .materialIcon, code: "home")).onClick {
+            self.launch.alert("TODO")
+        })
 
 //        #if DEBUG
 //        menu.add(MenuItem(title: "Diagnostics").screen(JsonUiScreen(path: "/app_diagnostics.json")))
