@@ -52,6 +52,8 @@ public class JsonUi {
     }
 
     public static func parseEntireScreen(_ spec: Json, screen: GScreen) {
+        screen.title = spec["title"].string
+
         parseScreenContent(spec, screen: screen)
         initNavBar(spec: spec, screen: screen)
     }
@@ -75,5 +77,21 @@ public class JsonUi {
         }
 
         screen.rightBarButtons(items: buttons)
+
+        if let leftDrawer = spec["leftDrawer"].presence {
+            // TODO: implement
+            screen.leftMenu(controller: JsonUiMenuNavController())
+        }
+    }
+}
+
+class JsonUiMenuNavController: MenuNavController {
+    override func initMenu(_ menu: Menu) {
+        // TODO: display based on json data
+        menu.add(MenuItem(title: "TODO"))
+
+//        #if DEBUG
+//        menu.add(MenuItem(title: "Diagnostics").screen(JsonUiScreen(path: "/app_diagnostics.json")))
+//        #endif
     }
 }

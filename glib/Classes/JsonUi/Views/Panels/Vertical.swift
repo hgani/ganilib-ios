@@ -11,7 +11,9 @@ class JsonView_Panels_VerticalV1: JsonView {
     }
 
     override func initView() -> UIView {
-        let subviews: [UIView] = spec["subviews"].arrayValue.compactMap { viewSpec -> UIView? in
+        // NOTE: subviews property is deprecated
+        let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
+        let subviews: [UIView] = childViews.compactMap { viewSpec -> UIView? in
             if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
                 return jsonView.createView()
             }

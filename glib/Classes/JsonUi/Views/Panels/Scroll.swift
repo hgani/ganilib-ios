@@ -2,7 +2,9 @@ class JsonView_Panels_ScrollV1: JsonView {
     private let panel = GScrollPanel()
 
     override func initView() -> UIView {
-        for viewSpec in spec["subviews"].arrayValue {
+        // NOTE: subviews property is deprecated
+        let childViews = spec["subviews"].array ?? spec["childViews"].arrayValue
+        for viewSpec in childViews {
             if let jsonView = JsonView.create(spec: viewSpec, screen: screen) {
                 panel.addView(jsonView.createView())
             }
